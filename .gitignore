@@ -1,0 +1,5 @@
+data/
+plot/
+src/out/
+models/
+src/models/__pycache__/
