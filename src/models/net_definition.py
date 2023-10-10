@@ -349,6 +349,85 @@ class SixthLayerNet(nn.Module):
         self.fc1.bias = nn.Parameter(sixth, requires_grad=False)
 
 # Model definition
+class Conv2Net(nn.Module):
+    def __init__(self):
+        super(Conv2Net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2)
+        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.fc1 = nn.Linear(2048, 100)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(100, 10)
+        self.flatten = nn.Flatten()
+        self.softmax = nn.LogSoftmax(dim=1)
+        
+    def forward(self, x):
+        # Input size = 1x32x32
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = self.flatten(x)
+        x = self.relu(self.fc1(x))
+        x = self.softmax(self.fc2(x))
+        return x
+        
+    def weights_init(self, first, second, third, fourth):
+        # Initialization of first convolutional layer weights
+        self.conv1.weight = nn.Parameter(first, requires_grad=True)
+        
+        # Initialization of second convolutional layer weights
+        self.conv2.weight = nn.Parameter(second, requires_grad=True)
+        
+        # Initialization of first linear layer weights
+        self.fc1.weight = nn.Parameter(third, requires_grad=True)
+        
+        # Initialization of second linear layer weights
+        self.fc2.weight = nn.Parameter(fourth, requires_grad=True)
+
+# Model definition
+class ThirdLayerConv2Net(nn.Module):
+    def __init__(self):
+        super(ThirdLayerConv2Net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2) 
+        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.fc1 = nn.Linear(2048, 100)
+        self.fc2 = nn.Linear(100, 10)
+        self.relu = nn.ReLU()
+        self.flatten = nn.Flatten()
+        
+    def forward(self, x):
+        # Input size = 1x32x32
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = self.flatten(x)
+        x = self.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+        
+    def weights_init(self, first, second, third, fourth):
+        # Initialization of first convolutional layer weights
+        self.conv1.weight = nn.Parameter(first, requires_grad=False)
+        
+        # Initialization of second convolutional layer weights
+        self.conv2.weight = nn.Parameter(second, requires_grad=False)
+        
+        # Initialization of fourth convolutional layer weights
+        self.fc1.weight = nn.Parameter(third, requires_grad=False)
+        
+        # Initialization of first linear layer weights
+        self.fc2.weight = nn.Parameter(fourth, requires_grad=True)
+
+    def bias_init(self, first, second, third):
+        # Initialization of first convolutional layer bias
+        self.conv1.bias = nn.Parameter(first, requires_grad=False)
+
+        # Initialization of second convolutional layer bias
+        self.conv2.bias = nn.Parameter(second, requires_grad=False)
+
+        # Initialization of fourth convolutional layer bias
+        self.fc1.bias = nn.Parameter(third, requires_grad=False)
+
+# Model definition
 class Conv3Net(nn.Module):
     def __init__(self):
         super(Conv3Net, self).__init__()
@@ -439,3 +518,108 @@ class FourthLayerConv3Net(nn.Module):
 
         # Initialization of fourth convolutional layer bias
         self.fc1.bias = nn.Parameter(fourth, requires_grad=False)
+
+# Model definition
+class Conv4Net(nn.Module):
+    def __init__(self):
+        super(Conv4Net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2)
+        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
+        self.conv3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1)
+        self.conv4 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.fc1 = nn.Linear(1024, 100)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(100, 10)
+        self.flatten = nn.Flatten()
+        self.softmax = nn.LogSoftmax(dim=1)
+        
+    def forward(self, x):
+        # Input size = 1x32x32
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = self.relu(self.conv3(x))
+        x = self.pool(self.relu(self.conv4(x)))
+        x = self.flatten(x)
+        x = self.relu(self.fc1(x))
+        x = self.softmax(self.fc2(x))
+        return x
+        
+    def weights_init(self, first, second, third, fourth, fifth, sixth):
+        # Initialization of first convolutional layer weights
+        self.conv1.weight = nn.Parameter(first, requires_grad=True)
+        
+        # Initialization of second convolutional layer weights
+        self.conv2.weight = nn.Parameter(second, requires_grad=True)
+        
+        # Initialization of third convolutional layer weights
+        self.conv3.weight = nn.Parameter(third, requires_grad=True)
+
+        # Initialization of third convolutional layer weights
+        self.conv4.weight = nn.Parameter(fourth, requires_grad=True)
+        
+        # Initialization of first linear layer weights
+        self.fc1.weight = nn.Parameter(fifth, requires_grad=True)
+        
+        # Initialization of second linear layer weights
+        self.fc2.weight = nn.Parameter(sixth, requires_grad=True)
+
+# Model definition
+class FifthLayerConv4Net(nn.Module):
+    def __init__(self):
+        super(FifthLayerConv4Net, self).__init__()
+        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2) 
+        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
+        self.conv3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1)
+        self.conv4 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.fc1 = nn.Linear(1024, 100)
+        self.fc2 = nn.Linear(100, 10)
+        self.relu = nn.ReLU()
+        self.flatten = nn.Flatten()
+        
+    def forward(self, x):
+        # Input size = 1x32x32
+        x = self.pool(self.relu(self.conv1(x)))
+        x = self.pool(self.relu(self.conv2(x)))
+        x = self.relu(self.conv3(x))
+        x = self.pool(self.relu(self.conv4(x)))
+        x = self.flatten(x)
+        x = self.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+        
+    def weights_init(self, first, second, third, fourth, fifth, sixth):
+        # Initialization of first convolutional layer weights
+        self.conv1.weight = nn.Parameter(first, requires_grad=False)
+        
+        # Initialization of second convolutional layer weights
+        self.conv2.weight = nn.Parameter(second, requires_grad=False)
+        
+        # Initialization of third convolutional layer weights
+        self.conv3.weight = nn.Parameter(third, requires_grad=False)
+
+        # Initialization of third convolutional layer weights
+        self.conv4.weight = nn.Parameter(fourth, requires_grad=False)
+        
+        # Initialization of fourth convolutional layer weights
+        self.fc1.weight = nn.Parameter(fifth, requires_grad=False)
+        
+        # Initialization of first linear layer weights
+        self.fc2.weight = nn.Parameter(sixth, requires_grad=True)
+
+    def bias_init(self, first, second, third, fourth, fifth):
+        # Initialization of first convolutional layer bias
+        self.conv1.bias = nn.Parameter(first, requires_grad=False)
+
+        # Initialization of second convolutional layer bias
+        self.conv2.bias = nn.Parameter(second, requires_grad=False)
+
+        # Initialization of third convolutional layer bias
+        self.conv3.bias = nn.Parameter(third, requires_grad=False)
+
+        # Initialization of third convolutional layer bias
+        self.conv4.bias = nn.Parameter(fourth, requires_grad=False)
+
+        # Initialization of fourth convolutional layer bias
+        self.fc1.bias = nn.Parameter(fifth, requires_grad=False)

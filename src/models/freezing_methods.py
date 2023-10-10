@@ -9,7 +9,7 @@ import torch.utils.data as data_utils
 from torch import nn
 import matplotlib.pyplot as plt
 from net_definition import FirstLayerNet, SecondLayerNet, ThirdLayerNet, FourthLayerNet, FifthLayerNet, SixthLayerNet, \
-FourthLayerConv3Net
+FourthLayerConv3Net, ThirdLayerConv2Net, FifthLayerConv4Net
 from training_loops import train_loop, test_loop
 import os
 
@@ -127,24 +127,29 @@ thirdLinearLayer_weights = torch.zeros([10, 10, 2048])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(thirdLinearLayer_weights[i])
 
-"""
 fourthLinearLayer_weights = torch.zeros([10, 10, 1024])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(fourthLinearLayer_weights[i])
 
-fifthLinearLayer_weights = torch.zeros([10, 10, 512])
+fifthLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(fifthLinearLayer_weights[i])
 
+"""
 sixthLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(sixthLinearLayer_weights[i])
-"""
 
 # Conv3Net analysis
 fourthLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(fourthLinearLayer_weights[i])
+
+# Conv2Net analysis
+thirdLinearLayer_weights = torch.zeros([10, 10, 100])
+for i in range(0,10):
+    torch.nn.init.xavier_uniform_(thirdLinearLayer_weights[i])
+"""
 
 def layerInfluenceAnalysis(model):
     """ 
@@ -164,8 +169,8 @@ def layerInfluenceAnalysis(model):
     batch_size = 64
     loss_fn = nn.CrossEntropyLoss()    
 
-    accuracy_array = torch.zeros([5])
-    loss_array = torch.zeros([5])
+    accuracy_array = torch.zeros([6])
+    loss_array = torch.zeros([6])
 
 
     print('--------- Analysis ---------')
@@ -248,7 +253,6 @@ def layerInfluenceAnalysis(model):
     accuracy_array[2] = accuracy_sum/10
     loss_array[2] = loss_sum/10
 
-    """
     print('FOURTH TYPE NET TRAINING')
 
     fourth_layer_nets = nn.ModuleList()
@@ -278,6 +282,7 @@ def layerInfluenceAnalysis(model):
     accuracy_array[3] = accuracy_sum/10
     loss_array[3] = loss_sum/10
 
+    """
     print('FIFTH TYPE NET TRAINING')
 
     fifth_layer_nets = nn.ModuleList()
@@ -339,7 +344,6 @@ def layerInfluenceAnalysis(model):
 
     accuracy_array[5] = accuracy_sum/10
     loss_array[5] = loss_sum/10
-    """
 
     # Conv3Net analysis
     print('FOURTH TYPE NET TRAINING')
@@ -367,5 +371,62 @@ def layerInfluenceAnalysis(model):
     
     accuracy_array[3] = accuracy_sum/10
     loss_array[3] = loss_sum/10
+    
+    # Conv2Net analysis
+    print('THIRD TYPE NET TRAINING')
+    
+    third_layer_nets = nn.ModuleList()
+    for i in range(0,10):
+        # Third net initialization
+        third_layer_nets.insert(i, ThirdLayerConv2Net())
+        third_layer_nets[i].weights_init(model.conv1.weight.data,model.conv2.weight.data,\
+                                         model.fc1.weight.data,thirdLinearLayer_weights[i].clone())
+        third_layer_nets[i].bias_init(model.conv1.bias.data,model.conv2.bias.data,model.fc1.bias.data)
+        
+    accuracy_sum = 0
+    loss_sum = 0
+    for i in range(0,10):
+        optimizer = torch.optim.SGD(third_layer_nets[i].parameters(), lr=learning_rate_)
+        # Training loop
+        for t in range(epochs):
+            print(f"Epoch {t+1}\n-------------------------------")
+        
+            train_loop(train_dataloader, third_layer_nets[i], loss_fn, optimizer)
+            accuracy, loss = test_loop(test_dataloader, third_layer_nets[i], loss_fn)
+            accuracy_sum = accuracy_sum+accuracy
+            loss_sum = loss_sum+loss
+    
+    accuracy_array[2] = accuracy_sum/10
+    loss_array[2] = loss_sum/10
+    """
+
+    # Conv4Net analysis
+    print('FIFTH TYPE NET TRAINING')
+    
+    fifth_layer_nets = nn.ModuleList()
+    for i in range(0,10):
+        # Fifth net initialization
+        fifth_layer_nets.insert(i, FifthLayerConv4Net())
+        fifth_layer_nets[i].weights_init(model.conv1.weight.data,model.conv2.weight.data,\
+                                         model.conv3.weight.data,model.conv4.weight.data,model.fc1.weight.data,\
+                                            fifthLinearLayer_weights[i].clone())
+        fifth_layer_nets[i].bias_init(model.conv1.bias.data,model.conv2.bias.data,model.conv3.bias.data,model.conv4.bias.data,\
+                                      model.fc1.bias.data)
+        
+    accuracy_sum = 0
+    loss_sum = 0
+    for i in range(0,10):
+        optimizer = torch.optim.SGD(fifth_layer_nets[i].parameters(), lr=learning_rate_)
+        # Training loop
+        for t in range(epochs):
+            print(f"Epoch {t+1}\n-------------------------------")
+        
+            train_loop(train_dataloader, fifth_layer_nets[i], loss_fn, optimizer)
+            accuracy, loss = test_loop(test_dataloader, fifth_layer_nets[i], loss_fn)
+            accuracy_sum = accuracy_sum+accuracy
+            loss_sum = loss_sum+loss
+    
+    accuracy_array[4] = accuracy_sum/10
+    loss_array[4] = loss_sum/10
 
     return accuracy_array, loss_array

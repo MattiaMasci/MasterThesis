@@ -9,7 +9,7 @@ import torch.utils.data as data_utils
 from torch import nn
 import matplotlib.pyplot as plt
 import os
-from net_definition import Net, Conv3Net
+from net_definition import Net, Conv2Net
 from training_loops import train_loop, test_loop
 #from training_loops import train_loop, test_loop
 from freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
@@ -28,10 +28,11 @@ batch_size = 64
 loss_fn = nn.CrossEntropyLoss()
 
 # Model loading
-net = Conv3Net()
+net = Conv2Net()
 
 checkpoint = torch.load('../../models/CIFAR-net.pt')
-del checkpoint['model_weights']['conv4.weight'], checkpoint['model_weights']['conv4.bias'], \
+del checkpoint['model_weights']['conv3.weight'], checkpoint['model_weights']['conv3.bias'], \
+    checkpoint['model_weights']['conv4.weight'], checkpoint['model_weights']['conv4.bias'], \
     checkpoint['model_weights']['conv5.weight'], checkpoint['model_weights']['conv5.bias'], \
     checkpoint['model_weights']['fc1.weight'], checkpoint['model_weights']['fc1.bias'], \
     checkpoint['model_weights']['fc2.weight'], checkpoint['model_weights']['fc2.bias']
@@ -65,8 +66,8 @@ net_loss_values = torch.zeros([epochs])
 count = 0
 
 # Array for influence analysis
-accuracy_analysis_array = torch.zeros([epochs,5])
-loss_analysis_array = torch.zeros([epochs,5])
+accuracy_analysis_array = torch.zeros([epochs,4])
+loss_analysis_array = torch.zeros([epochs,4])
 
 # Training loop
 for t in range(epochs):
@@ -76,8 +77,8 @@ for t in range(epochs):
     net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
 
     accuracy_temp, loss_temp = layerInfluenceAnalysis(net)
-    accuracy_temp[4] = net_acc_values[count]
-    loss_temp[4] = net_loss_values[count]
+    accuracy_temp[3] = net_acc_values[count]
+    loss_temp[3] = net_loss_values[count]
     accuracy_analysis_array[t] = accuracy_temp
     loss_analysis_array[t] = loss_temp
 
@@ -86,5 +87,5 @@ for t in range(epochs):
 print("Done!")
 
 # influence Analysis
-torch.save(accuracy_analysis_array, '../../plot/data/influenceAnalysis/conv3Net/accuracy50.pt')
-torch.save(loss_analysis_array, '../../plot/data/influenceAnalysis/conv3Net/loss50.pt')
+torch.save(accuracy_analysis_array, '../../plot/data/influenceAnalysis/conv2Net/accuracy50.pt')
+torch.save(loss_analysis_array, '../../plot/data/influenceAnalysis/conv2Net/loss50.pt')
