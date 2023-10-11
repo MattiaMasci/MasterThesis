@@ -131,15 +131,15 @@ fourthLinearLayer_weights = torch.zeros([10, 10, 1024])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(fourthLinearLayer_weights[i])
 
-fifthLinearLayer_weights = torch.zeros([10, 10, 100])
+fifthLinearLayer_weights = torch.zeros([10, 10, 512])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(fifthLinearLayer_weights[i])
 
-"""
-sixthLinearLayer_weights = torch.zeros([10, 10, 100])
+sixthLinearLayer_weights = torch.zeros([10, 10, 250])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(sixthLinearLayer_weights[i])
 
+"""
 # Conv3Net analysis
 fourthLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
@@ -169,8 +169,8 @@ def layerInfluenceAnalysis(model):
     batch_size = 64
     loss_fn = nn.CrossEntropyLoss()    
 
-    accuracy_array = torch.zeros([6])
-    loss_array = torch.zeros([6])
+    accuracy_array = torch.zeros([7])
+    loss_array = torch.zeros([7])
 
 
     print('--------- Analysis ---------')
@@ -258,12 +258,9 @@ def layerInfluenceAnalysis(model):
     fourth_layer_nets = nn.ModuleList()
     for i in range(0,10):
         # Fourth net initialization
-        fourthLinearLayer_weights = torch.zeros([10, 1024])
-        torch.nn.init.xavier_uniform_(fourthLinearLayer_weights)
-
         fourth_layer_nets.insert(i, FourthLayerNet())
         fourth_layer_nets[i].weights_init(model.conv1.weight.data,model.conv2.weight.data,\
-                                         model.conv3.weight.data,model.conv4.weight.data,fourthLinearLayer_weights)
+                                         model.conv3.weight.data,model.conv4.weight.data,fourthLinearLayer_weights[i])
         fourth_layer_nets[i].bias_init(model.conv1.bias.data,model.conv2.bias.data,model.conv3.bias.data,model.conv4.bias.data)
         
     accuracy_sum = 0
@@ -282,19 +279,15 @@ def layerInfluenceAnalysis(model):
     accuracy_array[3] = accuracy_sum/10
     loss_array[3] = loss_sum/10
 
-    """
     print('FIFTH TYPE NET TRAINING')
 
     fifth_layer_nets = nn.ModuleList()
     for i in range(0,10):
         # Fifth net initialization
-        fifthLinearLayer_weights = torch.zeros([10, 512])
-        torch.nn.init.xavier_uniform_(fifthLinearLayer_weights)
-
         fifth_layer_nets.insert(i, FifthLayerNet())
         fifth_layer_nets[i].weights_init(model.conv1.weight.data,model.conv2.weight.data,\
                                          model.conv3.weight.data,model.conv4.weight.data,\
-                                            model.conv5.weight.data,fifthLinearLayer_weights)
+                                            model.conv5.weight.data,fifthLinearLayer_weights[i])
         fifth_layer_nets[i].bias_init(model.conv1.bias.data,model.conv2.bias.data,model.conv3.bias.data,model.conv4.bias.data,\
                                       model.conv5.bias.data)
         
@@ -319,13 +312,10 @@ def layerInfluenceAnalysis(model):
     sixth_layer_nets = nn.ModuleList()
     for i in range(0,10):
         # Sixth net initialization
-        sixthLinearLayer_weights = torch.zeros([10, 100])
-        torch.nn.init.xavier_uniform_(sixthLinearLayer_weights)
-        
         sixth_layer_nets.insert(i, SixthLayerNet())
         sixth_layer_nets[i].weights_init(model.conv1.weight.data,model.conv2.weight.data,\
                                          model.conv3.weight.data,model.conv4.weight.data,\
-                                            model.conv5.weight.data,model.fc1.weight.data,sixthLinearLayer_weights)
+                                            model.conv5.weight.data,model.fc1.weight.data,sixthLinearLayer_weights[i])
         sixth_layer_nets[i].bias_init(model.conv1.bias.data,model.conv2.bias.data,model.conv3.bias.data,model.conv4.bias.data,\
                                       model.conv5.bias.data,model.fc1.bias.data)
         
@@ -345,6 +335,7 @@ def layerInfluenceAnalysis(model):
     accuracy_array[5] = accuracy_sum/10
     loss_array[5] = loss_sum/10
 
+    """
     # Conv3Net analysis
     print('FOURTH TYPE NET TRAINING')
     
@@ -398,7 +389,6 @@ def layerInfluenceAnalysis(model):
     
     accuracy_array[2] = accuracy_sum/10
     loss_array[2] = loss_sum/10
-    """
 
     # Conv4Net analysis
     print('FIFTH TYPE NET TRAINING')
@@ -428,5 +418,6 @@ def layerInfluenceAnalysis(model):
     
     accuracy_array[4] = accuracy_sum/10
     loss_array[4] = loss_sum/10
+    """
 
     return accuracy_array, loss_array
