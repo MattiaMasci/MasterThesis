@@ -86,5 +86,5 @@ for t in range(epochs):
 print("Done!")
 
 # influence Analysis
-torch.save(accuracy_analysis_array, '../../plot/data/influenceAnalysis/modified_fc1Net/accuracy50.pt')
-torch.save(loss_analysis_array, '../../plot/data/influenceAnalysis/modified_fc1Net/loss50.pt')
+torch.save(accuracy_analysis_array, '../../plot/basicModel/influenceAnalysis/modified_fc1Net/accuracy50.pt')
+torch.save(loss_analysis_array, '../../plot/basicModel/influenceAnalysis/modified_fc1Net/loss50.pt')

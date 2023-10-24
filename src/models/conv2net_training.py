@@ -87,5 +87,5 @@ for t in range(epochs):
 print("Done!")
 
 # influence Analysis
-torch.save(accuracy_analysis_array, '../../plot/data/influenceAnalysis/conv2Net/accuracy50.pt')
-torch.save(loss_analysis_array, '../../plot/data/influenceAnalysis/conv2Net/loss50.pt')
+torch.save(accuracy_analysis_array, '../../plot/basicModel/influenceAnalysis/conv2Net/accuracy50.pt')
+torch.save(loss_analysis_array, '../../plot/basicModel/influenceAnalysis/conv2Net/loss50.pt')

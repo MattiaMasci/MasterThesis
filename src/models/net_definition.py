@@ -14,6 +14,31 @@ import os
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2)
+        )
+        self.flatten = nn.Flatten()
+        self.classifier = nn.Sequential(
+            nn.Linear(512, 100),
+            nn.ReLU(),
+            nn.Linear(100, 10),
+            nn.LogSoftmax(dim=1)
+        )
+
+        """
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2)
         self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
         self.conv3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1)
@@ -25,9 +50,16 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(100, 10)
         self.flatten = nn.Flatten()
         self.softmax = nn.LogSoftmax(dim=1)
+        """
         
     def forward(self, x):
         # Input size = 1x32x32
+        x = self.features(x)
+        x = torch.flatten(x,1)
+        x = self.classifier(x)
+        return x
+
+        """
         x = self.pool(self.relu(self.conv1(x)))
         x = self.pool(self.relu(self.conv2(x)))
         x = self.relu(self.conv3(x))
@@ -37,28 +69,29 @@ class Net(nn.Module):
         x = self.relu(self.fc1(x))
         x = self.softmax(self.fc2(x))
         return x
+        """
         
     def weights_init(self, first, second, third, fourth, fifth, sixth, seventh):
         # Initialization of first convolutional layer weights
-        self.conv1.weight = nn.Parameter(first, requires_grad=True)
+        self.features[0].weight = nn.Parameter(first, requires_grad=True)
         
         # Initialization of second convolutional layer weights
-        self.conv2.weight = nn.Parameter(second, requires_grad=True)
+        self.features[3].weight = nn.Parameter(second, requires_grad=True)
         
         # Initialization of third convolutional layer weights
-        self.conv3.weight = nn.Parameter(third, requires_grad=True)
+        self.features[6].weight = nn.Parameter(third, requires_grad=True)
         
         # Initialization of fourth convolutional layer weights
-        self.conv4.weight = nn.Parameter(fourth, requires_grad=True)
+        self.features[8].weight = nn.Parameter(fourth, requires_grad=True)
         
         # Initialization of fifth convolutional layer weights
-        self.conv5.weight = nn.Parameter(fifth, requires_grad=True)
+        self.features[11].weight = nn.Parameter(fifth, requires_grad=True)
         
         # Initialization of first linear layer weights
-        self.fc1.weight = nn.Parameter(sixth, requires_grad=True)
+        self.classifier[0].weight = nn.Parameter(sixth, requires_grad=True)
         
         # Initialization of second linear layer weights
-        self.fc2.weight = nn.Parameter(seventh, requires_grad=True)
+        self.classifier[2].weight = nn.Parameter(seventh, requires_grad=True)
 
 # Model definition
 class FirstLayerNet(nn.Module):
@@ -741,3 +774,13 @@ class SixthLayerModifiedFc1Net(nn.Module):
 
         # Initialization of first linear layer bias
         self.fc1.bias = nn.Parameter(sixth, requires_grad=False)
+
+# Model definition
+class WrapperNet(nn.Module):
+    def __init__(self):
+        super(WrapperNet, self).__init__()
+        
+    def forward(self, x):
+        # Input size = 1x32x32
+        x = self.net(x)
+        return x
