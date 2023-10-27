@@ -11,9 +11,12 @@ from torch import nn
 import matplotlib.pyplot as plt
 import os
 
+"""
 net = vgg11(weights=None)
 
 net.classifier.add_module('7', nn.Linear(in_features=1000, out_features=10,bias=True))
+
+print(net)
 
 for i in net.children():
     if isinstance(i, nn.Sequential):
@@ -24,7 +27,6 @@ for i in net.children():
     else:
         print(i)
 
-"""
 device = (
     "cuda"
     if torch.cuda.is_available()
@@ -34,3 +36,8 @@ device = (
 )
 print(f"Using {device} device")
 """
+
+for name,param in nn.BatchNorm2d(10).named_parameters():
+    print(name)
+    print(param)
+    print(param.requires_grad)

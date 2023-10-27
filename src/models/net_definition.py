@@ -782,5 +782,5 @@ class WrapperNet(nn.Module):
         
     def forward(self, x):
         # Input size = 1x32x32
-        x = self.net(x)
+        x = self.layers(x)
         return x

@@ -75,6 +75,9 @@ loss_analysis_array = torch.zeros([epochs,12])
 # Training loop
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
+    # influence Analysis2
+    layerInfluenceAnalysis2(net, 10, batch_size, 3, 32, 32, 1)
+    exit()
 
     train_loop(train_dataloader, net, loss_fn, optimizer)
     net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
@@ -92,7 +95,7 @@ for t in range(epochs):
     """
 
     # influence Analysis2
-    layerInfluenceAnalysis2(net)
+    layerInfluenceAnalysis2(net, 10, batch_size, 3, 224, 224)
 
     count = count+1
 

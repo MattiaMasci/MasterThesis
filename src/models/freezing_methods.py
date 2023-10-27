@@ -3,6 +3,7 @@ import numpy as np
 from torch.utils.data import Dataset
 from torchvision import datasets
 from torchvision.transforms import ToTensor, Lambda, Compose
+from torchvision import transforms
 from torchvision.io import read_image
 from torch.utils.data import DataLoader
 import torch.utils.data as data_utils
@@ -422,15 +423,40 @@ def layerInfluenceAnalysis(model):
 
     return accuracy_array, loss_array
 
-def layerInfluenceAnalysis2(model):
+def layerInfluenceAnalysis2(model, num_classes, batch_size, in_channels, in_height, in_width, iterations):
     """ 
     Prende in input il modello in training e ritorna in output i valori di accuracy e loss di n-1 (n = numero layer)
     modelli copia costruiti a partire dal primo aggiungendo incrementalmente i layer
-    """
-
+   
+    
     # Dataset loading
     training_data = torch.load('../../data/reduced_training_set.pt')
     test_data = torch.load('../../data/reduced_testing_set.pt')
+    """
+
+    # Resize the images in the dataset
+    transform = transforms.Compose([
+        transforms.Resize(size=(224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize( 
+        (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010) 
+        )
+    ])
+
+    # Dataset loading
+    training_data = datasets.CIFAR10(
+    root="../../data",
+    train=True,
+    download=True,
+    transform= ToTensor()
+    )
+
+    test_data = datasets.CIFAR10(
+    root="../../data",
+    train=False,
+    download=True,
+    transform= ToTensor()
+    )
 
     train_dataloader = DataLoader(training_data, batch_size=64)
     test_dataloader = DataLoader(test_data, batch_size=64)
@@ -442,19 +468,23 @@ def layerInfluenceAnalysis2(model):
 
     num_layers = 0
 
-    print('LAYERS THAT REQUIRE GRADIENT:')
-    for name, param in model.named_parameters():
-        if param.requires_grad and  'weight' in name:
-            num_layers = num_layers+1
-    print(num_layers)
+    print('----------- Analysis -----------')
 
-    #for i in range(0,num_layers):
+    # Layers in the net
+    for name, param in model.named_parameters():
+        if  'weight' in name:
+            num_layers = num_layers+1
+
+    accuracy_array = torch.zeros([num_layers])
+    loss_array = torch.zeros([num_layers])
 
     for layer in range(0,num_layers-1):
         net = WrapperNet()
         seq = nn.Sequential()
         count = 0
         requires_grad = 0
+        accuracy_sum = 0
+        loss_sum = 0
 
         for children in model.children():
             if isinstance(children, nn.Sequential):
@@ -462,35 +492,62 @@ def layerInfluenceAnalysis2(model):
                     for parameter in sub_children.named_parameters():
                         if 'weight' in parameter:
                             if requires_grad <= layer:
+                                last_layer = count
                                 requires_grad = requires_grad+1
                             else:
-                                # Costruisci rete e traina
+                                # Create net and train
                                 for param in seq.parameters():
                                     param.requires_grad = False
 
-                                # Aggiungo ultimo layer
-                                if isinstance(m, nn.Linear):
-                                    out = m.bias.size()
-                                if isinstance(m, nn.Conv2d):
-                                    out = 2
-
+                                # Add last layer
+                                if isinstance(seq[last_layer], nn.Linear):
+                                    out = seq[last_layer].bias.size(dim=0)
+                                    seq.add_module(str(count),nn.Linear(out, num_classes))
+                                    last_linear_layer = count
+                                if isinstance(seq[last_layer], nn.Conv2d):
+                                    if isinstance(seq[count-1], nn.Flatten):
+                                        output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
+                                        seq.add_module(str(count),nn.Linear(output.size(dim=1), num_classes))
+                                        last_linear_layer = count
+                                    else:
+                                        seq.add_module(str(count),nn.Flatten())
+                                        output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
+                                        seq.add_module(str(count+1),nn.Linear(output.size(dim=1), num_classes))
+                                        last_linear_layer = count+1
+                                
                                 net.add_module('layers',seq)
 
-                                """
-                                optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
                                 epochs = 1
 
-                                # Training loop
-                                for t in range(epochs):
-                                    print(f"Epoch {t+1}\n-------------------------------")
+                                print(str(layer+1) + ' TYPE OF NET TRAINING')
+                                
+                                for i in range(0, iterations):
+                                    optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
 
-                                    train_loop(train_dataloader, net, loss_fn, optimizer)
-                                    test_loop(test_dataloader, net, loss_fn)
+                                    # Training loop
+                                    for t in range(epochs):
+                                        print(f"Epoch {t+1}\n-------------------------------")
 
-                                print("Done!")
-                                """
+                                        train_loop(train_dataloader, net, loss_fn, optimizer)
+                                        accuracy, loss = test_loop(test_dataloader, net, loss_fn)
+                                        accuracy_sum = accuracy_sum+accuracy
+                                        loss_sum = loss_sum+loss
+
+                                    print("Done!")
+                                    print()
+
+                                    net.layers[last_linear_layer].reset_parameters()
+
+                                accuracy_array[layer] = accuracy_sum/iterations
+                                loss_array[layer] = loss_sum/iterations
+                                
                                 break
                     else:
+                        # Only for VGG11
+                        if count == 22:
+                            seq.add_module(str(count),nn.Flatten())
+                            count = count+1
+                            last_layer = count  
                         seq.add_module(str(count),sub_children)
                         count = count+1    
                         continue
@@ -502,30 +559,66 @@ def layerInfluenceAnalysis2(model):
                 for parameter in children.named_parameters():
                     if 'weight' in parameter:
                         if requires_grad <= layer:
+                            last_layer = count
                             requires_grad = requires_grad+1
                         else:
                             # Create net and train
                             for param in seq.parameters():
                                 param.requires_grad = False
 
+                            # Add last layer
+                            if isinstance(seq[last_layer], nn.Linear):
+                                out = seq[last_layer].bias.size(dim=0)
+                                seq.add_module(str(count),nn.Linear(out, num_classes))
+                            if isinstance(seq[last_layer], nn.Conv2d):
+                                if isinstance(seq[count-1], nn.Flatten):
+                                    output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
+                                    seq.add_module(str(count),nn.Linear(output.size(dim=1), num_classes))
+                                else:
+                                    seq.add_module(str(count),nn.Flatten())
+                                    output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
+                                    seq.add_module(str(count+1),nn.Linear(output.size(dim=1), num_classes))
+                                    
                             net.add_module('layers',seq)
 
-                            """
-                            optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
                             epochs = 1
 
-                            # Training loop
-                            for t in range(epochs):
-                                print(f"Epoch {t+1}\n-------------------------------")
+                            print(str(layer+1) + ' TYPE OF NET TRAINING')
 
-                                train_loop(train_dataloader, net, loss_fn, optimizer)
-                                test_loop(test_dataloader, net, loss_fn)
+                            for i in range(0, iterations):
+                                optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
 
-                            print("Done!")
-                            """
+                                # Training loop
+                                for t in range(epochs):
+                                    print(f"Epoch {t+1}\n-------------------------------")
+
+                                    train_loop(train_dataloader, net, loss_fn, optimizer)
+                                    accuracy, loss = test_loop(test_dataloader, net, loss_fn)
+                                    accuracy_sum = accuracy_sum+accuracy
+                                    loss_sum = loss_sum+loss
+
+                                print("Done!")
+                                print()
+
+                                net.layers[last_linear_layer].reset_parameters()
+
+                            accuracy_array[layer] = accuracy_sum/iterations
+                            loss_array[layer] = loss_sum/iterations
+                            
                             break  
                 else:    
+                    # Only for VGG11
+                    if count == 22:
+                            seq.add_module(str(count),nn.Flatten())
+                            count = count+1
+                            last_layer = count  
                     seq.add_module(str(count),children)
                     count = count+1
                     continue
+
         print(net)
+
+    for param in model.parameters():
+        param.requires_grad = True
+
+    return accuracy_array, loss_array
