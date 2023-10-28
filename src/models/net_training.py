@@ -14,7 +14,7 @@ from net_definition import Net
 #from training_loops_additional import train_loop, test_loop
 from training_loops import train_loop, test_loop
 from freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
-layerInfluenceAnalysis, layerInfluenceAnalysis2
+layerInfluenceAnalysis, netComposition
 
 # Dataset loading
 training_data = torch.load('../../data/reduced_training_set.pt')
@@ -102,7 +102,7 @@ for t in range(epochs):
     """
 
     # influence Analysis2
-    accuracy_temp, loss_temp = layerInfluenceAnalysis2(net, 10, batch_size, 3, 32, 32, 10)
+    accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, batch_size, 3, 32, 32, 10)
     accuracy_temp[6] = net_acc_values[count]
     loss_temp[6] = net_loss_values[count]
     accuracy_analysis_array[t] = accuracy_temp

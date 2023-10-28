@@ -777,10 +777,15 @@ class SixthLayerModifiedFc1Net(nn.Module):
 
 # Model definition
 class WrapperNet(nn.Module):
-    def __init__(self):
+    def __init__(self, seq, leaf):
         super(WrapperNet, self).__init__()
-        
+        self.seq = seq
+        self.leaf = leaf
+
     def forward(self, x):
-        # Input size = 1x32x32
-        x = self.layers(x)
+        x = self.seq(x)
+        x = self.leaf(x)
         return x
+    
+    def reset(self):
+        self.leaf.reset_parameters()

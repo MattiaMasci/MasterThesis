@@ -14,6 +14,7 @@ from net_definition import FirstLayerNet, SecondLayerNet, ThirdLayerNet, FourthL
 FourthLayerConv3Net, ThirdLayerConv2Net, FifthLayerConv4Net, SixthLayerModifiedFc1Net, WrapperNet
 from training_loops import train_loop, test_loop
 import os
+import copy
 
 def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, model, frequence, grad_dict, grad_dict_abs):
     """ 
@@ -116,6 +117,7 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
             print()
             """
 
+"""
 # Additional linear layers initializations      
 firstLinearLayer_weights = torch.zeros([10, 10, 4096])
 for i in range(0,10):
@@ -141,7 +143,6 @@ sixthLinearLayer_weights = torch.zeros([10, 10, 250])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(sixthLinearLayer_weights[i])
 
-"""
 # Conv3Net analysis
 fourthLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
@@ -151,13 +152,12 @@ for i in range(0,10):
 thirdLinearLayer_weights = torch.zeros([10, 10, 100])
 for i in range(0,10):
     torch.nn.init.xavier_uniform_(thirdLinearLayer_weights[i])
-"""
 
 def layerInfluenceAnalysis(model):
-    """ 
+
     Prende in input il modello in training e ritorna in output i valori di accuracy e loss di n-1 (n = numero layer)
     modelli copia costruiti a partire dal primo aggiungendo incrementalmente i layer
-    """
+    
 
     # Dataset loading
     training_data = torch.load('../../data/reduced_training_set.pt')
@@ -336,7 +336,6 @@ def layerInfluenceAnalysis(model):
     accuracy_array[5] = accuracy_sum/10
     loss_array[5] = loss_sum/10
 
-    """
     # Conv3Net analysis
     print('FOURTH TYPE NET TRAINING')
     
@@ -419,15 +418,15 @@ def layerInfluenceAnalysis(model):
     
     accuracy_array[4] = accuracy_sum/10
     loss_array[4] = loss_sum/10
-    """
 
     return accuracy_array, loss_array
+    """
 
-def layerInfluenceAnalysis2(model, num_classes, batch_size, in_channels, in_height, in_width, iterations):
+def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_height, in_width, iterations):
     """ 
     Prende in input il modello in training e ritorna in output i valori di accuracy e loss di n-1 (n = numero layer)
     modelli copia costruiti a partire dal primo aggiungendo incrementalmente i layer
-   
+    
     
     # Dataset loading
     training_data = torch.load('../../data/reduced_training_set.pt')
@@ -448,177 +447,124 @@ def layerInfluenceAnalysis2(model, num_classes, batch_size, in_channels, in_heig
     root="../../data",
     train=True,
     download=True,
-    transform= ToTensor()
+    transform= transform
     )
 
     test_data = datasets.CIFAR10(
     root="../../data",
     train=False,
     download=True,
-    transform= ToTensor()
+    transform= transform
     )
-
-    train_dataloader = DataLoader(training_data, batch_size=64)
-    test_dataloader = DataLoader(test_data, batch_size=64)
+    
+    train_dataloader = DataLoader(training_data, batch_size)
+    test_dataloader = DataLoader(test_data, batch_size)
 
     # Parameters setting
     learning_rate = 1e-3
-    batch_size = 64
     loss_fn = nn.CrossEntropyLoss()    
+    epochs = 1
 
-    num_layers = 0
-
+    print()
     print('----------- Analysis -----------')
+    print()
 
-    # Layers in the net
-    for name, param in model.named_parameters():
-        if  'weight' in name:
-            num_layers = num_layers+1
+     # Counting the number of layers in the network
+    num_layers = 0
+    layer_list = ('conv','linear')
+
+    for children in model.children():
+        if isinstance(children, nn.Sequential):
+            for sub_children in children:
+                if any(substring.lower() in str(sub_children).lower() for substring in layer_list):
+                    num_layers = num_layers+1
+        else:
+            if any(substring.lower() in str(children).lower() for substring in layer_list):
+                num_layers = num_layers+1
+
+    # Freezing of the net
+    for param in model.parameters():
+        param.requires_grad = False
+
+    net_list = netComposition(model)
 
     accuracy_array = torch.zeros([num_layers])
     loss_array = torch.zeros([num_layers])
 
-    for layer in range(0,num_layers-1):
-        net = WrapperNet()
-        seq = nn.Sequential()
-        count = 0
-        requires_grad = 0
+    # Training of the nets
+    index = 0
+    for net in net_list:
         accuracy_sum = 0
         loss_sum = 0
 
-        for children in model.children():
-            if isinstance(children, nn.Sequential):
-                for sub_children in children:
-                    for parameter in sub_children.named_parameters():
-                        if 'weight' in parameter:
-                            if requires_grad <= layer:
-                                last_layer = count
-                                requires_grad = requires_grad+1
-                            else:
-                                # Create net and train
-                                for param in seq.parameters():
-                                    param.requires_grad = False
+        print('TRAINING OF ' + str(index+1) + ' TYPE OF NET')
+        print()
+        for i in range(0,iterations):
+            optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
 
-                                # Add last layer
-                                if isinstance(seq[last_layer], nn.Linear):
-                                    out = seq[last_layer].bias.size(dim=0)
-                                    seq.add_module(str(count),nn.Linear(out, num_classes))
-                                    last_linear_layer = count
-                                if isinstance(seq[last_layer], nn.Conv2d):
-                                    if isinstance(seq[count-1], nn.Flatten):
-                                        output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
-                                        seq.add_module(str(count),nn.Linear(output.size(dim=1), num_classes))
-                                        last_linear_layer = count
-                                    else:
-                                        seq.add_module(str(count),nn.Flatten())
-                                        output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
-                                        seq.add_module(str(count+1),nn.Linear(output.size(dim=1), num_classes))
-                                        last_linear_layer = count+1
-                                
-                                net.add_module('layers',seq)
+            # Training loop
+            for t in range(epochs):
+                print(f"Epoch {t+1}\n-------------------------------")
+        
+                train_loop(train_dataloader, net, loss_fn, optimizer)
+                accuracy, loss = test_loop(test_dataloader, net, loss_fn)
+                accuracy_sum = accuracy_sum+accuracy
+                loss_sum = loss_sum+loss
+            
+            net.reset()
+        print('--------------------')
 
-                                epochs = 1
+        accuracy_array[index] = accuracy_sum/iterations
+        loss_array[index] = loss_sum/iterations
 
-                                print(str(layer+1) + ' TYPE OF NET TRAINING')
-                                
-                                for i in range(0, iterations):
-                                    optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
-
-                                    # Training loop
-                                    for t in range(epochs):
-                                        print(f"Epoch {t+1}\n-------------------------------")
-
-                                        train_loop(train_dataloader, net, loss_fn, optimizer)
-                                        accuracy, loss = test_loop(test_dataloader, net, loss_fn)
-                                        accuracy_sum = accuracy_sum+accuracy
-                                        loss_sum = loss_sum+loss
-
-                                    print("Done!")
-                                    print()
-
-                                    net.layers[last_linear_layer].reset_parameters()
-
-                                accuracy_array[layer] = accuracy_sum/iterations
-                                loss_array[layer] = loss_sum/iterations
-                                
-                                break
-                    else:
-                        # Only for VGG11
-                        if count == 22:
-                            seq.add_module(str(count),nn.Flatten())
-                            count = count+1
-                            last_layer = count  
-                        seq.add_module(str(count),sub_children)
-                        count = count+1    
-                        continue
-                    break
-                else:
-                    continue
-                break
-            else:
-                for parameter in children.named_parameters():
-                    if 'weight' in parameter:
-                        if requires_grad <= layer:
-                            last_layer = count
-                            requires_grad = requires_grad+1
-                        else:
-                            # Create net and train
-                            for param in seq.parameters():
-                                param.requires_grad = False
-
-                            # Add last layer
-                            if isinstance(seq[last_layer], nn.Linear):
-                                out = seq[last_layer].bias.size(dim=0)
-                                seq.add_module(str(count),nn.Linear(out, num_classes))
-                            if isinstance(seq[last_layer], nn.Conv2d):
-                                if isinstance(seq[count-1], nn.Flatten):
-                                    output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
-                                    seq.add_module(str(count),nn.Linear(output.size(dim=1), num_classes))
-                                else:
-                                    seq.add_module(str(count),nn.Flatten())
-                                    output = seq(torch.rand(batch_size,in_channels,in_height,in_width))
-                                    seq.add_module(str(count+1),nn.Linear(output.size(dim=1), num_classes))
-                                    
-                            net.add_module('layers',seq)
-
-                            epochs = 1
-
-                            print(str(layer+1) + ' TYPE OF NET TRAINING')
-
-                            for i in range(0, iterations):
-                                optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
-
-                                # Training loop
-                                for t in range(epochs):
-                                    print(f"Epoch {t+1}\n-------------------------------")
-
-                                    train_loop(train_dataloader, net, loss_fn, optimizer)
-                                    accuracy, loss = test_loop(test_dataloader, net, loss_fn)
-                                    accuracy_sum = accuracy_sum+accuracy
-                                    loss_sum = loss_sum+loss
-
-                                print("Done!")
-                                print()
-
-                                net.layers[last_linear_layer].reset_parameters()
-
-                            accuracy_array[layer] = accuracy_sum/iterations
-                            loss_array[layer] = loss_sum/iterations
-                            
-                            break  
-                else:    
-                    # Only for VGG11
-                    if count == 22:
-                            seq.add_module(str(count),nn.Flatten())
-                            count = count+1
-                            last_layer = count  
-                    seq.add_module(str(count),children)
-                    count = count+1
-                    continue
-
-        print(net)
+        index = index+1
 
     for param in model.parameters():
         param.requires_grad = True
 
     return accuracy_array, loss_array
+
+def netComposition(model):
+    """ 
+    
+    """
+
+    layer_list = ('conv','linear')
+
+    # Composition of network
+    count = 0
+
+    net_list = nn.ModuleList()
+    sequence = nn.Sequential()
+    flattening = nn.Flatten()
+
+    output = torch.randn(64,3,224,224)
+
+    for children in model.children():
+        if isinstance(children, nn.Sequential):
+            for sub_children in children:
+                if any(substring.lower() in str(sub_children).lower() for substring in layer_list) and count != 0:
+                    if len(output.size()) > 2:
+                        linear_input = flattening(output)
+                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),10))
+                        net.seq.add_module(str(count), nn.Flatten())
+                    else:
+                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),10))
+                    net_list.append(net)
+                sequence.add_module(str(count),sub_children)
+                output = sub_children(output)
+                count = count+1   
+        else:
+            if any(substring.lower() in str(children).lower() for substring in layer_list) and count != 0:
+                if len(output.size()) > 2:
+                    linear_input = flattening(output)
+                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),10))
+                    net.seq.add_module(str(count), nn.Flatten())
+                else:
+                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),10))
+                net_list.append(net)
+            sequence.add_module(str(count),children)
+            output = children(output)
+            count = count+1
+
+    return net_list
