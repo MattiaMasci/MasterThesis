@@ -12,10 +12,9 @@ from torch import nn
 import matplotlib.pyplot as plt
 import os
 from training_loops import train_loop, test_loop
-#from training_loops_additional import train_loop, test_loop
 from net_definition import WrapperNet
 from freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
-layerInfluenceAnalysis, netComposition
+layerInfluenceAnalysis
 import copy
 
 # Resize the images in the dataset

@@ -11,9 +11,7 @@ from torch import nn
 import matplotlib.pyplot as plt
 import os
 
-net = vgg11(weights=None)
+values1 = torch.load('../freezing_rate.pt')
+values2 = torch.load('../freezing_rate50.pt')
 
-net.classifier.add_module('7', nn.Linear(in_features=1000, out_features=10,bias=True))
-
-print(net)
-
+print(torch.equal(values1,values2))
