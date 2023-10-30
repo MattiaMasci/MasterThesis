@@ -100,7 +100,7 @@ for t in range(epochs):
     net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
 
     # influence Analysis
-    accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, batch_size, 3, 224, 224, 1)
+    accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, [3, 224, 224], 1)
     accuracy_temp[11] = net_acc_values[count]
     loss_temp[11] = net_loss_values[count]
     accuracy_analysis_array[t] = accuracy_temp

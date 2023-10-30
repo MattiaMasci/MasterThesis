@@ -11,8 +11,8 @@ from torch import nn
 import matplotlib.pyplot as plt
 import os
 from net_definition import Net
-#from training_loops import train_loop, test_loop
-from training_loops_with_freezing_values import train_loop, test_loop
+from training_loops import train_loop, test_loop
+#from training_loops_with_freezing_values import train_loop, test_loop
 from freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
 layerInfluenceAnalysis
 
@@ -64,15 +64,17 @@ net_acc_values = torch.zeros([epochs])
 net_loss_values = torch.zeros([epochs])
 count = 0
 
+"""
 # normalizedGradientDifferenceFreezingProcedure
 freezing_rate_values = torch.zeros([epochs,7])
 freeze = False
-
 """
+
 # Influence analysis
 accuracy_analysis_array = torch.zeros([epochs,7])
 loss_analysis_array = torch.zeros([epochs,7])
 
+"""
 # gradientNormChangeFreezingProcedure
 step = 1
 gradient_difference_norm_change_array = torch.zeros([epochs,7,((389//step)+1)])
@@ -91,24 +93,26 @@ for t in range(epochs):
     print()
     """
 
-    grad_dict, abs_grad_dict = train_loop(train_dataloader, net, loss_fn, optimizer)
+    train_loop(train_dataloader, net, loss_fn, optimizer)
     net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
 
     """
     # Learning rate decay
     scheduler.step()
+    """
 
     # influence Analysis
-    accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, batch_size, 3, 32, 32, 10)
+    accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, [3, 32, 32], 1)
     accuracy_temp[6] = net_acc_values[count]
     loss_temp[6] = net_loss_values[count]
     accuracy_analysis_array[t] = accuracy_temp
     loss_analysis_array[t] = loss_temp
-    """
     
+    """
     # normalizedGradientDifferenceFreezingProcedure
     freezing_rate_values[count] = normalizedGradientDifferenceFreezingProcedure(t+1,epochs,net,1,grad_dict,abs_grad_dict)
-    
+    """
+
     count = count+1
 
     """ 

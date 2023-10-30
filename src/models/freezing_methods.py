@@ -128,17 +128,17 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
             print()
             """
 
-def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_height, in_width, iterations):
+def layerInfluenceAnalysis(model, num_classes, parameters, iterations):
     """ 
     Prende in input il modello in training e ritorna in output i valori di accuracy e loss di n-1 (n = numero layer)
     modelli copia costruiti a partire dal primo aggiungendo incrementalmente i layer
-    
+    """
     
     # Dataset loading
     training_data = torch.load('../../data/reduced_training_set.pt')
     test_data = torch.load('../../data/reduced_testing_set.pt')
-    """
 
+    """
     # Resize the images in the dataset
     transform = transforms.Compose([
         transforms.Resize(size=(224, 224)),
@@ -162,9 +162,10 @@ def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_heigh
     download=True,
     transform= transform
     )
+    """
     
-    train_dataloader = DataLoader(training_data, batch_size)
-    test_dataloader = DataLoader(test_data, batch_size)
+    train_dataloader = DataLoader(training_data, batch_size=64)
+    test_dataloader = DataLoader(test_data, batch_size=64)
 
     # Parameters setting
     learning_rate = 1e-3
@@ -192,7 +193,7 @@ def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_heigh
     for param in model.parameters():
         param.requires_grad = False
 
-    net_list = netComposition(model)
+    net_list = netComposition(model, num_classes, parameters)
 
     accuracy_array = torch.zeros([num_layers])
     loss_array = torch.zeros([num_layers])
@@ -206,7 +207,7 @@ def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_heigh
         print('TRAINING OF ' + str(index+1) + ' TYPE OF NET')
         print()
         for i in range(0,iterations):
-            optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
+            optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)#, momentum=0.9, weight_decay=5e-4)
 
             # Training loop
             for t in range(epochs):
@@ -230,7 +231,7 @@ def layerInfluenceAnalysis(model, num_classes, batch_size, in_channels, in_heigh
 
     return accuracy_array, loss_array
 
-def netComposition(model):
+def netComposition(model, num_classes, parameters):
     """ 
     Prende in input un modello di rete neurale e ritorna una lista di reti formate aggiungendo incrementalmente i vari 
     layer della rete originale
@@ -245,7 +246,10 @@ def netComposition(model):
     sequence = nn.Sequential()
     flattening = nn.Flatten()
 
-    output = torch.randn(64,3,224,224)
+    if len(parameters)>1:
+        output = torch.randn(1,parameters[0],parameters[1],parameters[2])
+    else:
+        output = torch.randn(1,parameters[0])
 
     for children in model.children():
         if isinstance(children, nn.Sequential):
@@ -253,10 +257,10 @@ def netComposition(model):
                 if any(substring.lower() in str(sub_children).lower() for substring in layer_list) and count != 0:
                     if len(output.size()) > 2:
                         linear_input = flattening(output)
-                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),10))
+                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),num_classes))
                         net.seq.add_module(str(count), nn.Flatten())
                     else:
-                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),10))
+                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),num_classes))
                     net_list.append(net)
                 sequence.add_module(str(count),sub_children)
                 output = sub_children(output)
@@ -265,10 +269,10 @@ def netComposition(model):
             if any(substring.lower() in str(children).lower() for substring in layer_list) and count != 0:
                 if len(output.size()) > 2:
                     linear_input = flattening(output)
-                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),10))
+                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),num_classes))
                     net.seq.add_module(str(count), nn.Flatten())
                 else:
-                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),10))
+                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(output.size(dim=1),num_classes))
                 net_list.append(net)
             sequence.add_module(str(count),children)
             output = children(output)
