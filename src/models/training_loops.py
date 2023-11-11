@@ -10,13 +10,21 @@ from torch import nn
 import matplotlib.pyplot as plt
 import os
 
+device = (
+            "cuda"
+            if torch.cuda.is_available()
+            else "mps"
+            if torch.backends.mps.is_available()
+            else "cpu"
+        )
+
 # Training and testing loop definition
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
     for batch, (X, y) in enumerate(dataloader):
         # Compute prediction and loss
-        pred = model(X)
-        loss = loss_fn(pred, y)
+        pred = model(X.to(device))
+        loss = loss_fn(pred, y.to(device))
 
         # Backpropagation
         optimizer.zero_grad()
@@ -34,7 +42,8 @@ def test_loop(dataloader, model, loss_fn):
 
     with torch.no_grad():
         for X, y in dataloader:
-            pred = model(X)
+            y = y.to(device)
+            pred = model(X.to(device))
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 

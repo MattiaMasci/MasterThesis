@@ -52,7 +52,7 @@ net.load_state_dict(checkpoint['model_weights'])
 
 # Parameters setting 
 optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
-epochs = 10
+epochs = 50
 
 """
 # Learning rate decay
@@ -156,12 +156,8 @@ torch.save(freezing_rate_values, '../../plot/basicModel/freezingRateProcedure/fr
 # gradientNormChangeFreezingProcedure
 torch.save(gradient_difference_norm_change_array, '../../plot/basicModel/gradientNormChanges/decay/gradient_difference_norm_change50.pt')
 torch.save(gradient_norm_difference_change_array, '../../plot/basicModel/gradientNormChanges/decay/gradient_norm_difference_change50.pt')
+"""
 
 # influence Analysis
-torch.save(accuracy_analysis_array, '../../plot/basicModel/influenceAnalysis/accuracy50.pt')
-torch.save(loss_analysis_array, '../../plot/basicModel/influenceAnalysis/loss50.pt')
-
-# influence Analysis2
-torch.save(accuracy_analysis_array, '../../plot/basicModel/influenceAnalysis2/accuracy50.pt')
-torch.save(loss_analysis_array, '../../plot/basicModel/influenceAnalysis2/loss50.pt')
-"""
+torch.save(accuracy_analysis_array, '../../plot/basicModel/InfluenceAnalysis/accuracy50.pt')
+torch.save(loss_analysis_array, '../../plot/basicModel/InfluenceAnalysis/loss50.pt')

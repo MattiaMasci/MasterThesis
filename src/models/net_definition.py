@@ -775,17 +775,3 @@ class SixthLayerModifiedFc1Net(nn.Module):
         # Initialization of first linear layer bias
         self.fc1.bias = nn.Parameter(sixth, requires_grad=False)
 
-# Model definition
-class WrapperNet(nn.Module):
-    def __init__(self, seq, leaf):
-        super(WrapperNet, self).__init__()
-        self.seq = seq
-        self.leaf = leaf
-
-    def forward(self, x):
-        x = self.seq(x)
-        x = self.leaf(x)
-        return x
-    
-    def reset(self):
-        self.leaf.reset_parameters()
