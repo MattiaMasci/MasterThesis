@@ -1,4 +1,8 @@
 import torch
+from torch import nn
+import logging
+
+logger = logging.getLogger('Main Logger')
 
 def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, model, frequence, grad_dict, grad_dict_abs):
     """ 
@@ -12,7 +16,7 @@ def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, m
     if current_epoch % frequence == 0:
         # Freezing decisions part
         if current_epoch>=0: #(total_epochs // 10):
-            print('--------- FREEZING PROCEDURE ---------')
+            logger.info('--------- FREEZING PROCEDURE ---------')
             freezingRate_array = torch.zeros(len(grad_dict))-1
             layer_counter = -1
 
@@ -37,11 +41,11 @@ def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, m
                             freezingRate_array[layer_counter] = 1 - (numerator_totalSummation/denominator_totalSummation)
                 
             # Array standardization
-            print("Tensor before normalize:\n", freezingRate_array)
+            logger.info(f"Tensor before normalize:\n{freezingRate_array}")
 
             mean, std= torch.mean(freezingRate_array[freezingRate_array!=-1]), \
                 torch.std(freezingRate_array[freezingRate_array!=-1])
-            print("Mean and Std before Normalize:\n", mean, std)
+            logger.info(f"Mean and Std before Normalize:\n{mean},{std}")
 
             freezingRate_array[freezingRate_array==-1] = float('-inf')
             standardized_freezingRate_array = freezingRate_array.clone()
@@ -50,17 +54,15 @@ def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, m
 
             standardized_freezingRate_array[0] = freezingRate_array[0]
             standardized_freezingRate_array[layer_counter] = freezingRate_array[layer_counter]
-            print("Tensor after Normalize:\n", standardized_freezingRate_array)
+            logger.info(f"Tensor after Normalize:\n{standardized_freezingRate_array}")
         
             # Maximum subarray sum
             cum_sum = torch.cumsum(standardized_freezingRate_array[standardized_freezingRate_array!=float('-inf')],dim=0)
             count = (standardized_freezingRate_array[standardized_freezingRate_array==float('-inf')].size(dim=0))
             n = torch.argmax(cum_sum)+count
         
-            print('Cumulative sum array:')
-            print(cum_sum)
-            print('Calculated argmax:')
-            print(n)
+            logger.info(f'Cumulative sum array: {cum_sum}')
+            logger.info(f'Calculated argmax: {n}')
             return freezingRate_array #n, 
 
 def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, frequence, step, grad_dict):
@@ -76,7 +78,7 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
     if current_epoch % frequence == 0:
         # Freezing decisions part
         if current_epoch>=0: #(total_epochs // 10):
-            print('--------- FREEZING PROCEDURE ---------')
+            logger.info('--------- FREEZING PROCEDURE ---------')
             total_number_iterations = grad_dict[len(grad_dict)-1].size()[0]
             frozen_layer = 0
             freeze = False

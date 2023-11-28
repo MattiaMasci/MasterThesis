@@ -2,12 +2,16 @@ import torch
 from torch import nn
 import copy
 from training_loops import train_loop, test_loop
+import logging
+
+logger = logging.getLogger('Main Logger')
 
 # Model definition
 class WrapperNet(nn.Module):
     def __init__(self, seq, leaf, lr=1e-3, loss_fn=nn.functional.cross_entropy, epochs=1):
         super(WrapperNet, self).__init__()
-        self.seq = seq
+        self.seq = nn.Sequential()
+        [self.seq.append(mod) for mod in seq]        
         self.leaf = leaf
         self.loss_fn = loss_fn
         self.epochs = epochs        
@@ -21,12 +25,11 @@ class WrapperNet(nn.Module):
     def reset(self):
         self.leaf.reset_parameters()
 
-    def train(self, dataloaders, runs = 1, reset = False):   
-
+    def train(self, dataloaders, runs = 1, reset = False):  
         accuracy_sum = 0
         loss_sum = 0
         for r in range(runs):
-            if(reset):
+            if (reset):
                 self.reset()
             for t in range(self.epochs):
                 print(f"Epoch {t+1}\n-------------------------------")
@@ -37,7 +40,7 @@ class WrapperNet(nn.Module):
        
         return  accuracy_sum/runs, loss_sum/runs
          
-def sequential2wrappers(seq_net, num_classes, input_sizes, device='cpu'):
+def sequential2wrappers(seq_net, num_classes, X, device='cpu'):
     """ 
     Prende in input un modello di rete neurale e ritorna una lista di reti formate aggiungendo incrementalmente i vari 
     layer della rete originale
@@ -54,11 +57,6 @@ def sequential2wrappers(seq_net, num_classes, input_sizes, device='cpu'):
     sequence = nn.Sequential()
     flattening = nn.Flatten()
 
-    if len(input_sizes)>1:
-        X = torch.randn(1,input_sizes[0],input_sizes[1],input_sizes[2]).to(device)
-    else:
-        X = torch.randn(1,input_sizes[0]).to(device)
-
     for children in seq_net:
         if isinstance(children, nn.Sequential):
             for sub_children in children:                
@@ -66,10 +64,10 @@ def sequential2wrappers(seq_net, num_classes, input_sizes, device='cpu'):
                     # if it's a layer to which I need to attach a leaf
                     if len(X.size()) > 2:
                         linear_input = flattening(X)
-                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),num_classes))
+                        net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
                         net.seq.add_module(str(count), nn.Flatten())
                     else:
-                        net = WrapperNet(copy.deepcopy(sequence), nn.Linear(X.size(dim=1),num_classes))
+                        net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
                     net_list.append(net)
 
                 sequence.add_module(str(count),sub_children)
@@ -80,10 +78,10 @@ def sequential2wrappers(seq_net, num_classes, input_sizes, device='cpu'):
                 # if it's a layer to which I need to attach a leaf
                 if len(X.size()) > 2:
                     linear_input = flattening(X)
-                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(linear_input.size(dim=1),num_classes))
+                    net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
                     net.seq.add_module(str(count), nn.Flatten())
                 else:
-                    net = WrapperNet(copy.deepcopy(sequence), nn.Linear(X.size(dim=1),num_classes))
+                    net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
                 net_list.append(net)
             sequence.add_module(str(count),children)
             X = children(X)
@@ -97,7 +95,7 @@ def layerInfluenceAnalysis(model, net_list, dataloaders , runs=1):
     modelli copia costruiti a partire dal primo aggiungendo incrementalmente i layer
     """
 
-    print('\n----------- Analysis -----------\n')
+    logger.info('----------- Analysis -----------')
     
     # Freezing of the net
     for param in model.parameters():
@@ -109,11 +107,11 @@ def layerInfluenceAnalysis(model, net_list, dataloaders , runs=1):
     # Training of the nets
     index = 0
     for wrp in net_list:
-        print('TRAINING OF ' + str(index+1) + ' TYPE OF NET\n')
-        
-        accuracy_array[index], loss_array[index] = wrp.train(dataloaders, runs)
+        logger.info('TRAINING OF ' + str(index+1) + ' TYPE OF NET\n') 
+    
+        accuracy_array[index], loss_array[index] = wrp.train(dataloaders, runs, True)
             
-        print('--------------------')
+        logger.info('--------------------')
 
         index = index+1
 

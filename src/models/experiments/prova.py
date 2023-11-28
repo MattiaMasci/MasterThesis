@@ -12,29 +12,44 @@ from torch import nn
 import sys
 import copy
 sys.path.append('../')
- 
-mod = nn.Linear(10,1)
-mod1 = nn.Linear(10,1)
 
-seq1 = nn.Sequential()
-seq2 = nn.Sequential()
+"""
+checkpoint = torch.load('../../../data/VGG11/new/weight0')
+print(checkpoint.keys())
+"""
 
-seq1.add_module('0', mod)
+for i in range(51):
+    checkpoint = torch.load('../../../data/VGG11/weight' + str(i))
+    checkpoint['0.weight'] = checkpoint['seq.0.weight']
+    checkpoint['0.bias'] = checkpoint['seq.0.bias']
+    checkpoint['3.weight'] = checkpoint['seq.3.weight']
+    checkpoint['3.bias'] = checkpoint['seq.3.bias']
+    checkpoint['6.weight'] = checkpoint['seq.6.weight']
+    checkpoint['6.bias'] = checkpoint['seq.6.bias']
+    checkpoint['8.weight'] = checkpoint['seq.8.weight']
+    checkpoint['8.bias'] = checkpoint['seq.8.bias']
+    checkpoint['11.weight'] = checkpoint['seq.11.weight']
+    checkpoint['11.bias'] = checkpoint['seq.11.bias']
+    checkpoint['13.weight'] = checkpoint['seq.13.weight']
+    checkpoint['13.bias'] = checkpoint['seq.13.bias']
+    checkpoint['16.weight'] = checkpoint['seq.16.weight']
+    checkpoint['16.bias'] = checkpoint['seq.16.bias']
+    checkpoint['18.weight'] = checkpoint['seq.18.weight']
+    checkpoint['18.bias'] = checkpoint['seq.18.bias']
+    checkpoint['23.weight'] = checkpoint['seq.23.weight']
+    checkpoint['23.bias'] = checkpoint['seq.23.bias']
+    checkpoint['26.weight'] = checkpoint['seq.26.weight']
+    checkpoint['26.bias'] = checkpoint['seq.26.bias']
+    checkpoint['29.weight'] = checkpoint['seq.29.weight']
+    checkpoint['29.bias'] = checkpoint['seq.29.bias']
+    checkpoint['30.weight'] = checkpoint['leaf.weight']
+    checkpoint['30.bias'] = checkpoint['leaf.bias']
 
-seq2 = copy.copy(seq1)
+    del checkpoint['seq.0.weight'], checkpoint['seq.0.bias'], checkpoint['seq.3.weight'], checkpoint['seq.3.bias'],\
+    checkpoint['seq.6.weight'], checkpoint['seq.6.bias'],checkpoint['seq.8.weight'], checkpoint['seq.8.bias'],\
+    checkpoint['seq.11.weight'], checkpoint['seq.11.bias'],checkpoint['seq.13.weight'], checkpoint['seq.13.bias'],\
+    checkpoint['seq.16.weight'], checkpoint['seq.16.bias'],checkpoint['seq.18.weight'], checkpoint['seq.18.bias'],\
+    checkpoint['seq.23.weight'], checkpoint['seq.23.bias'],checkpoint['seq.26.weight'], checkpoint['seq.26.bias'],\
+    checkpoint['seq.29.weight'], checkpoint['seq.29.bias'],checkpoint['leaf.weight'], checkpoint['leaf.bias'],
 
-seq1 = nn.Sequential()
-
-seq1.add_module('0',mod1)
-
-print(seq1[0].weight)
-print(seq2[0].weight)
-
-with torch.no_grad():
-    seq1[0].weight[0][0] = 18
-
-print(seq1[0].weight)
-print(seq2[0].weight)
-
-#print(seq1 == seq2)
-#print(seq1.get_submodule('0') == seq2.get_submodule('0'))
+    torch.save(checkpoint, '../../../data/VGG11/weight' + str(i))

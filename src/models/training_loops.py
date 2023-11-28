@@ -9,6 +9,10 @@ import torch.utils.data as data_utils
 from torch import nn
 import matplotlib.pyplot as plt
 import os
+import logging
+import time
+
+logger = logging.getLogger('Main Logger')
 
 device = (
             "cuda"
@@ -21,19 +25,43 @@ device = (
 # Training and testing loop definition
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
+    # Time accumulators
+    for_loop_time_accumulator = 0
+    forward_time_accumulator = 0
+    backward_time_accumulator = 0
+    start_time = time.time()
+    for_loop_time = start_time
     for batch, (X, y) in enumerate(dataloader):
+        for_loop_time_accumulator = for_loop_time_accumulator + (time.time()-for_loop_time)
         # Compute prediction and loss
+        forward_time = time.time()
         pred = model(X.to(device))
         loss = loss_fn(pred, y.to(device))
+        forward_time_accumulator = forward_time_accumulator + (time.time()-forward_time)
 
         # Backpropagation
+        backward_time = time.time()
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+        backward_time_accumulator = backward_time_accumulator + (time.time()-backward_time)
 
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
-            print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
+            logger.info(f'loss: {loss:>7f}  [{current:>5d}/{size:>5d}]')
+        
+        for_loop_time = time.time()
+    end_time = time.time()
+    
+    logger.debug(f'Train loop total time: {round(end_time-start_time,2)}s')
+    logger.debug(f'For loop time percentage with respect to '
+    f'total time: {round((for_loop_time_accumulator/(end_time-start_time))*100,1)}%')
+    logger.debug(f'Forward time percentage with respect to '
+    f'total time: {round((forward_time_accumulator/(end_time-start_time))*100,1)}%')
+    logger.debug(f'Backward time percentage with respect to '
+    f'total time: {round((backward_time_accumulator/(end_time-start_time))*100,1)}%')
+    logger.debug(f'Backward time percentage with respect to '
+    f'forward time: {round((backward_time_accumulator/(forward_time_accumulator))*100,1)}%\n')
 
 def test_loop(dataloader, model, loss_fn):
     size = len(dataloader.dataset)
@@ -49,6 +77,6 @@ def test_loop(dataloader, model, loss_fn):
 
     test_loss /= num_batches
     correct /= size
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    logger.info(f'Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n')
     
     return [correct, test_loss]
