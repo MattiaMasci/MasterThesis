@@ -55,7 +55,7 @@ def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradien
 
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
-            print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
+            logger.info(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
     grad_dict, abs_grad_dict = dictionariesCreation(model, gradient_list, abs_gradient_list)
 
@@ -75,7 +75,7 @@ def test_loop(dataloader, model, loss_fn):
 
     test_loss /= num_batches
     correct /= size
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    logger.info(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
     
     return [correct, test_loss]
 

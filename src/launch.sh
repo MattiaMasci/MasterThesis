@@ -2,8 +2,8 @@
 #$ -S /bin/bash
 #$ -pe mpi 4
 #$ -cwd
-#$ -o ../out/std_$JOB_ID.out
-#$ -e ../out/err_$JOB_ID.out
+#$ -o out/std_$JOB_ID.out
+#$ -e out/err_$JOB_ID.out
 #$ -q gpu6.q
 
 PYTHON_SCRIPT=$1

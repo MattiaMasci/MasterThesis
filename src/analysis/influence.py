@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 import copy
-from training_loops import train_loop, test_loop
+from training.training_loops import train_loop, test_loop
 import logging
 
 logger = logging.getLogger('Main Logger')
@@ -109,7 +109,7 @@ def layerInfluenceAnalysis(model, net_list, dataloaders , runs=1):
     for wrp in net_list:
         logger.info('TRAINING OF ' + str(index+1) + ' TYPE OF NET\n') 
     
-        accuracy_array[index], loss_array[index] = wrp.train(dataloaders, runs, True)
+        accuracy_array[index], loss_array[index] = wrp.train(dataloaders, runs)
             
         logger.info('--------------------')
 

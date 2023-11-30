@@ -61,7 +61,7 @@ def normalizedGradientDifferenceFreezingProcedure(current_epoch, total_epochs, m
             count = (standardized_freezingRate_array[standardized_freezingRate_array==float('-inf')].size(dim=0))
             n = torch.argmax(cum_sum)+count
         
-            logger.info(f'Cumulative sum array: {cum_sum}')
+            logger.info(f'Cumulative sum array:\n{cum_sum}')
             logger.info(f'Calculated argmax: {n}')
             return freezingRate_array #n, 
 
