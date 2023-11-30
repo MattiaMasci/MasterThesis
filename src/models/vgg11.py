@@ -2,8 +2,8 @@ import torch
 from torch import nn
 from torch.optim.lr_scheduler import StepLR
 from torchvision.models import vgg11
-#from training.training_loops import train_loop, test_loop
-from training.training_loops_with_gradient_info import train_loop, test_loop
+from training.training_loops import train_loop, test_loop
+#from training.training_loops_with_gradient_info import train_loop, test_loop
 from analysis.freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure
 from analysis.influence import sequential2wrappers, layerInfluenceAnalysis
 import logging
@@ -35,7 +35,9 @@ class VGG11(nn.Module):
                     count = count+1
 
         sequence.add_module(str(count),nn.Linear(in_features=1000, out_features=num_classes,bias=True))
+        self.num_classes = num_classes
         self.net = sequence
+        self.device = device
         self.net.to(device)   
 
     def forward(self, x):
@@ -43,7 +45,7 @@ class VGG11(nn.Module):
         return x
 
     def initialize(self):
-        checkpoint = torch.load('../data/VGG11/weight0')
+        checkpoint = torch.load('../models/VGG11/weight0')
         self.net.load_state_dict(checkpoint)
     
     def reset(self):
@@ -53,15 +55,17 @@ class VGG11(nn.Module):
 
     def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=50):  
 
-        self.optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
+        optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
+
         # Learning rate decay
-        self.scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
+        scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
 
         # For plot
         net_acc_values = torch.zeros([epochs])
         net_loss_values = torch.zeros([epochs])
         count = 0
 
+        """
         # normalizedGradientDifferenceFreezingProcedure
         freezing_rate_values = torch.zeros([epochs,12])
         freeze = False
@@ -89,18 +93,17 @@ class VGG11(nn.Module):
         accuracy_analysis_array = torch.zeros([epochs,12])
         loss_analysis_array = torch.zeros([epochs,12])
 
-        input, y = next(iter(train_dataloader))
-        net_list = sequential2wrappers(net, num_classes, torch.unsqueeze(input[0],dim=0).to(device), device)
+        input, y = next(iter(dataloaders['train']))
+        net_list = sequential2wrappers(self.net, self.num_classes, torch.unsqueeze(input[0],dim=0).to(self.device), self.device)
 
         # Leaves initializations fixed for influenceAnalysis
         index = 1
         for wrp in net_list:
-            checkpoint = torch.load(f'../../data/VGG11/leavesInitializations/{index}Net')
+            checkpoint = torch.load(f'../models/VGG11/leavesInitializations/{index}Net')
             wrp.leaf.load_state_dict(checkpoint)
             index = index+1
 
-        net_list.to(device)
-        """
+        net_list.to(self.device)
 
         #i = 0
 
@@ -112,23 +115,24 @@ class VGG11(nn.Module):
         for t in range(epochs):
             logger.info(f'Epoch {t+1}\n-------------------------------')
 
-            grad_dict, grad_dict_abs = train_loop(dataloaders['train'], self.net, loss_fn, self.optimizer, gradient_list, abs_gradient_list)
-            #checkpoint = torch.load('../../data/VGG11/weight' + str(t+1))
+            train_loop(dataloaders['train'], self.net, loss_fn, optimizer)#, gradient_list, abs_gradient_list)
+            #checkpoint = torch.load('../models/VGG11/weight' + str(t+1))
             #net.load_state_dict(checkpoint)
 
             net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
 
             # Learning rate decay
-            self.scheduler.step()
+            scheduler.step()
 
-            """
-            accuracy_array, loss_array = layerInfluenceAnalysis(net, net_list, dataloaders)
+            # influenceAnalysis
+            accuracy_array, loss_array = layerInfluenceAnalysis(self.net, net_list, dataloaders)
             accuracy_analysis_array[t] = torch.cat((accuracy_array,torch.tensor([net_acc_values[count]])),0)
             loss_analysis_array[t] = torch.cat((loss_array,torch.tensor([net_loss_values[count]])),0)
-            """
 
+            """
             # normalizedGradientDifferenceFreezingProcedure
             freezing_rate_values[count] = normalizedGradientDifferenceFreezingProcedure(t+1,epochs,self.net,1,grad_dict,grad_dict_abs)
+            """
 
             count = count+1
             #i = i+1
@@ -140,9 +144,9 @@ class VGG11(nn.Module):
 
         """
         # normalizedGradientDifferenceFreezingProcedure
-        torch.save(freezing_rate_values, '../../plot/VGG11/freezingRateProcedure/freezing_rate50_true.pt')
+        torch.save(freezing_rate_values, '../plot/VGG11/freezingRateProcedure/freezing_rate50_true.pt')
 
         # influence Analysis
-        torch.save(accuracy_analysis_array, '../../plot/VGG11/influenceAnalysis/accuracy50.pt')
-        torch.save(loss_analysis_array, '../../plot/VGG11/influenceAnalysis/loss50.pt')
+        torch.save(accuracy_analysis_array, '../plot/VGG11/influenceAnalysis/accuracy50.pt')
+        torch.save(loss_analysis_array, '../plot/VGG11/influenceAnalysis/loss50.pt')
         """

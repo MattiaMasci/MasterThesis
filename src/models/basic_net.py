@@ -10,7 +10,7 @@ import time
 class BasicNet(nn.Module):
     def __init__(self):
         super(BasicNet, self).__init__()
-        self.features = nn.Sequential(
+        self.net = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
@@ -25,9 +25,7 @@ class BasicNet(nn.Module):
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2)
-        )
-        self.flatten = nn.Flatten()
-        self.classifier = nn.Sequential(
+            nn.Flatten()
             nn.Linear(512, 100),
             nn.ReLU(),
             nn.Linear(100, 10),
@@ -36,32 +34,30 @@ class BasicNet(nn.Module):
         
     def forward(self, x):
         # Input size = 1x32x32
-        x = self.features(x)
-        x = torch.flatten(x,1)
-        x = self.classifier(x)
+        x = self.net(x)
         return x
         
     def weights_init(self, first, second, third, fourth, fifth, sixth, seventh):
         # Initialization of first convolutional layer weights
-        self.features[0].weight = nn.Parameter(first, requires_grad=True)
+        self.net[0].weight = nn.Parameter(first, requires_grad=True)
         
         # Initialization of second convolutional layer weights
-        self.features[3].weight = nn.Parameter(second, requires_grad=True)
+        self.net[3].weight = nn.Parameter(second, requires_grad=True)
         
         # Initialization of third convolutional layer weights
-        self.features[6].weight = nn.Parameter(third, requires_grad=True)
+        self.net[6].weight = nn.Parameter(third, requires_grad=True)
         
         # Initialization of fourth convolutional layer weights
-        self.features[8].weight = nn.Parameter(fourth, requires_grad=True)
+        self.net[8].weight = nn.Parameter(fourth, requires_grad=True)
         
         # Initialization of fifth convolutional layer weights
-        self.features[11].weight = nn.Parameter(fifth, requires_grad=True)
+        self.net[11].weight = nn.Parameter(fifth, requires_grad=True)
         
         # Initialization of first linear layer weights
-        self.classifier[0].weight = nn.Parameter(sixth, requires_grad=True)
+        self.net[15].weight = nn.Parameter(sixth, requires_grad=True)
         
         # Initialization of second linear layer weights
-        self.classifier[2].weight = nn.Parameter(seventh, requires_grad=True)
+        self.net[17].weight = nn.Parameter(seventh, requires_grad=True)
 
     def initialize():
         checkpoint = torch.load('../models/CIFAR-net.pt')
@@ -69,7 +65,7 @@ class BasicNet(nn.Module):
 
     def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=50):
         # Parameters setting 
-        self.optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
+        self.optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate)
 
         """
         # Learning rate decay
@@ -110,8 +106,8 @@ class BasicNet(nn.Module):
             print()
             """
 
-            train_loop(train_dataloader, net, loss_fn, optimizer)
-            net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
+            train_loop(dataloaders['train'], self.net, loss_fn, optimizer)
+            net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
 
             """
             # Learning rate decay
@@ -119,7 +115,7 @@ class BasicNet(nn.Module):
             """
 
             # influence Analysis
-            accuracy_temp, loss_temp = layerInfluenceAnalysis(net, 10, [3, 32, 32], 1)
+            accuracy_temp, loss_temp = layerInfluenceAnalysis(self.net, 10, [3, 32, 32], 1)
             accuracy_temp[6] = net_acc_values[count]
             loss_temp[6] = net_loss_values[count]
             accuracy_analysis_array[t] = accuracy_temp
