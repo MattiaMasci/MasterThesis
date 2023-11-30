@@ -70,14 +70,16 @@ def main():
     )
 
     """
+    dataloaders = datasetReduction(training_data, test_data)
+
+    dataloaders['influence'] = dict(dataloaders)
+    """
+
     # Dataloaders for VGG11 training
     train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
     test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
 
     dataloaders = {"train":train_dataloader,"test":test_dataloader}
-    """
-
-    dataloaders = datasetReduction(training_data, test_data)
 
     num_classes = len(training_data.classes)
 

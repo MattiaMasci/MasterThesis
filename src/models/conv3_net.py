@@ -10,41 +10,42 @@ import time
 class Conv3Net(nn.Module):
     def __init__(self):
         super(Conv3Net, self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2)
-        self.conv2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2)
-        self.conv3 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1)
-        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.fc1 = nn.Linear(2048, 100)
-        self.relu = nn.ReLU()
-        self.fc2 = nn.Linear(100, 10)
-        self.flatten = nn.Flatten()
-        self.softmax = nn.LogSoftmax(dim=1)
+        self.net = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=16, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Flatten()
+            nn.Linear(2048, 100),
+            nn.ReLU(),
+            nn.Linear(100, 10),
+            nn.LogSoftmax(dim=1)
+        )
         
     def forward(self, x):
         # Input size = 1x32x32
-        x = self.pool(self.relu(self.conv1(x)))
-        x = self.pool(self.relu(self.conv2(x)))
-        x = self.relu(self.conv3(x))
-        x = self.flatten(x)
-        x = self.relu(self.fc1(x))
-        x = self.softmax(self.fc2(x))
+        x = self.net(x)
         return x
         
     def weights_init(self, first, second, third, fourth, fifth):
         # Initialization of first convolutional layer weights
-        self.conv1.weight = nn.Parameter(first, requires_grad=True)
+        self.net[0].weight = nn.Parameter(first, requires_grad=True)
         
         # Initialization of second convolutional layer weights
-        self.conv2.weight = nn.Parameter(second, requires_grad=True)
+        self.net[3].weight = nn.Parameter(second, requires_grad=True)
         
         # Initialization of third convolutional layer weights
-        self.conv3.weight = nn.Parameter(third, requires_grad=True)
+        self.net[6].weight = nn.Parameter(third, requires_grad=True)
         
         # Initialization of first linear layer weights
-        self.fc1.weight = nn.Parameter(fourth, requires_grad=True)
+        self.net[9].weight = nn.Parameter(fourth, requires_grad=True)
         
         # Initialization of second linear layer weights
-        self.fc2.weight = nn.Parameter(fifth, requires_grad=True)
+        self.net[11].weight = nn.Parameter(fifth, requires_grad=True)
 
     def initialize(self):
         checkpoint = torch.load('../models/CIFAR-net.pt')
@@ -73,7 +74,7 @@ class Conv3Net(nn.Module):
         net.load_state_dict(checkpoint['model_weights'])
 
     def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=50):
-        self.optimizer = torch.optim.SGD(net.parameters(), lr=learning_rate)
+        optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate)
 
         # For plot
         net_acc_values = torch.zeros([epochs])
@@ -88,10 +89,10 @@ class Conv3Net(nn.Module):
         for t in range(epochs):
             print(f"Epoch {t+1}\n-------------------------------")
 
-            train_loop(train_dataloader, net, loss_fn, optimizer)
-            net_acc_values[count], net_loss_values[count] = test_loop(test_dataloader, net, loss_fn)
+            train_loop(dataloaders['train'], self.net, loss_fn, optimizer)
+            net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
 
-            accuracy_temp, loss_temp = layerInfluenceAnalysis(net)
+            accuracy_temp, loss_temp = layerInfluenceAnalysis(self.net)
             accuracy_temp[4] = net_acc_values[count]
             loss_temp[4] = net_loss_values[count]
             accuracy_analysis_array[t] = accuracy_temp

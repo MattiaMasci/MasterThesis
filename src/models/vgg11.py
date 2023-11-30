@@ -53,12 +53,14 @@ class VGG11(nn.Module):
             if hasattr(layer, 'reset_parameters'):
                 layer.reset_parameters()
 
-    def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=50):  
+    def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=150):  
 
         optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
 
+        """
         # Learning rate decay
         scheduler = StepLR(optimizer, step_size=100, gamma=0.1)
+        """
 
         # For plot
         net_acc_values = torch.zeros([epochs])
@@ -87,7 +89,6 @@ class VGG11(nn.Module):
                     array = torch.zeros(children.weight.size())
                     gradient_list.append(array.clone())
                     abs_gradient_list.append(array.clone())
-        """
 
         # influenceAnalysis
         accuracy_analysis_array = torch.zeros([epochs,12])
@@ -104,6 +105,7 @@ class VGG11(nn.Module):
             index = index+1
 
         net_list.to(self.device)
+        """
 
         #i = 0
 
@@ -121,15 +123,15 @@ class VGG11(nn.Module):
 
             net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
 
+            """
             # Learning rate decay
             scheduler.step()
 
             # influenceAnalysis
-            accuracy_array, loss_array = layerInfluenceAnalysis(self.net, net_list, dataloaders)
+            accuracy_array, loss_array = layerInfluenceAnalysis(self.net, net_list, dataloaders['influence'])
             accuracy_analysis_array[t] = torch.cat((accuracy_array,torch.tensor([net_acc_values[count]])),0)
             loss_analysis_array[t] = torch.cat((loss_array,torch.tensor([net_loss_values[count]])),0)
 
-            """
             # normalizedGradientDifferenceFreezingProcedure
             freezing_rate_values[count] = normalizedGradientDifferenceFreezingProcedure(t+1,epochs,self.net,1,grad_dict,grad_dict_abs)
             """

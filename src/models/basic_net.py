@@ -65,7 +65,7 @@ class BasicNet(nn.Module):
 
     def train(self, dataloaders, learning_rate=1e-3, loss_fn=nn.functional.cross_entropy, epochs=50):
         # Parameters setting 
-        self.optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate)
+        optimizer = torch.optim.SGD(self.net.parameters(), lr=learning_rate)
 
         """
         # Learning rate decay
