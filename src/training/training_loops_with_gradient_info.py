@@ -44,7 +44,7 @@ def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradien
         # Otherwise, we would be using stale gradients from previous minibatches, which could lead to incorrect parameter updates.
         
         loss.backward()
-    
+        
         accumulatedGradientCalculation(model, gradient_list, abs_gradient_list)
 
         optimizer.step()
@@ -90,11 +90,11 @@ def accumulatedGradientCalculation(model, gradient_list, abs_gradient_list):
                 if any(substring.lower() in str(sub_children).lower() for substring in layer_list):
                     if sub_children.weight.grad != None:
                         gradient_list[i] = torch.add(gradient_list[i].to(device), sub_children.weight.grad)
-                        gradient_list[i] = torch.add(abs_gradient_list[i].to(device), abs(sub_children.weight.grad))
+                        abs_gradient_list[i] = torch.add(abs_gradient_list[i].to(device), abs(sub_children.weight.grad))
                         i = i+1
                     else:
                         gradient_list[i] = None
-                        gradient_list[i] = None 
+                        abs_gradient_list[i] = None 
                         i = i+1
         else:
             if any(substring.lower() in str(children).lower() for substring in layer_list):
@@ -104,7 +104,7 @@ def accumulatedGradientCalculation(model, gradient_list, abs_gradient_list):
                     i = i+1
                 else:
                     gradient_list[i] = None
-                    gradient_list[i] = None 
+                    abs_gradient_list[i] = None 
                     i = i+1
 
 def dictionariesCreation(model, gradient_list, abs_gradient_list):
