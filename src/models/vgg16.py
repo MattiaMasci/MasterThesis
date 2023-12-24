@@ -1,9 +1,9 @@
 import torch
 from torch import nn
 from torch.optim.lr_scheduler import StepLR
-from torchvision.models import vgg11
-#from training.training_loops import train_loop, test_loop
-from training.training_loops_with_gradient_info import train_loop, test_loop
+from torchvision.models import vgg16
+from training.training_loops import train_loop, test_loop
+#from training.training_loops_with_gradient_info import train_loop, test_loop
 from analysis.freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
 randomSequentialFreezing, randomScatteredFreezing
 from analysis.influence import sequential2wrappers, layerInfluenceAnalysis
@@ -13,13 +13,13 @@ import copy
 
 logger = logging.getLogger('Main Logger')
 
-class VGG11(nn.Module):
+class VGG16(nn.Module):
     def __init__(self, num_classes, device):
-        super(VGG11, self).__init__()
+        super(VGG16, self).__init__()
         layer_list = ('conv','linear')
 
-        net = vgg11(weights=None)
-        #net.classifier[6] = nn.Linear(4096, 10)
+        net = vgg16(weights=None)
+        net.classifier[6] = nn.Linear(4096, 10)
 
         sequence = nn.Sequential()
         count = 0
@@ -32,7 +32,7 @@ class VGG11(nn.Module):
                         num_layers = num_layers+1
                     sequence.add_module(str(count),sub_children)
                     count = count+1
-                    if count == 22:
+                    if count == 32:
                         sequence.add_module(str(count),nn.Flatten())
                         count = count+1
             else:
@@ -40,12 +40,12 @@ class VGG11(nn.Module):
                     num_layers = num_layers+1
                 sequence.add_module(str(count),children)
                 count = count+1
-                if count == 22:
+                if count == 32:
                     sequence.add_module(str(count),nn.Flatten())
                     count = count+1
 
-        sequence.add_module(str(count),nn.Linear(in_features=1000, out_features=num_classes,bias=True))
-        num_layers = num_layers+1
+        #sequence.add_module(str(count),nn.Linear(in_features=1000, out_features=num_classes,bias=True))
+        #num_layers = num_layers+1
         self.num_classes = num_classes
         self.num_layers = num_layers
         self.net = sequence
@@ -83,11 +83,10 @@ class VGG11(nn.Module):
         or method == 'sequential freezing' or method == 'scattered freezing':
             # normalizedGradientDifferenceFreezingProcedure
             freezing_rate_values = torch.zeros([epochs,self.num_layers])
-            last_lr = learning_rate
+            last_lr = None
             frozen_net = None
             calculated_layer = None
-            freezing_epochs = 1
-            defreeze = 0
+            defreeze = False
             frequence = 2
 
             # Initialization of gradients arrays for normalizedGradientDifferenceFreezingProcedure
@@ -129,7 +128,7 @@ class VGG11(nn.Module):
         start_time = time.time()
 
         # Training loop
-        logger.info('----------- VGG11 TRAINING -----------')
+        logger.info('----------- VGG16 TRAINING -----------')
         for t in range(epochs):
             logger.info(f'Epoch {t+1}\n-------------------------------')
 
@@ -150,29 +149,28 @@ class VGG11(nn.Module):
                     train_loop(dataloaders['train'], self.net, loss_fn, optimizer)
                     net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
             
-            if method == 'freezing calc':
-                # normalizedGradientDifferenceFreezingProcedure
-                calculations = True
-                freezing_rate_values[count] = normalizedGradientDifferenceFreezingProcedure\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,grad_dict,grad_dict_abs,defreeze,calculations)
-            elif method == 'freezing app':
+            if method == 'freezing app':
                 # normalizedGradientDifferenceFreezingProcedure
                 if last_lr!=scheduler.get_last_lr():
                     last_lr = scheduler.get_last_lr()
-                    calculations = True
-                calculated_layer, calculations, defreeze, frozen_net = \
-                normalizedGradientDifferenceFreezingProcedure\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,grad_dict,grad_dict_abs,defreeze,calculations)
+                    #freezing_rate_values[count]
+                    calculated_layer, defreeze, frozen_net = \
+                    normalizedGradientDifferenceFreezingProcedure\
+                    (calculated_layer,t+1,epochs,self.net,frequence,grad_dict,grad_dict_abs,defreeze,True)
+                else:
+                    calculated_layer, defreeze, frozen_net = \
+                    normalizedGradientDifferenceFreezingProcedure\
+                    (calculated_layer,t+1,epochs,self.net,frequence,grad_dict,grad_dict_abs,defreeze)
             elif method == 'scattered freezing':
                 # scatteredFreezingProcedure
                 calculated_layer = normalizedGradientDifferenceFreezingProcedure\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,grad_dict,grad_dict_abs,defreeze,True)
+                (calculated_layer,t+1,epochs,self.net,frequence,grad_dict,grad_dict_abs,defreeze,True)
                 defreeze, frozen_net = \
-                randomScatteredFreezing(calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,defreeze,True)
+                randomScatteredFreezing(calculated_layer,t+1,epochs,self.net,frequence,self.num_layers,defreeze,True)
             elif method == 'sequential freezing':
                 # sequentialFreezingProcedure
                 calculated_layer, defreeze, frozen_net = \
-                randomSequentialFreezing(calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,defreeze,True)
+                randomSequentialFreezing(calculated_layer,t+1,epochs,self.net,frequence,self.num_layers,defreeze,True)
             elif method == 'influence analysis':
                 # influenceAnalysis
                 accuracy_array, loss_array = layerInfluenceAnalysis(self.net, net_list, dataloaders['influence'])
@@ -189,16 +187,3 @@ class VGG11(nn.Module):
 
         logger.info("Done!")
         logger.info(f'Total training time: {end_time-start_time}')
-
-        # accuracy and loss values
-        torch.save(net_acc_values, '../plot/VGG11/comparisons/accuracy/init1/random_scat_accuracy.pt')
-        torch.save(net_loss_values, '../plot/VGG11/comparisons/loss/init1/random_scat_loss.pt')
-
-        """
-        # normalizedGradientDifferenceFreezingProcedure
-        torch.save(freezing_rate_values, '../plot/VGG11/freezingRateProcedure/freezing_rate_init5.pt')
-
-        # influence Analysis
-        torch.save(accuracy_analysis_array, '../plot/VGG11/influenceAnalysis/accuracy50.pt')
-        torch.save(loss_analysis_array, '../plot/VGG11/influenceAnalysis/loss50.pt')
-        """

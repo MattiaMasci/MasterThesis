@@ -2,6 +2,7 @@ import torch
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader, Subset, SubsetRandomSampler
 from models.vgg11 import VGG11
+from models.vgg16 import VGG16
 import logging, sys
 
 # Logging settings
@@ -45,47 +46,26 @@ def datasetReduction(training_data, test_data, ratio=0.5, batch_size=64):
 
 def main():
 
-    # Resize the images in the dataset
-    transform = transforms.Compose([
-        transforms.Resize(size=(224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize( 
-        (0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010) 
-        )
-    ])
-
-    # Dataset loading
-    training_data = datasets.CIFAR10(
-    root="../data",
-    train=True,
-    download=True,
-    transform=transform
-    )
-
-    test_data = datasets.CIFAR10(
-    root="../data",
-    train=False,
-    download=True,
-    transform=transform
-    )
-
     """
     dataloaders = datasetReduction(training_data, test_data, 0.1)
 
     dataloaders['influence'] = dict(dataloaders)
-    """
 
     # Dataloaders for VGG11 training
     train_dataloader = DataLoader(training_data, batch_size=64, shuffle=False)
     test_dataloader = DataLoader(test_data, batch_size=64, shuffle=False)
+    """
+
+    train_dataloader = torch.load('../data/dataloaders/train_dataloader.pth')
+    test_dataloader = torch.load('../data/dataloaders/test_dataloader.pth')
 
     dataloaders = {"train":train_dataloader,"test":test_dataloader}
 
-    num_classes = len(training_data.classes)
+    num_classes = 10 #len(training_data.classes)
 
     net = VGG11(num_classes, device)
     net.initialize()
-    net.train(dataloaders)
+    net.train(dataloaders, decay=True, method='scattered freezing')
 
 if __name__ == "__main__":
     main()

@@ -34,13 +34,15 @@ def train_loop(dataloader, model, loss_fn, optimizer):
     for_loop_time = start_time
     """
     for batch, (X, y) in enumerate(dataloader):
+        X = X.to(device)
+        y = y.to(device)
         """
         for_loop_time_accumulator = for_loop_time_accumulator + (time.time()-for_loop_time)
         forward_time = time.time()
         """
         # Compute prediction and loss
-        pred = model(X.to(device))
-        loss = loss_fn(pred, y.to(device))
+        pred = model(X)
+        loss = loss_fn(pred, y)
         """
         forward_time_accumulator = forward_time_accumulator + (time.time()-forward_time)
         backward_time = time.time()
@@ -76,8 +78,9 @@ def test_loop(dataloader, model, loss_fn):
 
     with torch.no_grad():
         for X, y in dataloader:
+            X = X.to(device)
             y = y.to(device)
-            pred = model(X.to(device))
+            pred = model(X)
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 

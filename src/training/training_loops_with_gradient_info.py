@@ -25,14 +25,17 @@ device = (
 layer_list = ('conv','linear')
 
 # Training and testing loop definition
-def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradient_list):
+def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradient_list):#, calculations)
 
     size = len(dataloader.dataset)
     
     for batch, (X, y) in enumerate(dataloader):
+        X = X.to(device)
+        y = y.to(device)
+
         # Compute prediction and loss
-        pred = model(X.to(device))
-        loss = loss_fn(pred, y.to(device))
+        pred = model(X)
+        loss = loss_fn(pred, y)
 
         # Backpropagation
         optimizer.zero_grad()
@@ -45,6 +48,7 @@ def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradien
         
         loss.backward()
         
+        #if calculations == True:
         accumulatedGradientCalculation(model, gradient_list, abs_gradient_list)
 
         optimizer.step()
@@ -57,6 +61,7 @@ def train_loop(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradien
             loss, current = loss.item(), (batch + 1) * len(X)
             logger.info(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
+    #if calculations == True:
     grad_dict, abs_grad_dict = dictionariesCreation(model, gradient_list, abs_gradient_list)
 
     return grad_dict, abs_grad_dict
@@ -68,8 +73,9 @@ def test_loop(dataloader, model, loss_fn):
 
     with torch.no_grad():
         for X, y in dataloader:
+            X = X.to(device)
             y = y.to(device)
-            pred = model(X.to(device))
+            pred = model(X)
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
 
