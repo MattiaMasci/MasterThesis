@@ -49,7 +49,7 @@ def deFreeze(model):
     logger.info('--------- DE-FREEZING PROCEDURE TERMINATED ---------')
 
 def normalizedGradientDifferenceFreezingProcedure(calculated_layer, current_epoch, total_epochs, model,\
-frequence, freezing_epochs, grad_dict, grad_dict_abs, defreeze=0, calculations=False, initial_percentage=10):
+frequence, freezing_epochs, frozen, grad_dict, grad_dict_abs, defreeze=0, calculations=False, initial_percentage=10):
     """ 
     Prende in input l'indice dell'epoca corrente, il numero di epoche totali, il modello in training,
     la frequenza con cui si vuole freezare e un dizionario ordinato con un tensore gradiente per ogni layer,
@@ -57,7 +57,6 @@ frequence, freezing_epochs, grad_dict, grad_dict_abs, defreeze=0, calculations=F
     """
 
     layer_list = ('conv','linear')
-    frozen = None
 
     if defreeze == 0:
         if calculations == True or current_epoch == (total_epochs // initial_percentage):
@@ -97,19 +96,18 @@ frequence, freezing_epochs, grad_dict, grad_dict_abs, defreeze=0, calculations=F
             logger.info(f'Calculated argmax: {calculated_layer}')
             logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
 
-        """
         if current_epoch >= (total_epochs // initial_percentage) and current_epoch % frequence == 0:
             array = torch.zeros(len(grad_dict), dtype=torch.bool)
             array[:calculated_layer+1] = True
 
             frozen = freeze(model,array)
             defreeze = freezing_epochs
-        """
 
     else:
         defreeze = defreeze-1
         if defreeze == 0:
             deFreeze(model)
+            frozen = False
 
     #return freezingRate_array
     return calculated_layer, calculations, defreeze, frozen
@@ -182,13 +180,11 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
             """
 
 def randomSequentialFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
-num_layers, defreeze=0, calculations=False, initial_percentage=10):
+num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
     """ 
     Prende in input l'indice dell'epoca corrente, il numero di epoche totali, il modello in training e
     la frequenza con cui si vuole freezare e ritorna un indice casuale relativo al layer da freezare (da 0 a n.layer-1)
     """
-
-    frozen = None
 
     if defreeze == 0:
         if calculations == True or current_epoch == (total_epochs // initial_percentage):
@@ -207,17 +203,16 @@ num_layers, defreeze=0, calculations=False, initial_percentage=10):
         defreeze = defreeze-1
         if defreeze == 0:
             deFreeze(model)
+            frozen = False
 
     return calculated_layer, defreeze, frozen
 
 def randomScatteredFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
-num_layers, defreeze=False, calculations=False, initial_percentage=10):
+num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
     """ 
     Prende in input l'indice dell'epoca corrente, il numero di epoche totali, il modello in training e
     la frequenza con cui si vuole freezare e ritorna un indice casuale relativo al layer da freezare (da 0 a n.layer-1)
     """
-
-    frozen = None
 
     if defreeze == 0:
         if calculations == True or current_epoch == (total_epochs // initial_percentage):
@@ -235,5 +230,6 @@ num_layers, defreeze=False, calculations=False, initial_percentage=10):
         defreeze = defreeze-1
         if defreeze == 0:
             deFreeze(model)
+            frozen = False
 
     return defreeze, frozen
