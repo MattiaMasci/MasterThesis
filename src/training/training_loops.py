@@ -22,6 +22,8 @@ device = (
             else "cpu"
         )
 
+layer_list = ('conv','linear')
+
 # Training and testing loop definition
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
@@ -71,6 +73,53 @@ def train_loop(dataloader, model, loss_fn, optimizer):
     f'forward time: {round((backward_time_accumulator/(forward_time_accumulator))*100,1)}%\n')
     """
 
+# Training and testing loop definition
+def train_loop_with_gradient_info(dataloader, model, loss_fn, optimizer, gradient_list, abs_gradient_list, calculations=False):
+
+    logger.debug(f"Calculations is {calculations}")
+
+    grad_dict = None
+    abs_grad_dict = None
+
+    size = len(dataloader.dataset)
+    
+    for batch, (X, y) in enumerate(dataloader):
+        X = X.to(device)
+        y = y.to(device)
+
+        # Compute prediction and loss
+        pred = model(X)
+        loss = loss_fn(pred, y)
+
+        # Backpropagation
+        optimizer.zero_grad()
+        # When we call the backward() method on the loss tensor, the gradients computed by PyTorch accumulate 
+        # (i.e., they are added to the existing gradients) for each parameter during each iteration. 
+        # This is useful when we want to accumulate gradients across multiple batches, but it can lead to 
+        # incorrect gradient computations when we only want to compute the gradients for a single batch. Therefore, 
+        # before calling backward() for a new minibatch, we need to zero out the gradients from the previous minibatch. 
+        # Otherwise, we would be using stale gradients from previous minibatches, which could lead to incorrect parameter updates.
+        
+        loss.backward()
+        
+        if calculations == True:
+            accumulatedGradientCalculation(model, gradient_list, abs_gradient_list)
+
+        optimizer.step()
+        # Once the gradients have been computed, they are passed to the optimizer.step() function. 
+        # The optimizer.step() function is responsible for updating the weights and biases of the 
+        # neural network based on the gradients. In other words, it adjusts the weights and biases 
+        # in the direction that reduces the loss function the most.
+
+        if batch % 100 == 0:
+            loss, current = loss.item(), (batch + 1) * len(X)
+            logger.info(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
+
+    if calculations == True:
+        grad_dict, abs_grad_dict = dictionariesCreation(model, gradient_list, abs_gradient_list)
+
+    return grad_dict, abs_grad_dict
+
 def test_loop(dataloader, model, loss_fn):
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
@@ -89,3 +138,40 @@ def test_loop(dataloader, model, loss_fn):
     logger.info(f'Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n')
     
     return [correct, test_loss]
+
+def accumulatedGradientCalculation(model, gradient_list, abs_gradient_list):
+    """
+    """
+    
+    i = 0
+    for children in model:
+        if isinstance(children, nn.Sequential):
+            for sub_children in children:
+                if any(substring.lower() in str(sub_children).lower() for substring in layer_list):
+                    if sub_children.weight.grad != None:
+                        gradient_list[i] = torch.add(gradient_list[i].to(device), sub_children.weight.grad)
+                        abs_gradient_list[i] = torch.add(abs_gradient_list[i].to(device), abs(sub_children.weight.grad))
+                        i = i+1
+                    else:
+                        gradient_list[i] = None
+                        abs_gradient_list[i] = None 
+                        i = i+1
+        else:
+            if any(substring.lower() in str(children).lower() for substring in layer_list):
+                if children.weight.grad != None:
+                    gradient_list[i] = torch.add(gradient_list[i].to(device), children.weight.grad)
+                    abs_gradient_list[i] = torch.add(abs_gradient_list[i].to(device), abs(children.weight.grad))
+                    i = i+1
+                else:
+                    gradient_list[i] = None
+                    abs_gradient_list[i] = None 
+                    i = i+1
+
+def dictionariesCreation(model, gradient_list, abs_gradient_list):
+    """
+    """
+
+    grad_dict = dict(zip(range(len(gradient_list)), gradient_list))
+    abs_grad_dict = dict(zip(range(len(abs_gradient_list)), abs_gradient_list))
+
+    return grad_dict, abs_grad_dict

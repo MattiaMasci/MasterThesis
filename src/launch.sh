@@ -4,7 +4,7 @@
 #$ -cwd
 #$ -o out/std_$JOB_ID.out
 #$ -e out/err_$JOB_ID.out
-#$ -q gpu7.q
+#$ -q gpu2.q
 
 
 

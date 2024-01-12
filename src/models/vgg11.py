@@ -2,8 +2,7 @@ import torch
 from torch import nn
 from torch.optim.lr_scheduler import StepLR
 from torchvision.models import vgg11
-#from training.training_loops import train_loop, test_loop
-from training.training_loops_with_gradient_info import train_loop, test_loop
+from training.training_loops import train_loop, train_loop_with_gradient_info, test_loop
 from analysis.freezing_methods import normalizedGradientDifferenceFreezingProcedure, gradientNormChangeFreezingProcedure,\
 randomSequentialFreezing, randomScatteredFreezing
 from analysis.influence import sequential2wrappers, layerInfluenceAnalysis
@@ -57,7 +56,7 @@ class VGG11(nn.Module):
         return x
 
     def initialize(self):
-        checkpoint = torch.load('../models/VGG11/init/init1')
+        checkpoint = torch.load('../models/VGG11/init/init2')
         self.net.load_state_dict(checkpoint)
     
     def reset(self):
@@ -83,12 +82,14 @@ class VGG11(nn.Module):
         or method == 'sequential freezing' or method == 'scattered freezing':
             # normalizedGradientDifferenceFreezingProcedure
             freezing_rate_values = torch.zeros([epochs,self.num_layers])
-            last_lr = learning_rate
+            last_lr = None
+            initial_percentage = 10
+            calculations = False
             frozen_net = False
             calculated_layer = None
-            freezing_epochs = 3
+            freezing_epochs = 1
             defreeze = 0
-            frequence = 4
+            frequence = 2
 
             # Initialization of gradients arrays for normalizedGradientDifferenceFreezingProcedure
             layer_list = ('conv','linear')
@@ -139,42 +140,70 @@ class VGG11(nn.Module):
                     if param.requires_grad:
                         logger.info(name)
 
-            if method == 'freezing app' or method == 'freezing calc'\
-            or method == 'sequential freezing' or method == 'scattered freezing':
+            if method == 'freezing app' or method == 'freezing calc':
                 if frozen_net != True:
-                    grad_dict, grad_dict_abs = \
-                    train_loop\
-                    (dataloaders['train'], self.net, loss_fn, optimizer, copy.copy(gradient_list), copy.copy(abs_gradient_list))
+                    if (t+1) >= (epochs // initial_percentage):
+                        if last_lr!=scheduler.get_last_lr():
+                            last_lr = scheduler.get_last_lr()
+                            calculations = True
+                    if calculations == True and defreeze == 0 and (t+1) % frequence == 0:
+                        grad_dict, grad_dict_abs = \
+                        train_loop_with_gradient_info\
+                        (dataloaders['train'], self.net, loss_fn, optimizer, copy.copy(gradient_list), copy.copy(abs_gradient_list), calculations)
+                    else:
+                        grad_dict, grad_dict_abs = \
+                        train_loop_with_gradient_info\
+                        (dataloaders['train'], self.net, loss_fn, optimizer, copy.copy(gradient_list), copy.copy(abs_gradient_list))
                     net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
-            elif method == None:
+            elif method == 'scattered freezing':
+                if frozen_net != True:
+                    if (t+1) % frequence == 0 and (t+1) >= (epochs // initial_percentage):
+                        grad_dict, grad_dict_abs = \
+                        train_loop_with_gradient_info\
+                        (dataloaders['train'], self.net, loss_fn, optimizer, copy.copy(gradient_list),\
+                        copy.copy(abs_gradient_list), True)
+                    else:
+                        grad_dict, grad_dict_abs = \
+                        train_loop_with_gradient_info\
+                        (dataloaders['train'], self.net, loss_fn, optimizer, copy.copy(gradient_list),\
+                        copy.copy(abs_gradient_list))
+                    net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
+            elif method == 'sequential freezing':
+                if frozen_net != True:
                     train_loop(dataloaders['train'], self.net, loss_fn, optimizer)
                     net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
-            
+            else:
+                train_loop(dataloaders['train'], self.net, loss_fn, optimizer)
+                net_acc_values[count], net_loss_values[count] = test_loop(dataloaders['test'], self.net, loss_fn)
+
             if method == 'freezing calc':
                 # normalizedGradientDifferenceFreezingProcedure
-                calculations = True
                 freezing_rate_values[count] = normalizedGradientDifferenceFreezingProcedure\
                 (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,frozen_net,grad_dict,grad_dict_abs,defreeze,calculations)
             elif method == 'freezing app':
                 # normalizedGradientDifferenceFreezingProcedure
-                if last_lr!=scheduler.get_last_lr():
-                    last_lr = scheduler.get_last_lr()
-                    calculations = True
                 calculated_layer, calculations, defreeze, frozen_net = \
                 normalizedGradientDifferenceFreezingProcedure\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,frozen_net,grad_dict,grad_dict_abs,defreeze,calculations)
+                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,\
+                self.num_layers,frozen_net,grad_dict,grad_dict_abs,defreeze,calculations)
             elif method == 'scattered freezing':
                 # scatteredFreezingProcedure
-                calculated_layer = normalizedGradientDifferenceFreezingProcedure\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,frozen_net,grad_dict,grad_dict_abs,defreeze,True)
-                defreeze, frozen_net = \
-                randomScatteredFreezing\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,frozen_net,defreeze,True)
+                if (t+1) % frequence == 0 and (t+1) >= (epochs // initial_percentage):
+                    calculated_layer = normalizedGradientDifferenceFreezingProcedure\
+                    (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,\
+                    self.num_layers,frozen_net,grad_dict,grad_dict_abs,defreeze,True)
+                    defreeze, frozen_net = \
+                    randomScatteredFreezing\
+                    (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,frozen_net,defreeze,True)
+                else:
+                    defreeze, frozen_net = \
+                    randomScatteredFreezing\
+                    (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,frozen_net,defreeze)
             elif method == 'sequential freezing':
                 # sequentialFreezingProcedure
                 calculated_layer, defreeze, frozen_net = \
                 randomSequentialFreezing\
-                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,frozen_net,defreeze,True)
+                (calculated_layer,t+1,epochs,self.net,frequence,freezing_epochs,self.num_layers,frozen_net,defreeze)
             elif method == 'influence analysis':
                 # influenceAnalysis
                 accuracy_array, loss_array = layerInfluenceAnalysis(self.net, net_list, dataloaders['influence'])

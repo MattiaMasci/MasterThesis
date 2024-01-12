@@ -1,0 +1,957 @@
+A100 GPU 80gb
+@compute-2-3.local (GPU): GPU-8281fbc2-ad66-3ec4-1727-f5c0d85e45ca
+Files already downloaded and verified
+Files already downloaded and verified
+2023-11-28 11:40:36,867 | INFO : ----------- VGG11 TRAINING -----------
+2023-11-28 11:40:36,868 | INFO : Epoch 1
+-------------------------------
+2023-11-28 11:40:41,926 | INFO : loss: 2.306594  [   64/50000]
+2023-11-28 11:41:01,683 | INFO : loss: 2.266799  [ 6464/50000]
+2023-11-28 11:41:19,152 | INFO : loss: 2.096896  [12864/50000]
+2023-11-28 11:41:36,668 | INFO : loss: 1.959440  [19264/50000]
+2023-11-28 11:41:54,597 | INFO : loss: 1.918322  [25664/50000]
+2023-11-28 11:42:11,667 | INFO : loss: 1.903188  [32064/50000]
+2023-11-28 11:42:35,241 | INFO : loss: 1.895308  [38464/50000]
+2023-11-28 11:42:58,978 | INFO : loss: 1.781989  [44864/50000]
+2023-11-28 11:43:16,758 | DEBUG : Train loop total time: 159.89s
+2023-11-28 11:43:16,760 | DEBUG : For loop time percentage with respect to total time: 78.5%
+2023-11-28 11:43:16,760 | DEBUG : Forward time percentage with respect to total time: 18.8%
+2023-11-28 11:43:16,760 | DEBUG : Backward time percentage with respect to total time: 2.5%
+2023-11-28 11:43:16,760 | DEBUG : Backward time percentage with respect to forward time: 13.2%
+
+2023-11-28 11:43:51,029 | INFO : Test Error: 
+ Accuracy: 40.6%, Avg loss: 1.636228 
+
+2023-11-28 11:43:51,030 | INFO : Epoch 2
+-------------------------------
+2023-11-28 11:43:51,310 | INFO : loss: 1.749856  [   64/50000]
+2023-11-28 11:44:08,080 | INFO : loss: 1.602125  [ 6464/50000]
+2023-11-28 11:44:27,489 | INFO : loss: 1.716260  [12864/50000]
+2023-11-28 11:44:45,641 | INFO : loss: 1.605427  [19264/50000]
+2023-11-28 11:45:03,993 | INFO : loss: 1.721399  [25664/50000]
+2023-11-28 11:45:22,219 | INFO : loss: 1.293698  [32064/50000]
+2023-11-28 11:45:39,895 | INFO : loss: 1.306478  [38464/50000]
+2023-11-28 11:45:56,596 | INFO : loss: 1.695097  [44864/50000]
+2023-11-28 11:46:10,452 | DEBUG : Train loop total time: 139.42s
+2023-11-28 11:46:10,452 | DEBUG : For loop time percentage with respect to total time: 80.7%
+2023-11-28 11:46:10,453 | DEBUG : Forward time percentage with respect to total time: 16.9%
+2023-11-28 11:46:10,453 | DEBUG : Backward time percentage with respect to total time: 2.1%
+2023-11-28 11:46:10,453 | DEBUG : Backward time percentage with respect to forward time: 12.4%
+
+2023-11-28 11:46:37,195 | INFO : Test Error: 
+ Accuracy: 48.7%, Avg loss: 1.408948 
+
+2023-11-28 11:46:37,196 | INFO : Epoch 3
+-------------------------------
+2023-11-28 11:46:37,404 | INFO : loss: 1.344101  [   64/50000]
+2023-11-28 11:46:54,496 | INFO : loss: 1.424850  [ 6464/50000]
+2023-11-28 11:47:11,600 | INFO : loss: 1.332191  [12864/50000]
+2023-11-28 11:47:30,231 | INFO : loss: 1.440834  [19264/50000]
+2023-11-28 11:47:52,171 | INFO : loss: 1.355999  [25664/50000]
+2023-11-28 11:48:11,393 | INFO : loss: 1.450779  [32064/50000]
+2023-11-28 11:48:30,203 | INFO : loss: 1.189975  [38464/50000]
+2023-11-28 11:48:50,225 | INFO : loss: 1.299929  [44864/50000]
+2023-11-28 11:49:04,303 | DEBUG : Train loop total time: 147.11s
+2023-11-28 11:49:04,304 | DEBUG : For loop time percentage with respect to total time: 81.9%
+2023-11-28 11:49:04,304 | DEBUG : Forward time percentage with respect to total time: 15.8%
+2023-11-28 11:49:04,304 | DEBUG : Backward time percentage with respect to total time: 2.1%
+2023-11-28 11:49:04,304 | DEBUG : Backward time percentage with respect to forward time: 13.1%
+
+2023-11-28 11:49:29,837 | INFO : Test Error: 
+ Accuracy: 54.6%, Avg loss: 1.255030 
+
+2023-11-28 11:49:29,838 | INFO : Epoch 4
+-------------------------------
+2023-11-28 11:49:30,045 | INFO : loss: 1.047444  [   64/50000]
+2023-11-28 11:49:48,356 | INFO : loss: 1.283739  [ 6464/50000]
+2023-11-28 11:50:04,703 | INFO : loss: 1.298711  [12864/50000]
+2023-11-28 11:50:25,445 | INFO : loss: 1.105487  [19264/50000]
+2023-11-28 11:50:45,304 | INFO : loss: 1.191825  [25664/50000]
+2023-11-28 11:51:03,363 | INFO : loss: 1.114422  [32064/50000]
+2023-11-28 11:51:21,480 | INFO : loss: 1.093585  [38464/50000]
+2023-11-28 11:51:40,223 | INFO : loss: 1.178537  [44864/50000]
+2023-11-28 11:51:54,040 | DEBUG : Train loop total time: 144.2s
+2023-11-28 11:51:54,041 | DEBUG : For loop time percentage with respect to total time: 82.0%
+2023-11-28 11:51:54,041 | DEBUG : Forward time percentage with respect to total time: 15.6%
+2023-11-28 11:51:54,041 | DEBUG : Backward time percentage with respect to total time: 2.2%
+2023-11-28 11:51:54,041 | DEBUG : Backward time percentage with respect to forward time: 13.8%
+
+2023-11-28 11:52:22,542 | INFO : Test Error: 
+ Accuracy: 59.7%, Avg loss: 1.123825 
+
+2023-11-28 11:52:22,542 | INFO : Epoch 5
+-------------------------------
+2023-11-28 11:52:22,750 | INFO : loss: 1.151229  [   64/50000]
+2023-11-28 11:52:38,885 | INFO : loss: 1.052919  [ 6464/50000]
+2023-11-28 11:52:56,381 | INFO : loss: 1.203617  [12864/50000]
+2023-11-28 11:53:13,672 | INFO : loss: 1.198824  [19264/50000]
+2023-11-28 11:53:33,930 | INFO : loss: 0.742611  [25664/50000]
+2023-11-28 11:53:52,043 | INFO : loss: 0.903534  [32064/50000]
+2023-11-28 11:54:09,338 | INFO : loss: 0.889772  [38464/50000]
+2023-11-28 11:54:27,633 | INFO : loss: 1.254524  [44864/50000]
+2023-11-28 11:54:42,386 | DEBUG : Train loop total time: 139.84s
+2023-11-28 11:54:42,387 | DEBUG : For loop time percentage with respect to total time: 80.5%
+2023-11-28 11:54:42,387 | DEBUG : Forward time percentage with respect to total time: 17.1%
+2023-11-28 11:54:42,387 | DEBUG : Backward time percentage with respect to total time: 2.1%
+2023-11-28 11:54:42,387 | DEBUG : Backward time percentage with respect to forward time: 12.3%
+
+2023-11-28 11:55:10,942 | INFO : Test Error: 
+ Accuracy: 61.7%, Avg loss: 1.094150 
+
+2023-11-28 11:55:10,943 | INFO : Epoch 6
+-------------------------------
+2023-11-28 11:55:11,283 | INFO : loss: 1.086973  [   64/50000]
+2023-11-28 11:55:28,779 | INFO : loss: 0.982543  [ 6464/50000]
+2023-11-28 11:55:46,852 | INFO : loss: 1.147585  [12864/50000]
+2023-11-28 11:56:03,554 | INFO : loss: 1.044396  [19264/50000]
+2023-11-28 11:56:22,699 | INFO : loss: 1.028970  [25664/50000]
+2023-11-28 11:56:42,323 | INFO : loss: 1.144390  [32064/50000]
+2023-11-28 11:57:01,099 | INFO : loss: 0.700873  [38464/50000]
+2023-11-28 11:57:19,014 | INFO : loss: 0.763271  [44864/50000]
+2023-11-28 11:57:32,279 | DEBUG : Train loop total time: 141.34s
+2023-11-28 11:57:32,279 | DEBUG : For loop time percentage with respect to total time: 80.0%
+2023-11-28 11:57:32,279 | DEBUG : Forward time percentage with respect to total time: 17.6%
+2023-11-28 11:57:32,280 | DEBUG : Backward time percentage with respect to total time: 2.2%
+2023-11-28 11:57:32,280 | DEBUG : Backward time percentage with respect to forward time: 12.3%
+
+2023-11-28 11:57:59,390 | INFO : Test Error: 
+ Accuracy: 63.2%, Avg loss: 1.047137 
+
+2023-11-28 11:57:59,391 | INFO : Epoch 7
+-------------------------------
+2023-11-28 11:57:59,655 | INFO : loss: 0.952115  [   64/50000]
+2023-11-28 11:58:16,884 | INFO : loss: 0.786599  [ 6464/50000]
+2023-11-28 11:58:33,528 | INFO : loss: 0.935503  [12864/50000]
+2023-11-28 11:58:51,167 | INFO : loss: 0.917686  [19264/50000]
+2023-11-28 11:59:08,459 | INFO : loss: 0.828843  [25664/50000]
+2023-11-28 11:59:25,399 | INFO : loss: 0.792212  [32064/50000]
+2023-11-28 11:59:42,558 | INFO : loss: 0.675024  [38464/50000]
+2023-11-28 11:59:59,550 | INFO : loss: 0.775254  [44864/50000]
+2023-11-28 12:00:14,151 | DEBUG : Train loop total time: 134.76s
+2023-11-28 12:00:14,152 | DEBUG : For loop time percentage with respect to total time: 78.8%
+2023-11-28 12:00:14,152 | DEBUG : Forward time percentage with respect to total time: 18.6%
+2023-11-28 12:00:14,152 | DEBUG : Backward time percentage with respect to total time: 2.3%
+2023-11-28 12:00:14,152 | DEBUG : Backward time percentage with respect to forward time: 12.5%
+
+2023-11-28 12:00:42,250 | INFO : Test Error: 
+ Accuracy: 68.7%, Avg loss: 0.909370 
+
+2023-11-28 12:00:42,251 | INFO : Epoch 8
+-------------------------------
+2023-11-28 12:00:42,449 | INFO : loss: 0.743838  [   64/50000]
+2023-11-28 12:01:00,320 | INFO : loss: 0.740039  [ 6464/50000]
+2023-11-28 12:01:17,443 | INFO : loss: 0.876821  [12864/50000]
+2023-11-28 12:01:35,814 | INFO : loss: 0.781534  [19264/50000]
+2023-11-28 12:01:55,330 | INFO : loss: 0.696726  [25664/50000]
+2023-11-28 12:02:12,780 | INFO : loss: 0.670603  [32064/50000]
+2023-11-28 12:02:32,250 | INFO : loss: 0.840023  [38464/50000]
+2023-11-28 12:02:54,449 | INFO : loss: 0.475731  [44864/50000]
+2023-11-28 12:03:10,089 | DEBUG : Train loop total time: 147.84s
+2023-11-28 12:03:10,090 | DEBUG : For loop time percentage with respect to total time: 81.1%
+2023-11-28 12:03:10,090 | DEBUG : Forward time percentage with respect to total time: 16.4%
+2023-11-28 12:03:10,090 | DEBUG : Backward time percentage with respect to total time: 2.1%
+2023-11-28 12:03:10,090 | DEBUG : Backward time percentage with respect to forward time: 13.0%
+
+2023-11-28 12:03:40,049 | INFO : Test Error: 
+ Accuracy: 69.8%, Avg loss: 0.871205 
+
+2023-11-28 12:03:40,050 | INFO : Epoch 9
+-------------------------------
+2023-11-28 12:03:40,324 | INFO : loss: 0.543795  [   64/50000]
+2023-11-28 12:04:01,606 | INFO : loss: 0.571739  [ 6464/50000]
+2023-11-28 12:04:20,007 | INFO : loss: 0.520890  [12864/50000]
+2023-11-28 12:04:37,458 | INFO : loss: 0.739413  [19264/50000]
+2023-11-28 12:04:59,066 | INFO : loss: 0.601219  [25664/50000]
+2023-11-28 12:05:17,476 | INFO : loss: 0.566056  [32064/50000]
+2023-11-28 12:05:37,235 | INFO : loss: 0.614606  [38464/50000]
+2023-11-28 12:05:57,200 | INFO : loss: 0.502168  [44864/50000]
+2023-11-28 12:06:11,404 | DEBUG : Train loop total time: 151.35s
+2023-11-28 12:06:11,405 | DEBUG : For loop time percentage with respect to total time: 83.0%
+2023-11-28 12:06:11,406 | DEBUG : Forward time percentage with respect to total time: 14.9%
+2023-11-28 12:06:11,406 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:06:11,406 | DEBUG : Backward time percentage with respect to forward time: 12.5%
+
+2023-11-28 12:06:40,217 | INFO : Test Error: 
+ Accuracy: 71.0%, Avg loss: 0.855486 
+
+2023-11-28 12:06:40,218 | INFO : Epoch 10
+-------------------------------
+2023-11-28 12:06:40,471 | INFO : loss: 0.470622  [   64/50000]
+2023-11-28 12:06:57,771 | INFO : loss: 0.556053  [ 6464/50000]
+2023-11-28 12:07:15,325 | INFO : loss: 0.506270  [12864/50000]
+2023-11-28 12:07:32,871 | INFO : loss: 0.570016  [19264/50000]
+2023-11-28 12:07:49,669 | INFO : loss: 0.583670  [25664/50000]
+2023-11-28 12:08:06,171 | INFO : loss: 0.841167  [32064/50000]
+2023-11-28 12:08:26,321 | INFO : loss: 0.654787  [38464/50000]
+2023-11-28 12:08:46,309 | INFO : loss: 0.546857  [44864/50000]
+2023-11-28 12:09:00,752 | DEBUG : Train loop total time: 140.53s
+2023-11-28 12:09:00,752 | DEBUG : For loop time percentage with respect to total time: 81.9%
+2023-11-28 12:09:00,752 | DEBUG : Forward time percentage with respect to total time: 15.9%
+2023-11-28 12:09:00,752 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:09:00,752 | DEBUG : Backward time percentage with respect to forward time: 12.1%
+
+2023-11-28 12:09:30,527 | INFO : Test Error: 
+ Accuracy: 72.4%, Avg loss: 0.843296 
+
+2023-11-28 12:09:30,528 | INFO : Epoch 11
+-------------------------------
+2023-11-28 12:09:31,069 | INFO : loss: 0.477896  [   64/50000]
+2023-11-28 12:09:51,340 | INFO : loss: 0.336893  [ 6464/50000]
+2023-11-28 12:10:07,954 | INFO : loss: 0.417831  [12864/50000]
+2023-11-28 12:10:26,918 | INFO : loss: 0.482122  [19264/50000]
+2023-11-28 12:10:45,407 | INFO : loss: 0.691180  [25664/50000]
+2023-11-28 12:11:06,521 | INFO : loss: 0.620626  [32064/50000]
+2023-11-28 12:11:24,467 | INFO : loss: 0.349752  [38464/50000]
+2023-11-28 12:11:43,392 | INFO : loss: 0.429353  [44864/50000]
+2023-11-28 12:11:59,318 | DEBUG : Train loop total time: 148.79s
+2023-11-28 12:11:59,319 | DEBUG : For loop time percentage with respect to total time: 82.0%
+2023-11-28 12:11:59,319 | DEBUG : Forward time percentage with respect to total time: 15.7%
+2023-11-28 12:11:59,319 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 12:11:59,319 | DEBUG : Backward time percentage with respect to forward time: 12.7%
+
+2023-11-28 12:12:27,284 | INFO : Test Error: 
+ Accuracy: 71.6%, Avg loss: 0.844395 
+
+2023-11-28 12:12:27,285 | INFO : Epoch 12
+-------------------------------
+2023-11-28 12:12:27,579 | INFO : loss: 0.565549  [   64/50000]
+2023-11-28 12:12:46,604 | INFO : loss: 0.337161  [ 6464/50000]
+2023-11-28 12:13:02,798 | INFO : loss: 0.342750  [12864/50000]
+2023-11-28 12:13:19,779 | INFO : loss: 0.446049  [19264/50000]
+2023-11-28 12:13:36,878 | INFO : loss: 0.631554  [25664/50000]
+2023-11-28 12:13:55,853 | INFO : loss: 0.476020  [32064/50000]
+2023-11-28 12:14:12,473 | INFO : loss: 0.475285  [38464/50000]
+2023-11-28 12:14:28,501 | INFO : loss: 0.304490  [44864/50000]
+2023-11-28 12:14:41,972 | DEBUG : Train loop total time: 134.69s
+2023-11-28 12:14:41,973 | DEBUG : For loop time percentage with respect to total time: 79.6%
+2023-11-28 12:14:41,973 | DEBUG : Forward time percentage with respect to total time: 17.8%
+2023-11-28 12:14:41,973 | DEBUG : Backward time percentage with respect to total time: 2.3%
+2023-11-28 12:14:41,973 | DEBUG : Backward time percentage with respect to forward time: 12.7%
+
+2023-11-28 12:15:10,648 | INFO : Test Error: 
+ Accuracy: 72.7%, Avg loss: 0.855266 
+
+2023-11-28 12:15:10,649 | INFO : Epoch 13
+-------------------------------
+2023-11-28 12:15:10,872 | INFO : loss: 0.383329  [   64/50000]
+2023-11-28 12:15:29,108 | INFO : loss: 0.227375  [ 6464/50000]
+2023-11-28 12:15:46,764 | INFO : loss: 0.306798  [12864/50000]
+2023-11-28 12:16:04,770 | INFO : loss: 0.246049  [19264/50000]
+2023-11-28 12:16:22,975 | INFO : loss: 0.306266  [25664/50000]
+2023-11-28 12:16:39,553 | INFO : loss: 0.393279  [32064/50000]
+2023-11-28 12:16:57,064 | INFO : loss: 0.517696  [38464/50000]
+2023-11-28 12:17:14,226 | INFO : loss: 0.493734  [44864/50000]
+2023-11-28 12:17:30,312 | DEBUG : Train loop total time: 139.66s
+2023-11-28 12:17:30,312 | DEBUG : For loop time percentage with respect to total time: 79.2%
+2023-11-28 12:17:30,312 | DEBUG : Forward time percentage with respect to total time: 18.4%
+2023-11-28 12:17:30,312 | DEBUG : Backward time percentage with respect to total time: 2.2%
+2023-11-28 12:17:30,312 | DEBUG : Backward time percentage with respect to forward time: 11.7%
+
+2023-11-28 12:17:59,451 | INFO : Test Error: 
+ Accuracy: 73.2%, Avg loss: 0.902126 
+
+2023-11-28 12:17:59,452 | INFO : Epoch 14
+-------------------------------
+2023-11-28 12:17:59,665 | INFO : loss: 0.182562  [   64/50000]
+2023-11-28 12:18:15,479 | INFO : loss: 0.373381  [ 6464/50000]
+2023-11-28 12:18:31,777 | INFO : loss: 0.200655  [12864/50000]
+2023-11-28 12:18:49,007 | INFO : loss: 0.239123  [19264/50000]
+2023-11-28 12:19:07,526 | INFO : loss: 0.333400  [25664/50000]
+2023-11-28 12:19:24,812 | INFO : loss: 0.439599  [32064/50000]
+2023-11-28 12:19:41,803 | INFO : loss: 0.240774  [38464/50000]
+2023-11-28 12:19:58,227 | INFO : loss: 0.231209  [44864/50000]
+2023-11-28 12:20:11,700 | DEBUG : Train loop total time: 132.25s
+2023-11-28 12:20:11,701 | DEBUG : For loop time percentage with respect to total time: 79.2%
+2023-11-28 12:20:11,702 | DEBUG : Forward time percentage with respect to total time: 18.5%
+2023-11-28 12:20:11,702 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 12:20:11,702 | DEBUG : Backward time percentage with respect to forward time: 10.7%
+
+2023-11-28 12:20:38,388 | INFO : Test Error: 
+ Accuracy: 73.0%, Avg loss: 0.938434 
+
+2023-11-28 12:20:38,388 | INFO : Epoch 15
+-------------------------------
+2023-11-28 12:20:38,620 | INFO : loss: 0.172218  [   64/50000]
+2023-11-28 12:20:55,709 | INFO : loss: 0.208901  [ 6464/50000]
+2023-11-28 12:21:13,416 | INFO : loss: 0.227997  [12864/50000]
+2023-11-28 12:21:32,021 | INFO : loss: 0.224783  [19264/50000]
+2023-11-28 12:21:50,041 | INFO : loss: 0.224039  [25664/50000]
+2023-11-28 12:22:06,814 | INFO : loss: 0.126387  [32064/50000]
+2023-11-28 12:22:23,696 | INFO : loss: 0.452891  [38464/50000]
+2023-11-28 12:22:40,028 | INFO : loss: 0.201800  [44864/50000]
+2023-11-28 12:22:52,983 | DEBUG : Train loop total time: 134.59s
+2023-11-28 12:22:52,984 | DEBUG : For loop time percentage with respect to total time: 79.2%
+2023-11-28 12:22:52,984 | DEBUG : Forward time percentage with respect to total time: 18.6%
+2023-11-28 12:22:52,984 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:22:52,984 | DEBUG : Backward time percentage with respect to forward time: 10.4%
+
+2023-11-28 12:23:18,393 | INFO : Test Error: 
+ Accuracy: 73.4%, Avg loss: 0.979807 
+
+2023-11-28 12:23:18,393 | INFO : Epoch 16
+-------------------------------
+2023-11-28 12:23:18,663 | INFO : loss: 0.168293  [   64/50000]
+2023-11-28 12:23:36,538 | INFO : loss: 0.187361  [ 6464/50000]
+2023-11-28 12:23:52,637 | INFO : loss: 0.209323  [12864/50000]
+2023-11-28 12:24:08,951 | INFO : loss: 0.093061  [19264/50000]
+2023-11-28 12:24:26,952 | INFO : loss: 0.121154  [25664/50000]
+2023-11-28 12:24:44,438 | INFO : loss: 0.106366  [32064/50000]
+2023-11-28 12:25:01,341 | INFO : loss: 0.126607  [38464/50000]
+2023-11-28 12:25:17,210 | INFO : loss: 0.166017  [44864/50000]
+2023-11-28 12:25:31,123 | DEBUG : Train loop total time: 132.73s
+2023-11-28 12:25:31,124 | DEBUG : For loop time percentage with respect to total time: 79.2%
+2023-11-28 12:25:31,124 | DEBUG : Forward time percentage with respect to total time: 18.5%
+2023-11-28 12:25:31,124 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:25:31,124 | DEBUG : Backward time percentage with respect to forward time: 10.4%
+
+2023-11-28 12:25:58,250 | INFO : Test Error: 
+ Accuracy: 72.8%, Avg loss: 1.099760 
+
+2023-11-28 12:25:58,251 | INFO : Epoch 17
+-------------------------------
+2023-11-28 12:25:58,482 | INFO : loss: 0.198711  [   64/50000]
+2023-11-28 12:26:15,063 | INFO : loss: 0.128764  [ 6464/50000]
+2023-11-28 12:26:33,817 | INFO : loss: 0.256621  [12864/50000]
+2023-11-28 12:26:50,505 | INFO : loss: 0.202891  [19264/50000]
+2023-11-28 12:27:08,944 | INFO : loss: 0.076219  [25664/50000]
+2023-11-28 12:27:27,159 | INFO : loss: 0.161594  [32064/50000]
+2023-11-28 12:27:43,667 | INFO : loss: 0.238068  [38464/50000]
+2023-11-28 12:28:02,558 | INFO : loss: 0.182637  [44864/50000]
+2023-11-28 12:28:16,772 | DEBUG : Train loop total time: 138.52s
+2023-11-28 12:28:16,773 | DEBUG : For loop time percentage with respect to total time: 79.5%
+2023-11-28 12:28:16,773 | DEBUG : Forward time percentage with respect to total time: 18.4%
+2023-11-28 12:28:16,773 | DEBUG : Backward time percentage with respect to total time: 1.8%
+2023-11-28 12:28:16,773 | DEBUG : Backward time percentage with respect to forward time: 10.1%
+
+2023-11-28 12:28:49,184 | INFO : Test Error: 
+ Accuracy: 73.2%, Avg loss: 1.138548 
+
+2023-11-28 12:28:49,185 | INFO : Epoch 18
+-------------------------------
+2023-11-28 12:28:49,458 | INFO : loss: 0.220227  [   64/50000]
+2023-11-28 12:29:07,227 | INFO : loss: 0.102700  [ 6464/50000]
+2023-11-28 12:29:24,987 | INFO : loss: 0.316097  [12864/50000]
+2023-11-28 12:29:44,105 | INFO : loss: 0.192959  [19264/50000]
+2023-11-28 12:30:04,900 | INFO : loss: 0.157250  [25664/50000]
+2023-11-28 12:30:23,596 | INFO : loss: 0.169187  [32064/50000]
+2023-11-28 12:30:42,059 | INFO : loss: 0.150486  [38464/50000]
+2023-11-28 12:31:00,505 | INFO : loss: 0.264032  [44864/50000]
+2023-11-28 12:31:14,878 | DEBUG : Train loop total time: 145.69s
+2023-11-28 12:31:14,879 | DEBUG : For loop time percentage with respect to total time: 81.6%
+2023-11-28 12:31:14,879 | DEBUG : Forward time percentage with respect to total time: 16.1%
+2023-11-28 12:31:14,879 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 12:31:14,879 | DEBUG : Backward time percentage with respect to forward time: 12.2%
+
+2023-11-28 12:31:43,570 | INFO : Test Error: 
+ Accuracy: 74.5%, Avg loss: 1.094547 
+
+2023-11-28 12:31:43,571 | INFO : Epoch 19
+-------------------------------
+2023-11-28 12:31:43,802 | INFO : loss: 0.095933  [   64/50000]
+2023-11-28 12:32:01,029 | INFO : loss: 0.029559  [ 6464/50000]
+2023-11-28 12:32:17,193 | INFO : loss: 0.043083  [12864/50000]
+2023-11-28 12:32:33,303 | INFO : loss: 0.126419  [19264/50000]
+2023-11-28 12:32:53,039 | INFO : loss: 0.044303  [25664/50000]
+2023-11-28 12:33:11,034 | INFO : loss: 0.359684  [32064/50000]
+2023-11-28 12:33:29,385 | INFO : loss: 0.161102  [38464/50000]
+2023-11-28 12:33:46,477 | INFO : loss: 0.169344  [44864/50000]
+2023-11-28 12:33:59,700 | DEBUG : Train loop total time: 136.13s
+2023-11-28 12:33:59,701 | DEBUG : For loop time percentage with respect to total time: 81.5%
+2023-11-28 12:33:59,701 | DEBUG : Forward time percentage with respect to total time: 16.2%
+2023-11-28 12:33:59,701 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 12:33:59,701 | DEBUG : Backward time percentage with respect to forward time: 12.5%
+
+2023-11-28 12:34:30,622 | INFO : Test Error: 
+ Accuracy: 74.9%, Avg loss: 1.099200 
+
+2023-11-28 12:34:30,623 | INFO : Epoch 20
+-------------------------------
+2023-11-28 12:34:30,884 | INFO : loss: 0.114740  [   64/50000]
+2023-11-28 12:34:49,895 | INFO : loss: 0.050297  [ 6464/50000]
+2023-11-28 12:35:07,024 | INFO : loss: 0.074351  [12864/50000]
+2023-11-28 12:35:23,902 | INFO : loss: 0.086367  [19264/50000]
+2023-11-28 12:35:41,537 | INFO : loss: 0.144154  [25664/50000]
+2023-11-28 12:35:57,140 | INFO : loss: 0.024946  [32064/50000]
+2023-11-28 12:36:13,656 | INFO : loss: 0.106824  [38464/50000]
+2023-11-28 12:36:30,667 | INFO : loss: 0.016743  [44864/50000]
+2023-11-28 12:36:44,248 | DEBUG : Train loop total time: 133.62s
+2023-11-28 12:36:44,249 | DEBUG : For loop time percentage with respect to total time: 80.8%
+2023-11-28 12:36:44,249 | DEBUG : Forward time percentage with respect to total time: 16.8%
+2023-11-28 12:36:44,249 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 12:36:44,249 | DEBUG : Backward time percentage with respect to forward time: 12.1%
+
+2023-11-28 12:37:14,219 | INFO : Test Error: 
+ Accuracy: 73.7%, Avg loss: 1.165645 
+
+2023-11-28 12:37:14,220 | INFO : Epoch 21
+-------------------------------
+2023-11-28 12:37:14,441 | INFO : loss: 0.041583  [   64/50000]
+2023-11-28 12:37:30,314 | INFO : loss: 0.035410  [ 6464/50000]
+2023-11-28 12:37:46,719 | INFO : loss: 0.120362  [12864/50000]
+2023-11-28 12:38:03,144 | INFO : loss: 0.018779  [19264/50000]
+2023-11-28 12:38:20,421 | INFO : loss: 0.045768  [25664/50000]
+2023-11-28 12:38:37,050 | INFO : loss: 0.092246  [32064/50000]
+2023-11-28 12:38:54,410 | INFO : loss: 0.118494  [38464/50000]
+2023-11-28 12:39:13,459 | INFO : loss: 0.031971  [44864/50000]
+2023-11-28 12:39:27,940 | DEBUG : Train loop total time: 133.72s
+2023-11-28 12:39:27,941 | DEBUG : For loop time percentage with respect to total time: 81.1%
+2023-11-28 12:39:27,941 | DEBUG : Forward time percentage with respect to total time: 16.4%
+2023-11-28 12:39:27,941 | DEBUG : Backward time percentage with respect to total time: 2.2%
+2023-11-28 12:39:27,941 | DEBUG : Backward time percentage with respect to forward time: 13.2%
+
+2023-11-28 12:39:58,270 | INFO : Test Error: 
+ Accuracy: 75.5%, Avg loss: 1.167967 
+
+2023-11-28 12:39:58,271 | INFO : Epoch 22
+-------------------------------
+2023-11-28 12:39:58,497 | INFO : loss: 0.003617  [   64/50000]
+2023-11-28 12:40:17,825 | INFO : loss: 0.049231  [ 6464/50000]
+2023-11-28 12:40:35,546 | INFO : loss: 0.005937  [12864/50000]
+2023-11-28 12:40:52,300 | INFO : loss: 0.097413  [19264/50000]
+2023-11-28 12:41:09,527 | INFO : loss: 0.047956  [25664/50000]
+2023-11-28 12:41:27,583 | INFO : loss: 0.106650  [32064/50000]
+2023-11-28 12:41:45,576 | INFO : loss: 0.114769  [38464/50000]
+2023-11-28 12:42:05,740 | INFO : loss: 0.099058  [44864/50000]
+2023-11-28 12:42:21,104 | DEBUG : Train loop total time: 142.83s
+2023-11-28 12:42:21,105 | DEBUG : For loop time percentage with respect to total time: 81.8%
+2023-11-28 12:42:21,105 | DEBUG : Forward time percentage with respect to total time: 15.9%
+2023-11-28 12:42:21,105 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:42:21,105 | DEBUG : Backward time percentage with respect to forward time: 11.9%
+
+2023-11-28 12:42:50,119 | INFO : Test Error: 
+ Accuracy: 72.3%, Avg loss: 1.387075 
+
+2023-11-28 12:42:50,120 | INFO : Epoch 23
+-------------------------------
+2023-11-28 12:42:50,385 | INFO : loss: 0.107100  [   64/50000]
+2023-11-28 12:43:07,051 | INFO : loss: 0.013138  [ 6464/50000]
+2023-11-28 12:43:24,298 | INFO : loss: 0.028237  [12864/50000]
+2023-11-28 12:43:42,345 | INFO : loss: 0.016172  [19264/50000]
+2023-11-28 12:43:59,734 | INFO : loss: 0.006201  [25664/50000]
+2023-11-28 12:44:16,832 | INFO : loss: 0.028420  [32064/50000]
+2023-11-28 12:44:34,673 | INFO : loss: 0.016624  [38464/50000]
+2023-11-28 12:44:53,023 | INFO : loss: 0.040481  [44864/50000]
+2023-11-28 12:45:06,549 | DEBUG : Train loop total time: 136.43s
+2023-11-28 12:45:06,549 | DEBUG : For loop time percentage with respect to total time: 81.2%
+2023-11-28 12:45:06,550 | DEBUG : Forward time percentage with respect to total time: 16.6%
+2023-11-28 12:45:06,550 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:45:06,550 | DEBUG : Backward time percentage with respect to forward time: 11.5%
+
+2023-11-28 12:45:33,486 | INFO : Test Error: 
+ Accuracy: 75.9%, Avg loss: 1.178215 
+
+2023-11-28 12:45:33,487 | INFO : Epoch 24
+-------------------------------
+2023-11-28 12:45:33,765 | INFO : loss: 0.099893  [   64/50000]
+2023-11-28 12:45:52,626 | INFO : loss: 0.077096  [ 6464/50000]
+2023-11-28 12:46:11,097 | INFO : loss: 0.058520  [12864/50000]
+2023-11-28 12:46:28,136 | INFO : loss: 0.093699  [19264/50000]
+2023-11-28 12:46:45,991 | INFO : loss: 0.117763  [25664/50000]
+2023-11-28 12:47:02,619 | INFO : loss: 0.095234  [32064/50000]
+2023-11-28 12:47:20,673 | INFO : loss: 0.053651  [38464/50000]
+2023-11-28 12:47:38,546 | INFO : loss: 0.081110  [44864/50000]
+2023-11-28 12:47:54,035 | DEBUG : Train loop total time: 140.55s
+2023-11-28 12:47:54,035 | DEBUG : For loop time percentage with respect to total time: 81.5%
+2023-11-28 12:47:54,036 | DEBUG : Forward time percentage with respect to total time: 16.3%
+2023-11-28 12:47:54,036 | DEBUG : Backward time percentage with respect to total time: 1.8%
+2023-11-28 12:47:54,036 | DEBUG : Backward time percentage with respect to forward time: 11.3%
+
+2023-11-28 12:48:21,215 | INFO : Test Error: 
+ Accuracy: 75.4%, Avg loss: 1.247979 
+
+2023-11-28 12:48:21,227 | INFO : Epoch 25
+-------------------------------
+2023-11-28 12:48:21,646 | INFO : loss: 0.025422  [   64/50000]
+2023-11-28 12:48:38,876 | INFO : loss: 0.091876  [ 6464/50000]
+2023-11-28 12:48:56,082 | INFO : loss: 0.082109  [12864/50000]
+2023-11-28 12:49:14,361 | INFO : loss: 0.012249  [19264/50000]
+2023-11-28 12:49:32,058 | INFO : loss: 0.046057  [25664/50000]
+2023-11-28 12:49:50,701 | INFO : loss: 0.032453  [32064/50000]
+2023-11-28 12:50:08,870 | INFO : loss: 0.011539  [38464/50000]
+2023-11-28 12:50:27,911 | INFO : loss: 0.081062  [44864/50000]
+2023-11-28 12:50:43,181 | DEBUG : Train loop total time: 141.95s
+2023-11-28 12:50:43,182 | DEBUG : For loop time percentage with respect to total time: 81.8%
+2023-11-28 12:50:43,182 | DEBUG : Forward time percentage with respect to total time: 16.0%
+2023-11-28 12:50:43,182 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:50:43,182 | DEBUG : Backward time percentage with respect to forward time: 11.9%
+
+2023-11-28 12:51:13,108 | INFO : Test Error: 
+ Accuracy: 75.3%, Avg loss: 1.320636 
+
+2023-11-28 12:51:13,109 | INFO : Epoch 26
+-------------------------------
+2023-11-28 12:51:13,414 | INFO : loss: 0.041464  [   64/50000]
+2023-11-28 12:51:32,321 | INFO : loss: 0.083211  [ 6464/50000]
+2023-11-28 12:51:49,788 | INFO : loss: 0.206050  [12864/50000]
+2023-11-28 12:52:07,123 | INFO : loss: 0.023839  [19264/50000]
+2023-11-28 12:52:24,811 | INFO : loss: 0.056622  [25664/50000]
+2023-11-28 12:52:43,944 | INFO : loss: 0.039320  [32064/50000]
+2023-11-28 12:53:01,786 | INFO : loss: 0.119373  [38464/50000]
+2023-11-28 12:53:21,536 | INFO : loss: 0.180600  [44864/50000]
+2023-11-28 12:53:36,613 | DEBUG : Train loop total time: 143.5s
+2023-11-28 12:53:36,614 | DEBUG : For loop time percentage with respect to total time: 82.0%
+2023-11-28 12:53:36,614 | DEBUG : Forward time percentage with respect to total time: 15.9%
+2023-11-28 12:53:36,614 | DEBUG : Backward time percentage with respect to total time: 1.8%
+2023-11-28 12:53:36,614 | DEBUG : Backward time percentage with respect to forward time: 11.1%
+
+2023-11-28 12:54:06,799 | INFO : Test Error: 
+ Accuracy: 75.2%, Avg loss: 1.391699 
+
+2023-11-28 12:54:06,801 | INFO : Epoch 27
+-------------------------------
+2023-11-28 12:54:07,059 | INFO : loss: 0.109566  [   64/50000]
+2023-11-28 12:54:27,366 | INFO : loss: 0.010557  [ 6464/50000]
+2023-11-28 12:54:47,281 | INFO : loss: 0.080112  [12864/50000]
+2023-11-28 12:55:06,883 | INFO : loss: 0.009353  [19264/50000]
+2023-11-28 12:55:24,685 | INFO : loss: 0.025002  [25664/50000]
+2023-11-28 12:55:41,623 | INFO : loss: 0.018143  [32064/50000]
+2023-11-28 12:55:58,746 | INFO : loss: 0.009031  [38464/50000]
+2023-11-28 12:56:16,653 | INFO : loss: 0.016725  [44864/50000]
+2023-11-28 12:56:30,397 | DEBUG : Train loop total time: 143.6s
+2023-11-28 12:56:30,398 | DEBUG : For loop time percentage with respect to total time: 81.8%
+2023-11-28 12:56:30,398 | DEBUG : Forward time percentage with respect to total time: 16.2%
+2023-11-28 12:56:30,398 | DEBUG : Backward time percentage with respect to total time: 1.7%
+2023-11-28 12:56:30,398 | DEBUG : Backward time percentage with respect to forward time: 10.7%
+
+2023-11-28 12:56:59,660 | INFO : Test Error: 
+ Accuracy: 75.9%, Avg loss: 1.320355 
+
+2023-11-28 12:56:59,661 | INFO : Epoch 28
+-------------------------------
+2023-11-28 12:56:59,870 | INFO : loss: 0.020902  [   64/50000]
+2023-11-28 12:57:17,808 | INFO : loss: 0.151869  [ 6464/50000]
+2023-11-28 12:57:35,208 | INFO : loss: 0.010297  [12864/50000]
+2023-11-28 12:57:52,745 | INFO : loss: 0.053679  [19264/50000]
+2023-11-28 12:58:13,447 | INFO : loss: 0.030868  [25664/50000]
+2023-11-28 12:58:32,969 | INFO : loss: 0.033260  [32064/50000]
+2023-11-28 12:58:53,836 | INFO : loss: 0.080331  [38464/50000]
+2023-11-28 12:59:12,034 | INFO : loss: 0.010097  [44864/50000]
+2023-11-28 12:59:26,042 | DEBUG : Train loop total time: 146.38s
+2023-11-28 12:59:26,044 | DEBUG : For loop time percentage with respect to total time: 81.8%
+2023-11-28 12:59:26,044 | DEBUG : Forward time percentage with respect to total time: 16.0%
+2023-11-28 12:59:26,044 | DEBUG : Backward time percentage with respect to total time: 1.9%
+2023-11-28 12:59:26,044 | DEBUG : Backward time percentage with respect to forward time: 11.7%
+
+2023-11-28 13:00:07,439 | INFO : Test Error: 
+ Accuracy: 75.3%, Avg loss: 1.370096 
+
+2023-11-28 13:00:07,440 | INFO : Epoch 29
+-------------------------------
+2023-11-28 13:00:07,670 | INFO : loss: 0.045443  [   64/50000]
+2023-11-28 13:00:29,544 | INFO : loss: 0.024698  [ 6464/50000]
+2023-11-28 13:00:49,465 | INFO : loss: 0.041671  [12864/50000]
+2023-11-28 13:01:14,994 | INFO : loss: 0.122458  [19264/50000]
+2023-11-28 13:01:50,030 | INFO : loss: 0.032494  [25664/50000]
+2023-11-28 13:02:26,361 | INFO : loss: 0.019411  [32064/50000]
+2023-11-28 13:03:04,063 | INFO : loss: 0.046691  [38464/50000]
+2023-11-28 13:03:34,297 | INFO : loss: 0.008564  [44864/50000]
+2023-11-28 13:03:54,048 | DEBUG : Train loop total time: 226.61s
+2023-11-28 13:03:54,049 | DEBUG : For loop time percentage with respect to total time: 86.0%
+2023-11-28 13:03:54,049 | DEBUG : Forward time percentage with respect to total time: 11.9%
+2023-11-28 13:03:54,049 | DEBUG : Backward time percentage with respect to total time: 1.8%
+2023-11-28 13:03:54,049 | DEBUG : Backward time percentage with respect to forward time: 14.8%
+
+2023-11-28 13:04:26,109 | INFO : Test Error: 
+ Accuracy: 76.1%, Avg loss: 1.351385 
+
+2023-11-28 13:04:26,110 | INFO : Epoch 30
+-------------------------------
+2023-11-28 13:04:26,318 | INFO : loss: 0.021538  [   64/50000]
+2023-11-28 13:04:44,298 | INFO : loss: 0.012541  [ 6464/50000]
+2023-11-28 13:05:08,940 | INFO : loss: 0.010348  [12864/50000]
+2023-11-28 13:05:38,192 | INFO : loss: 0.030466  [19264/50000]
+2023-11-28 13:06:11,897 | INFO : loss: 0.085257  [25664/50000]
+2023-11-28 13:06:52,281 | INFO : loss: 0.053856  [32064/50000]
+2023-11-28 13:07:30,048 | INFO : loss: 0.041525  [38464/50000]
+2023-11-28 13:08:04,600 | INFO : loss: 0.011496  [44864/50000]
+2023-11-28 13:08:32,709 | DEBUG : Train loop total time: 246.6s
+2023-11-28 13:08:32,774 | DEBUG : For loop time percentage with respect to total time: 82.8%
+2023-11-28 13:08:32,774 | DEBUG : Forward time percentage with respect to total time: 14.5%
+2023-11-28 13:08:32,774 | DEBUG : Backward time percentage with respect to total time: 2.3%
+2023-11-28 13:08:32,774 | DEBUG : Backward time percentage with respect to forward time: 16.1%
+
+2023-11-28 13:09:19,895 | INFO : Test Error: 
+ Accuracy: 75.8%, Avg loss: 1.372288 
+
+2023-11-28 13:09:19,944 | INFO : Epoch 31
+-------------------------------
+2023-11-28 13:09:21,482 | INFO : loss: 0.027243  [   64/50000]
+2023-11-28 13:09:54,858 | INFO : loss: 0.086938  [ 6464/50000]
+2023-11-28 13:10:28,012 | INFO : loss: 0.009791  [12864/50000]
+2023-11-28 13:11:02,295 | INFO : loss: 0.013242  [19264/50000]
+2023-11-28 13:11:43,110 | INFO : loss: 0.013586  [25664/50000]
+2023-11-28 13:12:17,666 | INFO : loss: 0.019552  [32064/50000]
+2023-11-28 13:12:48,257 | INFO : loss: 0.003217  [38464/50000]
+2023-11-28 13:13:14,665 | INFO : loss: 0.074473  [44864/50000]
+2023-11-28 13:13:35,950 | DEBUG : Train loop total time: 256.01s
+2023-11-28 13:13:35,951 | DEBUG : For loop time percentage with respect to total time: 78.1%
+2023-11-28 13:13:35,951 | DEBUG : Forward time percentage with respect to total time: 19.4%
+2023-11-28 13:13:35,951 | DEBUG : Backward time percentage with respect to total time: 2.0%
+2023-11-28 13:13:35,951 | DEBUG : Backward time percentage with respect to forward time: 10.3%
+
+2023-11-28 13:14:17,354 | INFO : Test Error: 
+ Accuracy: 76.0%, Avg loss: 1.354728 
+
+2023-11-28 13:14:17,364 | INFO : Epoch 32
+-------------------------------
+2023-11-28 13:14:17,783 | INFO : loss: 0.012174  [   64/50000]
+2023-11-28 13:14:44,401 | INFO : loss: 0.041042  [ 6464/50000]
+2023-11-28 13:15:13,558 | INFO : loss: 0.035052  [12864/50000]
+2023-11-28 13:15:40,146 | INFO : loss: 0.038908  [19264/50000]
+2023-11-28 13:16:08,962 | INFO : loss: 0.048736  [25664/50000]
+2023-11-28 13:16:41,446 | INFO : loss: 0.004105  [32064/50000]
+2023-11-28 13:17:07,994 | INFO : loss: 0.011296  [38464/50000]
+2023-11-28 13:17:32,491 | INFO : loss: 0.011169  [44864/50000]
+2023-11-28 13:17:52,892 | DEBUG : Train loop total time: 215.53s
+2023-11-28 13:17:52,911 | DEBUG : For loop time percentage with respect to total time: 74.0%
+2023-11-28 13:17:52,911 | DEBUG : Forward time percentage with respect to total time: 24.0%
+2023-11-28 13:17:52,911 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:17:52,911 | DEBUG : Backward time percentage with respect to forward time: 6.4%
+
+2023-11-28 13:18:31,963 | INFO : Test Error: 
+ Accuracy: 75.7%, Avg loss: 1.389846 
+
+2023-11-28 13:18:31,964 | INFO : Epoch 33
+-------------------------------
+2023-11-28 13:18:32,289 | INFO : loss: 0.037883  [   64/50000]
+2023-11-28 13:18:59,755 | INFO : loss: 0.003584  [ 6464/50000]
+2023-11-28 13:19:26,179 | INFO : loss: 0.052113  [12864/50000]
+2023-11-28 13:19:50,703 | INFO : loss: 0.017701  [19264/50000]
+2023-11-28 13:20:15,977 | INFO : loss: 0.087063  [25664/50000]
+2023-11-28 13:20:39,772 | INFO : loss: 0.020200  [32064/50000]
+2023-11-28 13:21:05,234 | INFO : loss: 0.035969  [38464/50000]
+2023-11-28 13:21:31,370 | INFO : loss: 0.012505  [44864/50000]
+2023-11-28 13:21:51,984 | DEBUG : Train loop total time: 200.02s
+2023-11-28 13:21:51,985 | DEBUG : For loop time percentage with respect to total time: 72.2%
+2023-11-28 13:21:51,985 | DEBUG : Forward time percentage with respect to total time: 25.9%
+2023-11-28 13:21:51,985 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:21:51,985 | DEBUG : Backward time percentage with respect to forward time: 5.3%
+
+2023-11-28 13:22:26,792 | INFO : Test Error: 
+ Accuracy: 75.9%, Avg loss: 1.400813 
+
+2023-11-28 13:22:26,793 | INFO : Epoch 34
+-------------------------------
+2023-11-28 13:22:27,123 | INFO : loss: 0.099982  [   64/50000]
+2023-11-28 13:22:50,577 | INFO : loss: 0.017060  [ 6464/50000]
+2023-11-28 13:23:13,073 | INFO : loss: 0.084493  [12864/50000]
+2023-11-28 13:23:37,266 | INFO : loss: 0.003216  [19264/50000]
+2023-11-28 13:24:02,888 | INFO : loss: 0.022859  [25664/50000]
+2023-11-28 13:24:26,418 | INFO : loss: 0.041076  [32064/50000]
+2023-11-28 13:24:49,429 | INFO : loss: 0.006856  [38464/50000]
+2023-11-28 13:25:11,956 | INFO : loss: 0.052428  [44864/50000]
+2023-11-28 13:25:30,597 | DEBUG : Train loop total time: 183.8s
+2023-11-28 13:25:30,598 | DEBUG : For loop time percentage with respect to total time: 69.5%
+2023-11-28 13:25:30,598 | DEBUG : Forward time percentage with respect to total time: 28.4%
+2023-11-28 13:25:30,598 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:25:30,598 | DEBUG : Backward time percentage with respect to forward time: 5.3%
+
+2023-11-28 13:26:06,658 | INFO : Test Error: 
+ Accuracy: 75.9%, Avg loss: 1.304082 
+
+2023-11-28 13:26:06,659 | INFO : Epoch 35
+-------------------------------
+2023-11-28 13:26:07,111 | INFO : loss: 0.001360  [   64/50000]
+2023-11-28 13:26:30,246 | INFO : loss: 0.029184  [ 6464/50000]
+2023-11-28 13:26:54,008 | INFO : loss: 0.003659  [12864/50000]
+2023-11-28 13:27:19,367 | INFO : loss: 0.028524  [19264/50000]
+2023-11-28 13:27:44,023 | INFO : loss: 0.005348  [25664/50000]
+2023-11-28 13:28:08,387 | INFO : loss: 0.004475  [32064/50000]
+2023-11-28 13:28:31,667 | INFO : loss: 0.085823  [38464/50000]
+2023-11-28 13:28:56,132 | INFO : loss: 0.015604  [44864/50000]
+2023-11-28 13:29:15,941 | DEBUG : Train loop total time: 189.28s
+2023-11-28 13:29:15,947 | DEBUG : For loop time percentage with respect to total time: 70.3%
+2023-11-28 13:29:15,947 | DEBUG : Forward time percentage with respect to total time: 27.7%
+2023-11-28 13:29:15,947 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:29:15,947 | DEBUG : Backward time percentage with respect to forward time: 5.2%
+
+2023-11-28 13:29:54,437 | INFO : Test Error: 
+ Accuracy: 75.8%, Avg loss: 1.474266 
+
+2023-11-28 13:29:54,437 | INFO : Epoch 36
+-------------------------------
+2023-11-28 13:29:54,999 | INFO : loss: 0.041241  [   64/50000]
+2023-11-28 13:30:20,847 | INFO : loss: 0.005327  [ 6464/50000]
+2023-11-28 13:30:45,036 | INFO : loss: 0.004614  [12864/50000]
+2023-11-28 13:31:07,902 | INFO : loss: 0.033505  [19264/50000]
+2023-11-28 13:31:34,294 | INFO : loss: 0.030712  [25664/50000]
+2023-11-28 13:32:03,046 | INFO : loss: 0.027673  [32064/50000]
+2023-11-28 13:32:28,817 | INFO : loss: 0.003438  [38464/50000]
+2023-11-28 13:32:51,928 | INFO : loss: 0.055898  [44864/50000]
+2023-11-28 13:33:09,644 | DEBUG : Train loop total time: 195.21s
+2023-11-28 13:33:09,645 | DEBUG : For loop time percentage with respect to total time: 70.2%
+2023-11-28 13:33:09,645 | DEBUG : Forward time percentage with respect to total time: 27.8%
+2023-11-28 13:33:09,645 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:33:09,645 | DEBUG : Backward time percentage with respect to forward time: 5.3%
+
+2023-11-28 13:33:44,582 | INFO : Test Error: 
+ Accuracy: 76.0%, Avg loss: 1.404055 
+
+2023-11-28 13:33:44,583 | INFO : Epoch 37
+-------------------------------
+2023-11-28 13:33:44,890 | INFO : loss: 0.001011  [   64/50000]
+2023-11-28 13:34:09,555 | INFO : loss: 0.005293  [ 6464/50000]
+2023-11-28 13:34:33,186 | INFO : loss: 0.008930  [12864/50000]
+2023-11-28 13:34:56,970 | INFO : loss: 0.003150  [19264/50000]
+2023-11-28 13:35:21,489 | INFO : loss: 0.006181  [25664/50000]
+2023-11-28 13:35:45,921 | INFO : loss: 0.004300  [32064/50000]
+2023-11-28 13:36:10,245 | INFO : loss: 0.060951  [38464/50000]
+2023-11-28 13:36:35,488 | INFO : loss: 0.020122  [44864/50000]
+2023-11-28 13:36:54,653 | DEBUG : Train loop total time: 190.07s
+2023-11-28 13:36:54,653 | DEBUG : For loop time percentage with respect to total time: 69.9%
+2023-11-28 13:36:54,653 | DEBUG : Forward time percentage with respect to total time: 28.1%
+2023-11-28 13:36:54,653 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:36:54,653 | DEBUG : Backward time percentage with respect to forward time: 5.2%
+
+2023-11-28 13:37:30,374 | INFO : Test Error: 
+ Accuracy: 76.2%, Avg loss: 1.375191 
+
+2023-11-28 13:37:30,374 | INFO : Epoch 38
+-------------------------------
+2023-11-28 13:37:30,657 | INFO : loss: 0.007115  [   64/50000]
+2023-11-28 13:37:56,163 | INFO : loss: 0.010208  [ 6464/50000]
+2023-11-28 13:38:20,114 | INFO : loss: 0.013792  [12864/50000]
+2023-11-28 13:38:45,144 | INFO : loss: 0.012835  [19264/50000]
+2023-11-28 13:39:07,753 | INFO : loss: 0.004288  [25664/50000]
+2023-11-28 13:39:31,451 | INFO : loss: 0.005784  [32064/50000]
+2023-11-28 13:39:55,842 | INFO : loss: 0.001004  [38464/50000]
+2023-11-28 13:40:21,562 | INFO : loss: 0.005185  [44864/50000]
+2023-11-28 13:40:40,827 | DEBUG : Train loop total time: 190.45s
+2023-11-28 13:40:40,828 | DEBUG : For loop time percentage with respect to total time: 70.8%
+2023-11-28 13:40:40,828 | DEBUG : Forward time percentage with respect to total time: 27.2%
+2023-11-28 13:40:40,828 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:40:40,828 | DEBUG : Backward time percentage with respect to forward time: 5.3%
+
+2023-11-28 13:41:18,122 | INFO : Test Error: 
+ Accuracy: 76.2%, Avg loss: 1.422876 
+
+2023-11-28 13:41:18,123 | INFO : Epoch 39
+-------------------------------
+2023-11-28 13:41:18,410 | INFO : loss: 0.032600  [   64/50000]
+2023-11-28 13:41:44,665 | INFO : loss: 0.004035  [ 6464/50000]
+2023-11-28 13:42:10,802 | INFO : loss: 0.007052  [12864/50000]
+2023-11-28 13:42:35,470 | INFO : loss: 0.013205  [19264/50000]
+2023-11-28 13:43:00,861 | INFO : loss: 0.002447  [25664/50000]
+2023-11-28 13:43:25,518 | INFO : loss: 0.000895  [32064/50000]
+2023-11-28 13:43:48,253 | INFO : loss: 0.001243  [38464/50000]
+2023-11-28 13:44:10,380 | INFO : loss: 0.096905  [44864/50000]
+2023-11-28 13:44:29,764 | DEBUG : Train loop total time: 191.64s
+2023-11-28 13:44:29,764 | DEBUG : For loop time percentage with respect to total time: 70.9%
+2023-11-28 13:44:29,764 | DEBUG : Forward time percentage with respect to total time: 27.0%
+2023-11-28 13:44:29,765 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 13:44:29,765 | DEBUG : Backward time percentage with respect to forward time: 5.5%
+
+2023-11-28 13:45:05,158 | INFO : Test Error: 
+ Accuracy: 76.1%, Avg loss: 1.426261 
+
+2023-11-28 13:45:05,159 | INFO : Epoch 40
+-------------------------------
+2023-11-28 13:45:05,484 | INFO : loss: 0.009155  [   64/50000]
+2023-11-28 13:45:30,624 | INFO : loss: 0.036776  [ 6464/50000]
+2023-11-28 13:45:55,372 | INFO : loss: 0.002295  [12864/50000]
+2023-11-28 13:46:18,574 | INFO : loss: 0.004405  [19264/50000]
+2023-11-28 13:46:42,237 | INFO : loss: 0.020579  [25664/50000]
+2023-11-28 13:47:06,017 | INFO : loss: 0.005058  [32064/50000]
+2023-11-28 13:47:31,234 | INFO : loss: 0.000095  [38464/50000]
+2023-11-28 13:47:57,381 | INFO : loss: 0.009068  [44864/50000]
+2023-11-28 13:48:15,919 | DEBUG : Train loop total time: 190.76s
+2023-11-28 13:48:15,923 | DEBUG : For loop time percentage with respect to total time: 69.7%
+2023-11-28 13:48:15,923 | DEBUG : Forward time percentage with respect to total time: 28.3%
+2023-11-28 13:48:15,923 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:48:15,923 | DEBUG : Backward time percentage with respect to forward time: 5.0%
+
+2023-11-28 13:48:56,559 | INFO : Test Error: 
+ Accuracy: 76.7%, Avg loss: 1.428253 
+
+2023-11-28 13:48:56,560 | INFO : Epoch 41
+-------------------------------
+2023-11-28 13:48:56,842 | INFO : loss: 0.003826  [   64/50000]
+2023-11-28 13:49:20,637 | INFO : loss: 0.016726  [ 6464/50000]
+2023-11-28 13:49:45,091 | INFO : loss: 0.013643  [12864/50000]
+2023-11-28 13:50:09,577 | INFO : loss: 0.022054  [19264/50000]
+2023-11-28 13:50:32,542 | INFO : loss: 0.001241  [25664/50000]
+2023-11-28 13:50:57,563 | INFO : loss: 0.001638  [32064/50000]
+2023-11-28 13:51:20,588 | INFO : loss: 0.007067  [38464/50000]
+2023-11-28 13:51:43,670 | INFO : loss: 0.045712  [44864/50000]
+2023-11-28 13:52:05,034 | DEBUG : Train loop total time: 188.47s
+2023-11-28 13:52:05,034 | DEBUG : For loop time percentage with respect to total time: 69.5%
+2023-11-28 13:52:05,035 | DEBUG : Forward time percentage with respect to total time: 28.5%
+2023-11-28 13:52:05,035 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:52:05,035 | DEBUG : Backward time percentage with respect to forward time: 5.0%
+
+2023-11-28 13:52:42,100 | INFO : Test Error: 
+ Accuracy: 76.9%, Avg loss: 1.404983 
+
+2023-11-28 13:52:42,101 | INFO : Epoch 42
+-------------------------------
+2023-11-28 13:52:42,671 | INFO : loss: 0.003793  [   64/50000]
+2023-11-28 13:53:06,367 | INFO : loss: 0.000761  [ 6464/50000]
+2023-11-28 13:53:30,642 | INFO : loss: 0.008622  [12864/50000]
+2023-11-28 13:53:53,264 | INFO : loss: 0.000628  [19264/50000]
+2023-11-28 13:54:16,044 | INFO : loss: 0.004393  [25664/50000]
+2023-11-28 13:54:39,525 | INFO : loss: 0.011238  [32064/50000]
+2023-11-28 13:55:03,697 | INFO : loss: 0.056707  [38464/50000]
+2023-11-28 13:55:26,750 | INFO : loss: 0.004410  [44864/50000]
+2023-11-28 13:55:45,645 | DEBUG : Train loop total time: 183.54s
+2023-11-28 13:55:45,646 | DEBUG : For loop time percentage with respect to total time: 69.8%
+2023-11-28 13:55:45,646 | DEBUG : Forward time percentage with respect to total time: 28.2%
+2023-11-28 13:55:45,646 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:55:45,646 | DEBUG : Backward time percentage with respect to forward time: 5.1%
+
+2023-11-28 13:56:21,258 | INFO : Test Error: 
+ Accuracy: 76.2%, Avg loss: 1.442546 
+
+2023-11-28 13:56:21,259 | INFO : Epoch 43
+-------------------------------
+2023-11-28 13:56:21,559 | INFO : loss: 0.011254  [   64/50000]
+2023-11-28 13:56:44,778 | INFO : loss: 0.006406  [ 6464/50000]
+2023-11-28 13:57:09,283 | INFO : loss: 0.002477  [12864/50000]
+2023-11-28 13:57:32,129 | INFO : loss: 0.007057  [19264/50000]
+2023-11-28 13:57:56,065 | INFO : loss: 0.013272  [25664/50000]
+2023-11-28 13:58:19,530 | INFO : loss: 0.001267  [32064/50000]
+2023-11-28 13:58:42,194 | INFO : loss: 0.012596  [38464/50000]
+2023-11-28 13:59:06,110 | INFO : loss: 0.000816  [44864/50000]
+2023-11-28 13:59:25,240 | DEBUG : Train loop total time: 183.98s
+2023-11-28 13:59:25,271 | DEBUG : For loop time percentage with respect to total time: 70.3%
+2023-11-28 13:59:25,271 | DEBUG : Forward time percentage with respect to total time: 27.7%
+2023-11-28 13:59:25,271 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 13:59:25,271 | DEBUG : Backward time percentage with respect to forward time: 5.1%
+
+2023-11-28 14:00:00,043 | INFO : Test Error: 
+ Accuracy: 76.6%, Avg loss: 1.381958 
+
+2023-11-28 14:00:00,053 | INFO : Epoch 44
+-------------------------------
+2023-11-28 14:00:00,510 | INFO : loss: 0.003902  [   64/50000]
+2023-11-28 14:00:26,267 | INFO : loss: 0.009310  [ 6464/50000]
+2023-11-28 14:00:49,768 | INFO : loss: 0.008286  [12864/50000]
+2023-11-28 14:01:12,666 | INFO : loss: 0.004893  [19264/50000]
+2023-11-28 14:01:38,422 | INFO : loss: 0.003007  [25664/50000]
+2023-11-28 14:02:05,315 | INFO : loss: 0.008754  [32064/50000]
+2023-11-28 14:02:31,371 | INFO : loss: 0.002251  [38464/50000]
+2023-11-28 14:02:58,886 | INFO : loss: 0.001331  [44864/50000]
+2023-11-28 14:03:18,146 | DEBUG : Train loop total time: 198.09s
+2023-11-28 14:03:18,147 | DEBUG : For loop time percentage with respect to total time: 71.0%
+2023-11-28 14:03:18,147 | DEBUG : Forward time percentage with respect to total time: 27.0%
+2023-11-28 14:03:18,147 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 14:03:18,147 | DEBUG : Backward time percentage with respect to forward time: 5.2%
+
+2023-11-28 14:03:56,146 | INFO : Test Error: 
+ Accuracy: 76.4%, Avg loss: 1.390309 
+
+2023-11-28 14:03:56,163 | INFO : Epoch 45
+-------------------------------
+2023-11-28 14:03:56,863 | INFO : loss: 0.006660  [   64/50000]
+2023-11-28 14:04:23,673 | INFO : loss: 0.001996  [ 6464/50000]
+2023-11-28 14:04:49,392 | INFO : loss: 0.004199  [12864/50000]
+2023-11-28 14:05:15,357 | INFO : loss: 0.005828  [19264/50000]
+2023-11-28 14:05:42,746 | INFO : loss: 0.001041  [25664/50000]
+2023-11-28 14:06:12,019 | INFO : loss: 0.001747  [32064/50000]
+2023-11-28 14:06:37,819 | INFO : loss: 0.013151  [38464/50000]
+2023-11-28 14:07:03,422 | INFO : loss: 0.076242  [44864/50000]
+2023-11-28 14:07:23,680 | DEBUG : Train loop total time: 207.52s
+2023-11-28 14:07:23,696 | DEBUG : For loop time percentage with respect to total time: 71.6%
+2023-11-28 14:07:23,696 | DEBUG : Forward time percentage with respect to total time: 26.5%
+2023-11-28 14:07:23,696 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 14:07:23,696 | DEBUG : Backward time percentage with respect to forward time: 5.5%
+
+2023-11-28 14:08:02,961 | INFO : Test Error: 
+ Accuracy: 76.8%, Avg loss: 1.469355 
+
+2023-11-28 14:08:02,962 | INFO : Epoch 46
+-------------------------------
+2023-11-28 14:08:03,313 | INFO : loss: 0.042955  [   64/50000]
+2023-11-28 14:08:30,064 | INFO : loss: 0.033457  [ 6464/50000]
+2023-11-28 14:08:55,259 | INFO : loss: 0.002324  [12864/50000]
+2023-11-28 14:09:18,964 | INFO : loss: 0.002561  [19264/50000]
+2023-11-28 14:09:43,519 | INFO : loss: 0.001373  [25664/50000]
+2023-11-28 14:10:07,292 | INFO : loss: 0.002567  [32064/50000]
+2023-11-28 14:10:32,036 | INFO : loss: 0.002643  [38464/50000]
+2023-11-28 14:10:57,232 | INFO : loss: 0.000107  [44864/50000]
+2023-11-28 14:11:18,653 | DEBUG : Train loop total time: 195.69s
+2023-11-28 14:11:18,653 | DEBUG : For loop time percentage with respect to total time: 71.7%
+2023-11-28 14:11:18,653 | DEBUG : Forward time percentage with respect to total time: 26.3%
+2023-11-28 14:11:18,654 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 14:11:18,654 | DEBUG : Backward time percentage with respect to forward time: 5.7%
+
+2023-11-28 14:11:59,950 | INFO : Test Error: 
+ Accuracy: 76.9%, Avg loss: 1.491817 
+
+2023-11-28 14:11:59,968 | INFO : Epoch 47
+-------------------------------
+2023-11-28 14:12:00,393 | INFO : loss: 0.024189  [   64/50000]
+2023-11-28 14:12:25,812 | INFO : loss: 0.014243  [ 6464/50000]
+2023-11-28 14:12:53,498 | INFO : loss: 0.017623  [12864/50000]
+2023-11-28 14:13:18,543 | INFO : loss: 0.006953  [19264/50000]
+2023-11-28 14:13:46,095 | INFO : loss: 0.062077  [25664/50000]
+2023-11-28 14:14:13,700 | INFO : loss: 0.024715  [32064/50000]
+2023-11-28 14:14:40,500 | INFO : loss: 0.010503  [38464/50000]
+2023-11-28 14:15:06,126 | INFO : loss: 0.000735  [44864/50000]
+2023-11-28 14:15:27,265 | DEBUG : Train loop total time: 207.3s
+2023-11-28 14:15:27,266 | DEBUG : For loop time percentage with respect to total time: 73.2%
+2023-11-28 14:15:27,266 | DEBUG : Forward time percentage with respect to total time: 25.0%
+2023-11-28 14:15:27,266 | DEBUG : Backward time percentage with respect to total time: 1.3%
+2023-11-28 14:15:27,266 | DEBUG : Backward time percentage with respect to forward time: 5.3%
+
+2023-11-28 14:16:03,871 | INFO : Test Error: 
+ Accuracy: 77.0%, Avg loss: 1.378517 
+
+2023-11-28 14:16:03,887 | INFO : Epoch 48
+-------------------------------
+2023-11-28 14:16:04,668 | INFO : loss: 0.030029  [   64/50000]
+2023-11-28 14:16:30,292 | INFO : loss: 0.016001  [ 6464/50000]
+2023-11-28 14:16:57,173 | INFO : loss: 0.000681  [12864/50000]
+2023-11-28 14:17:21,773 | INFO : loss: 0.000799  [19264/50000]
+2023-11-28 14:17:46,909 | INFO : loss: 0.000557  [25664/50000]
+2023-11-28 14:18:11,893 | INFO : loss: 0.006683  [32064/50000]
+2023-11-28 14:18:36,347 | INFO : loss: 0.006239  [38464/50000]
+2023-11-28 14:19:01,310 | INFO : loss: 0.006473  [44864/50000]
+2023-11-28 14:19:20,091 | DEBUG : Train loop total time: 196.2s
+2023-11-28 14:19:20,092 | DEBUG : For loop time percentage with respect to total time: 71.9%
+2023-11-28 14:19:20,092 | DEBUG : Forward time percentage with respect to total time: 26.1%
+2023-11-28 14:19:20,092 | DEBUG : Backward time percentage with respect to total time: 1.5%
+2023-11-28 14:19:20,092 | DEBUG : Backward time percentage with respect to forward time: 5.8%
+
+2023-11-28 14:19:58,797 | INFO : Test Error: 
+ Accuracy: 76.8%, Avg loss: 1.457372 
+
+2023-11-28 14:19:58,798 | INFO : Epoch 49
+-------------------------------
+2023-11-28 14:19:59,362 | INFO : loss: 0.001728  [   64/50000]
+2023-11-28 14:20:26,473 | INFO : loss: 0.000367  [ 6464/50000]
+2023-11-28 14:20:54,823 | INFO : loss: 0.006453  [12864/50000]
+2023-11-28 14:21:20,359 | INFO : loss: 0.010195  [19264/50000]
+2023-11-28 14:21:47,529 | INFO : loss: 0.009569  [25664/50000]
+2023-11-28 14:22:14,830 | INFO : loss: 0.000297  [32064/50000]
+2023-11-28 14:22:39,448 | INFO : loss: 0.001375  [38464/50000]
+2023-11-28 14:23:06,695 | INFO : loss: 0.036994  [44864/50000]
+2023-11-28 14:23:29,211 | DEBUG : Train loop total time: 210.41s
+2023-11-28 14:23:29,233 | DEBUG : For loop time percentage with respect to total time: 73.4%
+2023-11-28 14:23:29,233 | DEBUG : Forward time percentage with respect to total time: 24.8%
+2023-11-28 14:23:29,233 | DEBUG : Backward time percentage with respect to total time: 1.3%
+2023-11-28 14:23:29,233 | DEBUG : Backward time percentage with respect to forward time: 5.2%
+
+2023-11-28 14:24:12,490 | INFO : Test Error: 
+ Accuracy: 76.9%, Avg loss: 1.494110 
+
+2023-11-28 14:24:12,491 | INFO : Epoch 50
+-------------------------------
+2023-11-28 14:24:13,158 | INFO : loss: 0.011642  [   64/50000]
+2023-11-28 14:24:41,692 | INFO : loss: 0.001288  [ 6464/50000]
+2023-11-28 14:25:09,890 | INFO : loss: 0.001319  [12864/50000]
+2023-11-28 14:25:37,910 | INFO : loss: 0.001456  [19264/50000]
+2023-11-28 14:26:05,643 | INFO : loss: 0.002209  [25664/50000]
+2023-11-28 14:26:32,568 | INFO : loss: 0.007689  [32064/50000]
+2023-11-28 14:27:00,873 | INFO : loss: 0.001596  [38464/50000]
+2023-11-28 14:27:26,403 | INFO : loss: 0.001153  [44864/50000]
+2023-11-28 14:27:46,877 | DEBUG : Train loop total time: 214.39s
+2023-11-28 14:27:46,877 | DEBUG : For loop time percentage with respect to total time: 73.1%
+2023-11-28 14:27:46,877 | DEBUG : Forward time percentage with respect to total time: 25.0%
+2023-11-28 14:27:46,877 | DEBUG : Backward time percentage with respect to total time: 1.4%
+2023-11-28 14:27:46,877 | DEBUG : Backward time percentage with respect to forward time: 5.6%
+
+2023-11-28 14:28:27,146 | INFO : Test Error: 
+ Accuracy: 76.6%, Avg loss: 1.503606 
+
+Done!
+Total training time: 10070.290684700012

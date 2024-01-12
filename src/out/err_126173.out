@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 71, in <module>
+    main()
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 68, in main
+    net.train(dataloaders, decay=True, method='scattered freezing')
+  File "/NFSHOME/mmasci/code/src/models/vgg11.py", line 193, in train
+    randomScatteredFreezing\
+  File "/NFSHOME/mmasci/code/src/analysis/freezing_methods.py", line 221, in randomScatteredFreezing
+    indices = sample(range(0, num_layers), calculated_layer+1)
+TypeError: can only concatenate tuple (not "int") to tuple

@@ -65,7 +65,7 @@ def main():
 
     net = VGG11(num_classes, device)
     net.initialize()
-    net.train(dataloaders, decay=True, method='freezing app')
+    net.train(dataloaders, decay=True)#, method='sequential freezing')
 
 if __name__ == "__main__":
     main()

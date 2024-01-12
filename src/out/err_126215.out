@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 71, in <module>
+    main()
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 68, in main
+    net.train(dataloaders, decay=True)#, method='scattered freezing')
+  File "/NFSHOME/mmasci/code/src/models/vgg11.py", line 172, in train
+    if frozen_net != True:
+UnboundLocalError: local variable 'frozen_net' referenced before assignment

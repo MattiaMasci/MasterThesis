@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 71, in <module>
+    main()
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 68, in main
+    net.train(dataloaders, decay=True, method='sequential freezing')
+  File "/NFSHOME/mmasci/code/src/models/vgg11.py", line 198, in train
+    randomSequentialFreezing\
+  File "/NFSHOME/mmasci/code/src/analysis/freezing_methods.py", line 189, in randomSequentialFreezing
+    if current_epoch >= (epochs // initial_percentage):
+NameError: name 'epochs' is not defined

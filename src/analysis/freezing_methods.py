@@ -49,7 +49,7 @@ def deFreeze(model):
     logger.info('--------- DE-FREEZING PROCEDURE TERMINATED ---------')
 
 def normalizedGradientDifferenceFreezingProcedure(calculated_layer, current_epoch, total_epochs, model,\
-frequence, freezing_epochs, frozen, grad_dict, grad_dict_abs, defreeze=0, calculations=False, initial_percentage=10):
+frequence, freezing_epochs, num_layers, frozen, grad_dict, grad_dict_abs, defreeze=0, calculations=False, initial_percentage=10):
     """ 
     Prende in input l'indice dell'epoca corrente, il numero di epoche totali, il modello in training,
     la frequenza con cui si vuole freezare e un dizionario ordinato con un tensore gradiente per ogni layer,
@@ -57,58 +57,59 @@ frequence, freezing_epochs, frozen, grad_dict, grad_dict_abs, defreeze=0, calcul
     """
 
     layer_list = ('conv','linear')
-
-    if defreeze == 0:
-        if calculations == True or current_epoch == (total_epochs // initial_percentage):
-            calculations = False
-            # Freezing decisions part
-            logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
-            freezingRate_array = torch.zeros(len(grad_dict))-1
-
-            for layer_counter in range(len(grad_dict)):
-                if grad_dict[layer_counter] != None:
-                    numerator_totalSummation = torch.sum(abs(grad_dict[layer_counter]))
-                    denominator_totalSummation = torch.sum(grad_dict_abs[layer_counter])
-                    freezingRate_array[layer_counter] = 1 - (numerator_totalSummation/denominator_totalSummation)
-                
-            # Array standardization
-            logger.info(f"Tensor before normalize:\n{freezingRate_array}")
-
-            mean, std= torch.mean(freezingRate_array[freezingRate_array!=-1]), \
-                torch.std(freezingRate_array[freezingRate_array!=-1])
-            logger.info(f"Mean and Std before Normalize:\n{mean},{std}")
-
-            freezingRate_array[freezingRate_array==-1] = float('-inf')
-            standardized_freezingRate_array = freezingRate_array.clone()
-
-            if not(torch.isnan(std)): standardized_freezingRate_array  = (standardized_freezingRate_array-mean)/std
-
-            standardized_freezingRate_array[0] = freezingRate_array[0]
-            standardized_freezingRate_array[layer_counter] = freezingRate_array[layer_counter]
-            logger.info(f"Tensor after Normalize:\n{standardized_freezingRate_array}")
-        
-            # Maximum subarray sum
-            cum_sum = torch.cumsum(standardized_freezingRate_array[standardized_freezingRate_array!=float('-inf')],dim=0)
-            count = (standardized_freezingRate_array[standardized_freezingRate_array==float('-inf')].size(dim=0))
-            calculated_layer = torch.argmax(cum_sum)+count
-        
-            logger.info(f'Cumulative sum array:\n{cum_sum}')
-            logger.info(f'Calculated argmax: {calculated_layer}')
-            logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
-
-        if current_epoch >= (total_epochs // initial_percentage) and current_epoch % frequence == 0:
-            array = torch.zeros(len(grad_dict), dtype=torch.bool)
-            array[:calculated_layer+1] = True
-
-            frozen = freeze(model,array)
-            defreeze = freezing_epochs
-
-    else:
-        defreeze = defreeze-1
+    
+    if current_epoch >= (total_epochs // initial_percentage):
         if defreeze == 0:
-            deFreeze(model)
-            frozen = False
+            if calculations == True and current_epoch % frequence == 0:
+                calculations = False
+                # Freezing decisions part
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
+                freezingRate_array = torch.zeros(len(grad_dict))-1
 
+                for layer_counter in range(len(grad_dict)):
+                    if grad_dict[layer_counter] != None:
+                        numerator_totalSummation = torch.sum(abs(grad_dict[layer_counter]))
+                        denominator_totalSummation = torch.sum(grad_dict_abs[layer_counter])
+                        freezingRate_array[layer_counter] = 1 - (numerator_totalSummation/denominator_totalSummation)
+                    
+                # Array standardization
+                logger.info(f"Tensor before normalize:\n{freezingRate_array}")
+
+                mean, std= torch.mean(freezingRate_array[freezingRate_array!=-1]), \
+                    torch.std(freezingRate_array[freezingRate_array!=-1])
+                logger.info(f"Mean and Std before Normalize:\n{mean},{std}")
+
+                freezingRate_array[freezingRate_array==-1] = float('-inf')
+                standardized_freezingRate_array = freezingRate_array.clone()
+
+                if not(torch.isnan(std)): standardized_freezingRate_array  = (standardized_freezingRate_array-mean)/std
+
+                standardized_freezingRate_array[0] = freezingRate_array[0]
+                standardized_freezingRate_array[layer_counter] = freezingRate_array[layer_counter]
+                logger.info(f"Tensor after Normalize:\n{standardized_freezingRate_array}")
+            
+                # Maximum subarray sum
+                cum_sum = torch.cumsum(standardized_freezingRate_array[standardized_freezingRate_array!=float('-inf')],dim=0)
+                count = (standardized_freezingRate_array[standardized_freezingRate_array==float('-inf')].size(dim=0))
+                calculated_layer = torch.argmax(cum_sum)+count
+            
+                logger.info(f'Cumulative sum array:\n{cum_sum}')
+                logger.info(f'Calculated argmax: {calculated_layer}')
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
+
+            if current_epoch >= (total_epochs // initial_percentage) and current_epoch % frequence == 0:
+                array = torch.zeros(num_layers, dtype=torch.bool)
+                array[:calculated_layer+1] = True
+
+                frozen = freeze(model,array)
+                defreeze = freezing_epochs
+
+        else:
+            defreeze = defreeze-1
+            if defreeze == 0:
+                deFreeze(model)
+                frozen = False
+    
     #return freezingRate_array
     return calculated_layer, calculations, defreeze, frozen
 
@@ -180,30 +181,29 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
             """
 
 def randomSequentialFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
-num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
+num_layers, frozen, defreeze=0, initial_percentage=10):
     """ 
     Prende in input l'indice dell'epoca corrente, il numero di epoche totali, il modello in training e
     la frequenza con cui si vuole freezare e ritorna un indice casuale relativo al layer da freezare (da 0 a n.layer-1)
     """
 
-    if defreeze == 0:
-        if calculations == True or current_epoch == (total_epochs // initial_percentage):
-            logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
-            # Freezing decisions part
-            calculated_layer = randint(0, num_layers)
-            logger.info(f'Calculated argmax: {calculated_layer}')
-            logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
-            
-        if current_epoch >= (total_epochs // initial_percentage) and current_epoch % frequence == 0:
-            array = torch.zeros(num_layers, dtype=torch.bool)
-            array[:calculated_layer+1] = True
-            frozen = freeze(model,array)
-            defreeze = freezing_epochs
-    else:
-        defreeze = defreeze-1
+    if current_epoch >= (total_epochs // initial_percentage):
         if defreeze == 0:
-            deFreeze(model)
-            frozen = False
+            if current_epoch % frequence == 0:
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
+                # Freezing decisions part
+                calculated_layer = randint(0, num_layers)
+                logger.info(f'Calculated argmax: {calculated_layer}')
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
+                array = torch.zeros(num_layers, dtype=torch.bool)
+                array[:calculated_layer+1] = True
+                frozen = freeze(model,array)
+                defreeze = freezing_epochs
+        else:
+            defreeze = defreeze-1
+            if defreeze == 0:
+                deFreeze(model)
+                frozen = False
 
     return calculated_layer, defreeze, frozen
 
@@ -215,7 +215,7 @@ num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
     """
 
     if defreeze == 0:
-        if calculations == True or current_epoch == (total_epochs // initial_percentage):
+        if calculations == True:
             logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
             # Freezing decisions part
             indices = sample(range(0, num_layers), calculated_layer+1)

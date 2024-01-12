@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/NFSHOME/mmasci/code/src/__main__.py", line 4, in <module>
+    from models.vgg11 import VGG11
+  File "/NFSHOME/mmasci/code/src/models/vgg11.py", line 149
+    if calculations == True and defreeze == 0 and (t+1)) % frequence == 0:
+                                                       ^
+SyntaxError: unmatched ')'

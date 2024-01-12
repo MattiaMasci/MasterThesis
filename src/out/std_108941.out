@@ -1,0 +1,1301 @@
+Epoch 1
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.316313  [   64/25000]
+loss: 2.296744  [ 6464/25000]
+loss: 2.299161  [12864/25000]
+loss: 2.293775  [19264/25000]
+Test Error: 
+ Accuracy: 10.2%, Avg loss: 2.299794 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 2
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.311782  [   64/25000]
+loss: 2.295423  [ 6464/25000]
+loss: 2.295086  [12864/25000]
+loss: 2.293336  [19264/25000]
+Test Error: 
+ Accuracy: 13.0%, Avg loss: 2.297385 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 3
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.308362  [   64/25000]
+loss: 2.293866  [ 6464/25000]
+loss: 2.291035  [12864/25000]
+loss: 2.291926  [19264/25000]
+Test Error: 
+ Accuracy: 14.3%, Avg loss: 2.294566 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 4
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.305802  [   64/25000]
+loss: 2.291607  [ 6464/25000]
+loss: 2.286398  [12864/25000]
+loss: 2.289643  [19264/25000]
+Test Error: 
+ Accuracy: 13.5%, Avg loss: 2.291205 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 5
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.303558  [   64/25000]
+loss: 2.288852  [ 6464/25000]
+loss: 2.280783  [12864/25000]
+loss: 2.286574  [19264/25000]
+Test Error: 
+ Accuracy: 12.4%, Avg loss: 2.287020 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 6
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.301120  [   64/25000]
+loss: 2.285113  [ 6464/25000]
+loss: 2.274314  [12864/25000]
+loss: 2.282254  [19264/25000]
+Test Error: 
+ Accuracy: 12.0%, Avg loss: 2.281533 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 7
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.297421  [   64/25000]
+loss: 2.280387  [ 6464/25000]
+loss: 2.265914  [12864/25000]
+loss: 2.276208  [19264/25000]
+Test Error: 
+ Accuracy: 12.5%, Avg loss: 2.273843 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 8
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.291578  [   64/25000]
+loss: 2.273758  [ 6464/25000]
+loss: 2.253784  [12864/25000]
+loss: 2.267476  [19264/25000]
+Test Error: 
+ Accuracy: 13.1%, Avg loss: 2.262341 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 9
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.282671  [   64/25000]
+loss: 2.263838  [ 6464/25000]
+loss: 2.235904  [12864/25000]
+loss: 2.254238  [19264/25000]
+Test Error: 
+ Accuracy: 14.3%, Avg loss: 2.245008 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 10
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.267712  [   64/25000]
+loss: 2.248852  [ 6464/25000]
+loss: 2.208140  [12864/25000]
+loss: 2.232975  [19264/25000]
+Test Error: 
+ Accuracy: 16.6%, Avg loss: 2.218728 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 11
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.243356  [   64/25000]
+loss: 2.225394  [ 6464/25000]
+loss: 2.167681  [12864/25000]
+loss: 2.198789  [19264/25000]
+Test Error: 
+ Accuracy: 19.2%, Avg loss: 2.180807 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 12
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.203486  [   64/25000]
+loss: 2.191357  [ 6464/25000]
+loss: 2.113064  [12864/25000]
+loss: 2.151146  [19264/25000]
+Test Error: 
+ Accuracy: 22.6%, Avg loss: 2.131249 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 13
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.134358  [   64/25000]
+loss: 2.145986  [ 6464/25000]
+loss: 2.039623  [12864/25000]
+loss: 2.088907  [19264/25000]
+Test Error: 
+ Accuracy: 25.5%, Avg loss: 2.075110 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 14
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 2.029447  [   64/25000]
+loss: 2.095395  [ 6464/25000]
+loss: 1.959992  [12864/25000]
+loss: 2.031071  [19264/25000]
+Test Error: 
+ Accuracy: 25.7%, Avg loss: 2.039903 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 15
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.940117  [   64/25000]
+loss: 2.055593  [ 6464/25000]
+loss: 1.897420  [12864/25000]
+loss: 1.996714  [19264/25000]
+Test Error: 
+ Accuracy: 26.2%, Avg loss: 2.025009 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 16
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.893642  [   64/25000]
+loss: 2.030060  [ 6464/25000]
+loss: 1.857817  [12864/25000]
+loss: 1.975050  [19264/25000]
+Test Error: 
+ Accuracy: 27.3%, Avg loss: 2.004995 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 17
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.863365  [   64/25000]
+loss: 2.010407  [ 6464/25000]
+loss: 1.831453  [12864/25000]
+loss: 1.958752  [19264/25000]
+Test Error: 
+ Accuracy: 27.6%, Avg loss: 1.993158 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 18
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.842219  [   64/25000]
+loss: 1.994769  [ 6464/25000]
+loss: 1.809129  [12864/25000]
+loss: 1.941975  [19264/25000]
+Test Error: 
+ Accuracy: 28.4%, Avg loss: 1.980638 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 19
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.824606  [   64/25000]
+loss: 1.974589  [ 6464/25000]
+loss: 1.786821  [12864/25000]
+loss: 1.922848  [19264/25000]
+Test Error: 
+ Accuracy: 29.1%, Avg loss: 1.973661 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 20
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.809425  [   64/25000]
+loss: 1.953286  [ 6464/25000]
+loss: 1.765731  [12864/25000]
+loss: 1.904775  [19264/25000]
+Test Error: 
+ Accuracy: 29.6%, Avg loss: 1.965971 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 21
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.790424  [   64/25000]
+loss: 1.935388  [ 6464/25000]
+loss: 1.749637  [12864/25000]
+loss: 1.884629  [19264/25000]
+Test Error: 
+ Accuracy: 29.9%, Avg loss: 1.966101 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 22
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.778457  [   64/25000]
+loss: 1.911258  [ 6464/25000]
+loss: 1.735022  [12864/25000]
+loss: 1.865504  [19264/25000]
+Test Error: 
+ Accuracy: 29.6%, Avg loss: 1.972896 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 23
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.771917  [   64/25000]
+loss: 1.885336  [ 6464/25000]
+loss: 1.717494  [12864/25000]
+loss: 1.856735  [19264/25000]
+Test Error: 
+ Accuracy: 29.9%, Avg loss: 1.973605 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 24
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.756630  [   64/25000]
+loss: 1.855748  [ 6464/25000]
+loss: 1.699809  [12864/25000]
+loss: 1.838214  [19264/25000]
+Test Error: 
+ Accuracy: 30.4%, Avg loss: 1.973994 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 25
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.740836  [   64/25000]
+loss: 1.824386  [ 6464/25000]
+loss: 1.683323  [12864/25000]
+loss: 1.829555  [19264/25000]
+Test Error: 
+ Accuracy: 30.0%, Avg loss: 1.993755 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 26
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.743739  [   64/25000]
+loss: 1.792694  [ 6464/25000]
+loss: 1.666836  [12864/25000]
+loss: 1.803508  [19264/25000]
+Test Error: 
+ Accuracy: 29.3%, Avg loss: 2.036966 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 27
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.770486  [   64/25000]
+loss: 1.763910  [ 6464/25000]
+loss: 1.650754  [12864/25000]
+loss: 1.794300  [19264/25000]
+Test Error: 
+ Accuracy: 30.4%, Avg loss: 1.997387 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 28
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.733959  [   64/25000]
+loss: 1.730579  [ 6464/25000]
+loss: 1.633034  [12864/25000]
+loss: 1.767966  [19264/25000]
+Test Error: 
+ Accuracy: 31.3%, Avg loss: 1.972434 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 29
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.709316  [   64/25000]
+loss: 1.699806  [ 6464/25000]
+loss: 1.613551  [12864/25000]
+loss: 1.776663  [19264/25000]
+Test Error: 
+ Accuracy: 32.3%, Avg loss: 1.942912 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 30
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.677990  [   64/25000]
+loss: 1.675396  [ 6464/25000]
+loss: 1.590200  [12864/25000]
+loss: 1.732098  [19264/25000]
+Test Error: 
+ Accuracy: 33.4%, Avg loss: 1.900086 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 31
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.634951  [   64/25000]
+loss: 1.655027  [ 6464/25000]
+loss: 1.573724  [12864/25000]
+loss: 1.687142  [19264/25000]
+Test Error: 
+ Accuracy: 34.7%, Avg loss: 1.845710 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 32
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.585026  [   64/25000]
+loss: 1.631107  [ 6464/25000]
+loss: 1.559249  [12864/25000]
+loss: 1.642587  [19264/25000]
+Test Error: 
+ Accuracy: 36.0%, Avg loss: 1.802672 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 33
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.546908  [   64/25000]
+loss: 1.615985  [ 6464/25000]
+loss: 1.546365  [12864/25000]
+loss: 1.605775  [19264/25000]
+Test Error: 
+ Accuracy: 37.1%, Avg loss: 1.750385 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 34
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.501178  [   64/25000]
+loss: 1.594036  [ 6464/25000]
+loss: 1.529178  [12864/25000]
+loss: 1.573783  [19264/25000]
+Test Error: 
+ Accuracy: 37.5%, Avg loss: 1.726814 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 35
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.479091  [   64/25000]
+loss: 1.577009  [ 6464/25000]
+loss: 1.517372  [12864/25000]
+loss: 1.546589  [19264/25000]
+Test Error: 
+ Accuracy: 38.4%, Avg loss: 1.705703 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 36
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.464854  [   64/25000]
+loss: 1.572734  [ 6464/25000]
+loss: 1.505426  [12864/25000]
+loss: 1.534646  [19264/25000]
+Test Error: 
+ Accuracy: 38.9%, Avg loss: 1.691077 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 37
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.466529  [   64/25000]
+loss: 1.567477  [ 6464/25000]
+loss: 1.494268  [12864/25000]
+loss: 1.504702  [19264/25000]
+Test Error: 
+ Accuracy: 38.5%, Avg loss: 1.691090 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 38
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.475166  [   64/25000]
+loss: 1.560070  [ 6464/25000]
+loss: 1.488008  [12864/25000]
+loss: 1.477419  [19264/25000]
+Test Error: 
+ Accuracy: 38.9%, Avg loss: 1.683828 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 39
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.468812  [   64/25000]
+loss: 1.553505  [ 6464/25000]
+loss: 1.479931  [12864/25000]
+loss: 1.461267  [19264/25000]
+Test Error: 
+ Accuracy: 38.9%, Avg loss: 1.681090 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 40
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.460115  [   64/25000]
+loss: 1.540679  [ 6464/25000]
+loss: 1.468637  [12864/25000]
+loss: 1.443604  [19264/25000]
+Test Error: 
+ Accuracy: 39.4%, Avg loss: 1.677577 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 41
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.459563  [   64/25000]
+loss: 1.524276  [ 6464/25000]
+loss: 1.459193  [12864/25000]
+loss: 1.426546  [19264/25000]
+Test Error: 
+ Accuracy: 39.6%, Avg loss: 1.661913 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 42
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.442224  [   64/25000]
+loss: 1.518782  [ 6464/25000]
+loss: 1.449128  [12864/25000]
+loss: 1.409846  [19264/25000]
+Test Error: 
+ Accuracy: 39.9%, Avg loss: 1.658848 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 43
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.439302  [   64/25000]
+loss: 1.511121  [ 6464/25000]
+loss: 1.442067  [12864/25000]
+loss: 1.395244  [19264/25000]
+Test Error: 
+ Accuracy: 40.4%, Avg loss: 1.651084 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 44
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.438598  [   64/25000]
+loss: 1.502938  [ 6464/25000]
+loss: 1.434998  [12864/25000]
+loss: 1.385157  [19264/25000]
+Test Error: 
+ Accuracy: 41.1%, Avg loss: 1.636185 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 45
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.424351  [   64/25000]
+loss: 1.497135  [ 6464/25000]
+loss: 1.426356  [12864/25000]
+loss: 1.372109  [19264/25000]
+Test Error: 
+ Accuracy: 41.6%, Avg loss: 1.615486 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 46
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.401492  [   64/25000]
+loss: 1.483914  [ 6464/25000]
+loss: 1.418555  [12864/25000]
+loss: 1.362379  [19264/25000]
+Test Error: 
+ Accuracy: 42.1%, Avg loss: 1.603089 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 47
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.388246  [   64/25000]
+loss: 1.473915  [ 6464/25000]
+loss: 1.410042  [12864/25000]
+loss: 1.353142  [19264/25000]
+Test Error: 
+ Accuracy: 42.4%, Avg loss: 1.598399 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 48
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.379817  [   64/25000]
+loss: 1.464263  [ 6464/25000]
+loss: 1.401024  [12864/25000]
+loss: 1.340476  [19264/25000]
+Test Error: 
+ Accuracy: 42.8%, Avg loss: 1.586887 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 49
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.366398  [   64/25000]
+loss: 1.458907  [ 6464/25000]
+loss: 1.394712  [12864/25000]
+loss: 1.326935  [19264/25000]
+Test Error: 
+ Accuracy: 43.0%, Avg loss: 1.581416 
+
+--------- FREEZING PROCEDURE ---------
+Epoch 50
+-------------------------------
+PARAMETERS THAT REQUIRE GRADIENT:
+conv1.weight
+conv1.bias
+conv2.weight
+conv2.bias
+conv3.weight
+conv3.bias
+conv4.weight
+conv4.bias
+conv5.weight
+conv5.bias
+fc1.weight
+fc1.bias
+fc2.weight
+fc2.bias
+
+loss: 1.361938  [   64/25000]
+loss: 1.449138  [ 6464/25000]
+loss: 1.387491  [12864/25000]
+loss: 1.314581  [19264/25000]
+Test Error: 
+ Accuracy: 43.5%, Avg loss: 1.575433 
+
+--------- FREEZING PROCEDURE ---------
+Done!
