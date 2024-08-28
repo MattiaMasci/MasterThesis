@@ -24,8 +24,8 @@ class BasicNet(nn.Module):
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=2, stride=2)
-            nn.Flatten()
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Flatten(),
             nn.Linear(512, 100),
             nn.ReLU(),
             nn.Linear(100, 10),

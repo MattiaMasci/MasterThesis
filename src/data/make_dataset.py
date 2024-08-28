@@ -1,18 +1,18 @@
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader, Subset, SubsetRandomSampler
 from torchvision import datasets
 from torchvision.transforms import ToTensor, Lambda, Compose
 
 # Download CIFAR-10 dataset
 training_data = datasets.CIFAR10(
-  root="../data",
+  root="../../data",
   train=True,
   download=True,
   transform = ToTensor()
 )
 
 test_data = datasets.CIFAR10(
-  root="../data",
+  root="../../data",
   train=False,
   download=True,
   transform = ToTensor()
@@ -34,5 +34,5 @@ subset_indices = torch.randperm(len(test_data))[:subset_size]
 subset_test = Subset(test_data, subset_indices)
 
 # Save the reduced dataset
-torch.save(subset_train, '../data/reducedDataset/subset_train.pt')
-torch.save(subset_test, '../data/reducedDataset/subset_test.pt')
+torch.save(subset_train, '../../data/reducedDataset/subset_train.pt')
+torch.save(subset_test, '../../data/reducedDataset/subset_test.pt')

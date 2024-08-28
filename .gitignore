@@ -2,3 +2,9 @@
 plot/
 /models/
 *.sh
+out/
+runs*/
+wandb/
+old__main__.py
+main_wandb.py
+experiments/

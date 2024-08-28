@@ -11,6 +11,7 @@ class WrapperNet(nn.Module):
     def __init__(self, seq, leaf, lr=1e-3, loss_fn=nn.functional.cross_entropy, epochs=1):
         super(WrapperNet, self).__init__()
         self.seq = nn.Sequential()
+        # Appends all modules of the input sequence
         [self.seq.append(mod) for mod in seq]        
         self.leaf = leaf
         self.loss_fn = loss_fn
@@ -42,47 +43,55 @@ class WrapperNet(nn.Module):
          
 def sequential2wrappers(seq_net, num_classes, X, device='cpu'):
     """ 
-    Prende in input un modello di rete neurale e ritorna una lista di reti formate aggiungendo incrementalmente i vari 
-    layer della rete originale
+    It takes as input a neural network model (Sequential) and returns a list of networks formed by 
+    incrementally adding the various layers of the original network
     """
 
-    layer_list = ('conv','linear')
-
+    # List of trainable layers
     layers_type = (nn.Linear,nn.Conv1d,nn.Conv2d, nn.Conv3d)
 
-    # Composition of network
     count = 0
 
     net_list = nn.ModuleList()
     sequence = nn.Sequential()
     flattening = nn.Flatten()
 
+    # Considers each module of the network
     for children in seq_net:
         if isinstance(children, nn.Sequential):
-            for sub_children in children:                
-                if any(substring.lower() in str(sub_children).lower() for substring in layer_list) and count != 0:
-                    # if it's a layer to which I need to attach a leaf
-                    if len(X.size()) > 2:
-                        linear_input = flattening(X)
-                        net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
-                        net.seq.add_module(str(count), nn.Flatten())
-                    else:
-                        net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
-                    net_list.append(net)
+            for sub_children in children:   
+                for t in layers_type:
+                    # Checks if the selected module is trainable
+                    if isinstance(sub_children, t):
+                        if count != 0: # This allows me to include all operations performed after a trainable layer
+                            # I need to attach a leaf
+                            if len(X.size()) > 2:
+                                linear_input = flattening(X)
+                                net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
+                                net.seq.add_module(str(count), nn.Flatten())
+                            else:
+                                net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
+                            net_list.append(net)
+                        break
 
                 sequence.add_module(str(count),sub_children)
                 X = sub_children(X)
                 count = count+1   
         else:
-            if any(substring.lower() in str(children).lower() for substring in layer_list) and count != 0:
-                # if it's a layer to which I need to attach a leaf
-                if len(X.size()) > 2:
-                    linear_input = flattening(X)
-                    net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
-                    net.seq.add_module(str(count), nn.Flatten())
-                else:
-                    net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
-                net_list.append(net)
+            for t in layers_type:
+                # Checks if the selected module is trainable
+                if isinstance(children, t):
+                    if count != 0: # This allows me to include all operations performed after a trainable layer
+                        # I need to attach a leaf
+                        if len(X.size()) > 2:
+                            linear_input = flattening(X)
+                            net = WrapperNet(sequence, nn.Linear(linear_input.size(dim=1),num_classes))
+                            net.seq.add_module(str(count), nn.Flatten())
+                        else:
+                            net = WrapperNet(sequence, nn.Linear(X.size(dim=1),num_classes))
+                        net_list.append(net)
+                    break
+
             sequence.add_module(str(count),children)
             X = children(X)
             count = count+1

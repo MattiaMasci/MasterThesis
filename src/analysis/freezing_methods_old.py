@@ -187,6 +187,36 @@ def gradientNormChangeFreezingProcedure(current_epoch, total_epochs, model, freq
             print()
             """
 
+def randomSequentialFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
+num_layers, frozen, defreeze=0, initial_percentage=10):
+    """ 
+    Take as input the index of the current epoch, the number of total epochs, the model being trained and
+    the frequency with which you want to freeze and returns a random index relating to the layer to be frozen
+    """
+
+    if current_epoch >= (round(total_epochs / initial_percentage)):
+        if defreeze == 0:
+            if (current_epoch-round(total_epochs / initial_percentage)) % frequence == 0:
+                if frequence == 1:
+                    deFreeze(model)
+                    frozen = False
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
+                # Freezing decisions part
+                calculated_layer = randint(0, num_layers-1)
+                logger.info(f'Calculated argmax: {calculated_layer+1}')
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
+                array = torch.zeros(num_layers, dtype=torch.bool)
+                array[:calculated_layer+1] = True
+                frozen = freeze(model,array)
+                defreeze = freezing_epochs
+        else:
+            defreeze = defreeze-1
+            if defreeze == 0:
+                deFreeze(model)
+                frozen = False
+
+    return calculated_layer, defreeze, frozen
+
 def scatteredFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
 num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
     """ 
@@ -214,6 +244,38 @@ num_layers, frozen, defreeze=0, calculations=False, initial_percentage=10):
         if defreeze == 0:
             deFreeze(model)
             frozen = False
+
+    return defreeze, frozen
+
+def randomScatteredFreezing(calculated_layer, current_epoch, total_epochs, model, frequence, freezing_epochs,\
+num_layers, frozen, defreeze=0, initial_percentage=10):
+    """ 
+    Take as input the index of the current epoch, the number of total epochs, the model being trained and
+    the frequency with which you want to freeze and returns a random index relating to the layer to be frozen
+    """
+
+    if current_epoch >= (total_epochs // initial_percentage):
+        if defreeze == 0:
+            if (current_epoch-(total_epochs // initial_percentage)) % frequence == 0:
+                if frequence == 1:
+                    deFreeze(model)
+                    frozen = False
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
+                # Freezing decisions part
+                calculated_layer = randint(1, num_layers)
+                logger.info(f'Calculated argmax: {calculated_layer}')
+                indices = sample(range(0, num_layers), calculated_layer)
+                array = torch.zeros(num_layers, dtype=torch.bool)
+                array[indices] = True
+                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
+                frozen = freeze(model,array)
+                defreeze = freezing_epochs
+                
+        else:
+            defreeze = defreeze-1
+            if defreeze == 0:
+                deFreeze(model)
+                frozen = False
 
     return defreeze, frozen
 
@@ -274,65 +336,3 @@ defreeze=0, initial_percentage=10):
                 frozen = False
 
     return defreeze, frozen
-
-def randomSequentialFreezing(current_epoch, total_epochs, model, freezing_period, freezing_span_fraction,\
-num_layers, frozen=False, defreeze=0, initial_percentage=10):
-    """ 
-    """
-
-    calculated_layer = 0
-    warmup_epochs = round(total_epochs / initial_percentage)
-    if current_epoch >= warmup_epochs:
-        if defreeze == 0:
-            if (current_epoch - warmup_epochs) % freezing_period == 0:
-                if freezing_period == 1:
-                    deFreeze(model)
-                    frozen = False
-                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
-                # Freezing decisions section
-                calculated_layer = randint(1, num_layers)
-                logger.info(f'Calculated argmax: {calculated_layer}')
-                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
-                array = torch.zeros(num_layers, dtype=torch.bool)
-                array[:calculated_layer] = True
-                frozen = freeze(model,array)
-                defreeze = round(freezing_span_fraction*freezing_period)
-        else:
-            defreeze = defreeze-1
-            if defreeze == 0:
-                deFreeze(model)
-                frozen = False
-
-    return calculated_layer, defreeze, frozen
-
-def randomScatteredFreezing(current_epoch, total_epochs, model, freezing_period, freezing_span_fraction,\
-num_layers, frozen, defreeze=0, initial_percentage=10):
-    """ 
-    """
-
-    calculated_layer = 0
-    warmup_epochs = round(total_epochs / initial_percentage)
-    if current_epoch >= warmup_epochs:
-        if defreeze == 0:
-            if (current_epoch - warmup_epochs) % freezing_period == 0:
-                if freezing_period == 1:
-                    deFreeze(model)
-                    frozen = False
-                logger.info('--------- PARAMETERS CALCULATION PROCEDURE ---------')
-                # Freezing decisions section
-                calculated_layer = randint(1, num_layers)
-                logger.info(f'Calculated argmax: {calculated_layer}')
-                indices = sample(range(0, num_layers), calculated_layer)
-                array = torch.zeros(num_layers, dtype=torch.bool)
-                array[indices] = True
-                logger.info('--------- PARAMETERS CALCULATION PROCEDURE TERMINATED ---------')
-                frozen = freeze(model,array)
-                defreeze = round(freezing_span_fraction*freezing_period)
-                
-        else:
-            defreeze = defreeze-1
-            if defreeze == 0:
-                deFreeze(model)
-                frozen = False
-
-    return calculated_layer, defreeze, frozen

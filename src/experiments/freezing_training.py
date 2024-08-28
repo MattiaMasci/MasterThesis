@@ -49,8 +49,8 @@ net = Net()
 net.weights_init(firstLinearLayer_weights, secondLinearLayer_weights, thirdLinearLayer_weights)
 
 # Dataset loading
-training_data = torch.load('../../../data/reduced_training_set.pt')
-test_data = torch.load('../../../data/reduced_testing_set.pt')
+training_data = torch.load('../../data/reducedDataset/subset_test.pt')
+test_data = torch.load('../../data/reducedDataset/subset_train.pt')
 
 train_dataloader = DataLoader(training_data, batch_size=64)
 test_dataloader = DataLoader(test_data, batch_size=64)

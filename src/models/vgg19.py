@@ -1,18 +1,18 @@
 import torch
 from torch import nn
-from torchvision.models import vgg16
+from torchvision.models import vgg19
 import logging
 import time
 import copy
 
 logger = logging.getLogger('Main Logger')
 
-class VGG16(nn.Module):
+class VGG19(nn.Module):
     def __init__(self, num_classes, device):
-        super(VGG16, self).__init__()
+        super(VGG19, self).__init__()
         layer_list = ('conv','linear')
 
-        net = vgg16(weights=None)
+        net = vgg19(weights=None)
         #net.classifier[6] = nn.Linear(4096, 10)
 
         sequence = nn.Sequential()
@@ -26,7 +26,7 @@ class VGG16(nn.Module):
                         num_layers = num_layers+1
                     sequence.add_module(str(count),sub_children)
                     count = count+1
-                    if count == 32:
+                    if count == 38:
                         sequence.add_module(str(count),nn.Flatten())
                         count = count+1
             else:
@@ -34,7 +34,7 @@ class VGG16(nn.Module):
                     num_layers = num_layers+1
                 sequence.add_module(str(count),children)
                 count = count+1
-                if count == 32:
+                if count == 38:
                     sequence.add_module(str(count),nn.Flatten())
                     count = count+1
 
@@ -44,7 +44,7 @@ class VGG16(nn.Module):
         self.num_layers = num_layers
         self.net = sequence
         self.device = device
-        self.net.to(device)   
+        self.net.to(device)  
         
     def forward(self, x):
         x = self.net(x)
@@ -52,7 +52,7 @@ class VGG16(nn.Module):
 
     def initialize(self, init):
         self.init = init
-        path = f'../models/VGG16/{self.init}'
+        path = f'../models/VGG19/{self.init}'
         checkpoint = torch.load(path)
         self.net.load_state_dict(checkpoint)
         logger.info(f'Initialization in use: {path}')

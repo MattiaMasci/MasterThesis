@@ -1,0 +1,1 @@
+python3 __main__.py --training_method SFS --freezing_period 2 --freezing_span_fraction 0.5 --init init1

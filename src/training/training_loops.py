@@ -87,29 +87,18 @@ def train_loop_with_gradient_info(dataloader, model, loss_fn, optimizer, gradien
         X = X.to(device)
         y = y.to(device)
 
-        # Compute prediction and loss
+        # Compute predictions and loss
         pred = model(X)
         loss = loss_fn(pred, y)
 
         # Backpropagation
         optimizer.zero_grad()
-        # When we call the backward() method on the loss tensor, the gradients computed by PyTorch accumulate 
-        # (i.e., they are added to the existing gradients) for each parameter during each iteration. 
-        # This is useful when we want to accumulate gradients across multiple batches, but it can lead to 
-        # incorrect gradient computations when we only want to compute the gradients for a single batch. Therefore, 
-        # before calling backward() for a new minibatch, we need to zero out the gradients from the previous minibatch. 
-        # Otherwise, we would be using stale gradients from previous minibatches, which could lead to incorrect parameter updates.
-        
         loss.backward()
         
         if calculations == True:
             accumulatedGradientCalculation(model, gradient_list, abs_gradient_list)
 
         optimizer.step()
-        # Once the gradients have been computed, they are passed to the optimizer.step() function. 
-        # The optimizer.step() function is responsible for updating the weights and biases of the 
-        # neural network based on the gradients. In other words, it adjusts the weights and biases 
-        # in the direction that reduces the loss function the most.
 
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
@@ -141,6 +130,7 @@ def test_loop(dataloader, model, loss_fn):
 
 def accumulatedGradientCalculation(model, gradient_list, abs_gradient_list):
     """
+    Accumulates the gradient for each layer in order to calculate the freezing rate
     """
     
     i = 0
@@ -169,6 +159,7 @@ def accumulatedGradientCalculation(model, gradient_list, abs_gradient_list):
 
 def dictionariesCreation(model, gradient_list, abs_gradient_list):
     """
+    Create a sorted dictionary with a gradient tensor for each layer
     """
 
     grad_dict = dict(zip(range(len(gradient_list)), gradient_list))
