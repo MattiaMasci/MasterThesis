@@ -8,4 +8,5 @@ wandb/
 old__main__.py
 main_wandb.py
 /experiments/
-/training/HAR_training_wandb.y
+/training/HAR_training_wandb.py
+trash.py
